@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/dio/dio_client.dart';
 import 'package:shop/data/datasource/remote/dio/logging_interceptor.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop/features/home/data/repository_implementation/repository_implementation.dart';
+import 'package:shop/features/home/domain/repository/repository.dart';
+import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
+import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
+import 'package:shop/features/home/domain/use_cases/get_sliders_use_case.dart';
 
 final getIt = GetIt.instance;
 
@@ -17,57 +21,13 @@ Future<void> init() async {
   *
   * */
 
-  // getIt.registerLazySingleton(
-  //     () => LoginUseCase(authRefreshRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => RegisterUseCase(authRefreshRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => RefreshUseCase(authRefreshRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => VerifyPhoneUseCase(authRefreshRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => ResendCodeUseCase(authRefreshRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetApointmentsUseCase(homeRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => BookingSubmetionUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetBookingAvalibaleTimesUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetCategoriesUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetDoctorsUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetQuestionUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => VideoCallRequestUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetSubCategoryUseCase(apointmentRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetApointmentDatesUseCase(homeRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => GetMedicalHistoryUseCase(medicalRepository: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => AddMedicaneUseCase(medicalRepository: getIt()));
-  // getIt.registerLazySingleton(() => ProjectsUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => ShiftsUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => CheckInUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => LeavingReasonUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => CheckOutUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => GetAttendanceUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => GetReplacemntAttendanceUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => ReplacementCheckOutUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(() => ReplacemntCheckinUseCase(homeRepo: getIt()));
-  // getIt.registerLazySingleton(
-  //     () => AuthRefreshUseCase(authRefreshRepository: getIt()));
-  /*
-  * Cubits
-  * */
-  // getIt.registerLazySingleton(() => HomeCubit(homeUseCase: getIt())) ;
+  getIt.registerLazySingleton(() => GetProductsUseCase(homeRepo: getIt()));
+  getIt.registerLazySingleton(() => GetCategoriesUseCase(homeRepo: getIt()));
+  getIt.registerLazySingleton(() => GetSlidersUseCase(homeRepo: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
-      "https://manage.shafi.app/api/v1/", getIt(),
+      "https://dev.prestigeb2b.net/api/v1", getIt(),
       loggingInterceptor: getIt(), cacheConsumer: getIt()));
 
   /// External
@@ -84,8 +44,8 @@ Future<void> init() async {
   // getIt.registerLazySingleton(() => ApiConsumer(getIt<Dio>(), getIt<PrettyDioLogger>(), getIt()));
   /*
   * Repository */
-  // getIt.registerLazySingleton<AuthRepository>(
-  //     () => AuthReopsitoryImplementation(networkClient: getIt()));
+  getIt.registerLazySingleton<Repository>(
+      () => RepositoryImplementation(networkClient: getIt()));
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));
   // getIt.registerLazySingleton<ApointmentRepository>(

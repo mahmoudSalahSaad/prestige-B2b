@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> { 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child:  Padding(
                           padding: EdgeInsets.symmetric(horizontal: size.width * 0.3),
-                          child: Text("Log in")) ,
+                          child: const Text("Log in")) ,
                       ),
                     ],
                   ),

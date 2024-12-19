@@ -48,7 +48,7 @@ class DioClient {
         'Accept': 'application/json; charset=UTF-8',
         'x-api-key': AppURL.kAPIKey,
         'Content-Type': 'application/json; charset=UTF-8',
-        'Content-Language': 'en',
+        'X-App-Locale': 'en',
         // 'Authorization': 'Bearer $token',
       };
     _getToken();
@@ -198,7 +198,7 @@ class DioClient {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Accept-Language': 'ar',
+        'X-App-Locale': 'en',
         'User-Agents': 'android',
       },
     );

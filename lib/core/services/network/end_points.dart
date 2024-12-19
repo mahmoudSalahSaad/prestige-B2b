@@ -1,10 +1,7 @@
 class EndPoints {
-  static const String login = "employees/login";
-  static const String getProfile = "employees/more";
-  static const String changePassword = "employees/change_password";
-  static const String getNews = "articles";
-  static const String getAchievements = "achievements";
-  static const String getContactInfo = "contact-info";
-  static const String getAboutCompany = "about-company";
-  static const String getServices = "services";
+  static const String categories = '/categories';
+  static const String sliders = '/sliders';
+  static const String productList = '/products';
+  static String productdetails(String slug) => '/products/$slug';
+  static String getProductsByCategory(String category) => 'categories/$category/products';
 }

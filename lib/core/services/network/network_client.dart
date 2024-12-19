@@ -1,15 +1,14 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/core/base/base_response.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
-
 import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/core/services/local/storage_keys.dart';
 import 'package:shop/data/datasource/remote/dio/dio_client.dart';
 import 'package:shop/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 import '../../utils/logger.dart';
 
@@ -23,14 +22,14 @@ class NetworkClient {
     DioClient dioClient = getIt<DioClient>();
     late Response response;
     AppPrefs prefs = getIt();
-    String lang = await prefs.get(PrefKeys.lang, defaultValue: "ar");
+    String lang = await prefs.get(PrefKeys.lang, defaultValue: "en");
 
     Options options = Options(
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Accept-Language': lang,
-        'User-Agents': 'android', 
+        'X-App-Locale': lang,
+        'User-Agents': 'android',
       },
     );
     String? token = await prefs.getSecuredData(PrefKeys.token);
