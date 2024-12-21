@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
         navigatorKey: NavigationService.navigationKey,
         onGenerateRoute: RouteGenerator.generateBaseRoute,
-        initialRoute: Routes.login,
+        initialRoute: Routes.init,
         builder: (context, child) => Directionality(
           textDirection: TextDirection.ltr,
           child: child ?? const SizedBox(),

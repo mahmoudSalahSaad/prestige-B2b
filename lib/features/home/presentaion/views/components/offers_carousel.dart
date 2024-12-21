@@ -8,8 +8,8 @@ import 'package:shop/core/components/Banner/M/banner_m_style_2.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_3.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_4.dart';
 import 'package:shop/core/components/dot_indicators.dart';
+import 'package:shop/core/components/skleton/banner/banner_m_skelton.dart';
 import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class OffersCarousel extends ConsumerStatefulWidget {
   const OffersCarousel({
@@ -127,7 +127,8 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
               ),
             ),
         error: (err, stackTrance) => Text("Error==>$err"),
-        loading: () => AspectRatio(
+        loading:
+            () => /* AspectRatio(
               aspectRatio: 1.87,
               child: Skeletonizer(
                 enabled: true,
@@ -138,6 +139,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
                   press: () {},
                 ),
               ),
-            ));
+            ) */
+                const BannerMSkelton());
   }
 }

@@ -9,7 +9,7 @@ part 'sliders_controllers.freezed.dart';
 part 'sliders_controllers.g.dart';
 part 'sliders_state.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SlidersController extends _$SlidersController {
   @override
 

@@ -10,7 +10,7 @@ part 'get_products_controller.freezed.dart';
 part 'get_products_controller.g.dart';
 part 'get_products_state.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class GetProductsController extends _$GetProductsController {
   @override
 

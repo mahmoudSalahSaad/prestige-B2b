@@ -11,6 +11,9 @@ import 'package:shop/features/home/domain/repository/repository.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_sliders_use_case.dart';
+import 'package:shop/features/product/data/repository_implementation/repository_implementation.dart';
+import 'package:shop/features/product/domain/repository/repository.dart';
+import 'package:shop/features/product/domain/use_cases/get_categories_use_case.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,6 +27,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetProductsUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(() => GetCategoriesUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(() => GetSlidersUseCase(homeRepo: getIt()));
+  getIt.registerLazySingleton(
+      () => GetProductDetailsUseCase(productRepository: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
@@ -46,6 +51,10 @@ Future<void> init() async {
   * Repository */
   getIt.registerLazySingleton<Repository>(
       () => RepositoryImplementation(networkClient: getIt()));
+
+  getIt.registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImplementation(networkClient: getIt()));
+
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));
   // getIt.registerLazySingleton<ApointmentRepository>(
