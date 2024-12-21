@@ -1,10 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_model.dart';
+part of 'items_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+_$ItemsModelImpl _$$ItemsModelImplFromJson(Map<String, dynamic> json) =>
+    _$ItemsModelImpl(
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => ProductModels.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ItemsModelImplToJson(_$ItemsModelImpl instance) =>
+    <String, dynamic>{
+      'items': instance.items,
+    };
 
 _$ProductModelsImpl _$$ProductModelsImplFromJson(Map<String, dynamic> json) =>
     _$ProductModelsImpl(
@@ -30,14 +42,14 @@ Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
 
 _$PriceModelImpl _$$PriceModelImplFromJson(Map<String, dynamic> json) =>
     _$PriceModelImpl(
-      beforePrice: json['beforePrice'] as String?,
-      afterDiscount: json['afterDiscount'] as String?,
-      hasDiscount: json['hasDiscount'] as String?,
+      beforePrice: json['before_price'] as String?,
+      afterDiscount: json['after_discount'].toString() as String?,
+      hasDiscount: json['has_discount'] as bool?,
     );
 
 Map<String, dynamic> _$$PriceModelImplToJson(_$PriceModelImpl instance) =>
     <String, dynamic>{
-      'beforePrice': instance.beforePrice,
-      'afterDiscount': instance.afterDiscount,
-      'hasDiscount': instance.hasDiscount,
+      'before_price': instance.beforePrice,
+      'after_discount': instance.afterDiscount,
+      'has_discount': instance.hasDiscount,
     };

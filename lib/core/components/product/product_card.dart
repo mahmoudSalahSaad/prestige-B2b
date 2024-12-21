@@ -16,25 +16,23 @@ class ProductCard extends StatelessWidget {
     required this.press,
   });
   final String image, brandName, title;
-  final double price;
-  final double? priceAfetDiscount;
+  final String price;
+  final String? priceAfetDiscount;
   final int? dicountpercent;
   final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (_)=> const ProductDetailsScreen(        ))),
-      
-
+      onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (_) => const ProductDetailsScreen())),
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(140, 220),
           maximumSize: const Size(140, 220),
-          side:  BorderSide(color: Theme.of(context).dividerColor),
+          side: BorderSide(color: Theme.of(context).dividerColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadious),
           ),
-          
           padding: const EdgeInsets.all(8)),
       child: Column(
         children: [
@@ -97,25 +95,26 @@ class ProductCard extends StatelessWidget {
                       ? Row(
                           children: [
                             Text(
-                              "\$$priceAfetDiscount",
+                              "$priceAfetDiscount",
                               style: const TextStyle(
                                 color: Color(0xFF31B0D8),
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12,
+                                fontSize: 14,
                               ),
                             ),
                             const SizedBox(width: defaultPadding / 4),
-                            Text(
-                              "\$$price",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .color,
-                                fontSize: 10,
-                                decoration: TextDecoration.lineThrough,
+                            if (price == "0")
+                              Text(
+                                price,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color,
+                                  fontSize: 12,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
                               ),
-                            ),
                           ],
                         )
                       : Text(

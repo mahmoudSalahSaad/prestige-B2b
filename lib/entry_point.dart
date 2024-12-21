@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/features/home/presentaion/views/home_screen.dart';
 import 'package:shop/screens/bookmark/views/bookmark_screen.dart';
 import 'package:shop/screens/checkout/views/cart_screen.dart';
 import 'package:shop/screens/discover/views/discover_screen.dart';
-import 'package:shop/screens/home/views/home_screen.dart';
 import 'package:shop/screens/profile/views/profile_screen.dart';
-   
+
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
 
@@ -61,7 +61,7 @@ class _EntryPointState extends State<EntryPoint> {
         actions: [
           IconButton(
             onPressed: () {
-             // Navigator.pushNamed(context, searchScreenRoute);
+              // Navigator.pushNamed(context, searchScreenRoute);
             },
             icon: SvgPicture.asset(
               "assets/icons/Search.svg",
@@ -73,7 +73,7 @@ class _EntryPointState extends State<EntryPoint> {
           ),
           IconButton(
             onPressed: () {
-             // Navigator.pushNamed(context, notificationsScreenRoute);
+              // Navigator.pushNamed(context, notificationsScreenRoute);
             },
             icon: SvgPicture.asset(
               "assets/icons/Notification.svg",
@@ -122,7 +122,8 @@ class _EntryPointState extends State<EntryPoint> {
           items: [
             BottomNavigationBarItem(
               icon: svgIcon("assets/icons/Stores.svg"),
-              activeIcon: svgIcon("assets/icons/Stores.svg", color: primaryColor),
+              activeIcon:
+                  svgIcon("assets/icons/Stores.svg", color: primaryColor),
               label: "Shop",
             ),
             BottomNavigationBarItem(

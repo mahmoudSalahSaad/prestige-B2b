@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'product_model.dart';
+part of 'items_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,6 +13,163 @@ T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+ItemsModel _$ItemsModelFromJson(Map<String, dynamic> json) {
+  return _ItemsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemsModel {
+  List<ProductModels>? get items => throw _privateConstructorUsedError;
+
+  /// Serializes this ItemsModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ItemsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ItemsModelCopyWith<ItemsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemsModelCopyWith<$Res> {
+  factory $ItemsModelCopyWith(
+          ItemsModel value, $Res Function(ItemsModel) then) =
+      _$ItemsModelCopyWithImpl<$Res, ItemsModel>;
+  @useResult
+  $Res call({List<ProductModels>? items});
+}
+
+/// @nodoc
+class _$ItemsModelCopyWithImpl<$Res, $Val extends ItemsModel>
+    implements $ItemsModelCopyWith<$Res> {
+  _$ItemsModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ItemsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? items = freezed,
+  }) {
+    return _then(_value.copyWith(
+      items: freezed == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ProductModels>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemsModelImplCopyWith<$Res>
+    implements $ItemsModelCopyWith<$Res> {
+  factory _$$ItemsModelImplCopyWith(
+          _$ItemsModelImpl value, $Res Function(_$ItemsModelImpl) then) =
+      __$$ItemsModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ProductModels>? items});
+}
+
+/// @nodoc
+class __$$ItemsModelImplCopyWithImpl<$Res>
+    extends _$ItemsModelCopyWithImpl<$Res, _$ItemsModelImpl>
+    implements _$$ItemsModelImplCopyWith<$Res> {
+  __$$ItemsModelImplCopyWithImpl(
+      _$ItemsModelImpl _value, $Res Function(_$ItemsModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ItemsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? items = freezed,
+  }) {
+    return _then(_$ItemsModelImpl(
+      items: freezed == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ProductModels>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemsModelImpl implements _ItemsModel {
+  _$ItemsModelImpl({final List<ProductModels>? items}) : _items = items;
+
+  factory _$ItemsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemsModelImplFromJson(json);
+
+  final List<ProductModels>? _items;
+  @override
+  List<ProductModels>? get items {
+    final value = _items;
+    if (value == null) return null;
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ItemsModel(items: $items)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemsModelImpl &&
+            const DeepCollectionEquality().equals(other._items, _items));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+
+  /// Create a copy of ItemsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemsModelImplCopyWith<_$ItemsModelImpl> get copyWith =>
+      __$$ItemsModelImplCopyWithImpl<_$ItemsModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemsModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemsModel implements ItemsModel {
+  factory _ItemsModel({final List<ProductModels>? items}) = _$ItemsModelImpl;
+
+  factory _ItemsModel.fromJson(Map<String, dynamic> json) =
+      _$ItemsModelImpl.fromJson;
+
+  @override
+  List<ProductModels>? get items;
+
+  /// Create a copy of ItemsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ItemsModelImplCopyWith<_$ItemsModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 ProductModels _$ProductModelsFromJson(Map<String, dynamic> json) {
   return _ProductModels.fromJson(json);
@@ -298,12 +455,12 @@ PriceModel _$PriceModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PriceModel {
-  @JsonValue("before_price")
+  @JsonKey(name: "before_price")
   String? get beforePrice => throw _privateConstructorUsedError;
-  @JsonValue("after_discount")
+  @JsonKey(name: "after_discount")
   String? get afterDiscount => throw _privateConstructorUsedError;
-  @JsonValue("has_discount")
-  String? get hasDiscount => throw _privateConstructorUsedError;
+  @JsonKey(name: "has_discount")
+  bool? get hasDiscount => throw _privateConstructorUsedError;
 
   /// Serializes this PriceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -322,9 +479,9 @@ abstract class $PriceModelCopyWith<$Res> {
       _$PriceModelCopyWithImpl<$Res, PriceModel>;
   @useResult
   $Res call(
-      {@JsonValue("before_price") String? beforePrice,
-      @JsonValue("after_discount") String? afterDiscount,
-      @JsonValue("has_discount") String? hasDiscount});
+      {@JsonKey(name: "before_price") String? beforePrice,
+      @JsonKey(name: "after_discount") String? afterDiscount,
+      @JsonKey(name: "has_discount") bool? hasDiscount});
 }
 
 /// @nodoc
@@ -358,7 +515,7 @@ class _$PriceModelCopyWithImpl<$Res, $Val extends PriceModel>
       hasDiscount: freezed == hasDiscount
           ? _value.hasDiscount
           : hasDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
     ) as $Val);
   }
 }
@@ -372,9 +529,9 @@ abstract class _$$PriceModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonValue("before_price") String? beforePrice,
-      @JsonValue("after_discount") String? afterDiscount,
-      @JsonValue("has_discount") String? hasDiscount});
+      {@JsonKey(name: "before_price") String? beforePrice,
+      @JsonKey(name: "after_discount") String? afterDiscount,
+      @JsonKey(name: "has_discount") bool? hasDiscount});
 }
 
 /// @nodoc
@@ -406,7 +563,7 @@ class __$$PriceModelImplCopyWithImpl<$Res>
       hasDiscount: freezed == hasDiscount
           ? _value.hasDiscount
           : hasDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
     ));
   }
 }
@@ -415,22 +572,22 @@ class __$$PriceModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PriceModelImpl implements _PriceModel {
   _$PriceModelImpl(
-      {@JsonValue("before_price") this.beforePrice,
-      @JsonValue("after_discount") this.afterDiscount,
-      @JsonValue("has_discount") this.hasDiscount});
+      {@JsonKey(name: "before_price") this.beforePrice,
+      @JsonKey(name: "after_discount") this.afterDiscount,
+      @JsonKey(name: "has_discount") this.hasDiscount});
 
   factory _$PriceModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PriceModelImplFromJson(json);
 
   @override
-  @JsonValue("before_price")
+  @JsonKey(name: "before_price")
   final String? beforePrice;
   @override
-  @JsonValue("after_discount")
+  @JsonKey(name: "after_discount")
   final String? afterDiscount;
   @override
-  @JsonValue("has_discount")
-  final String? hasDiscount;
+  @JsonKey(name: "has_discount")
+  final bool? hasDiscount;
 
   @override
   String toString() {
@@ -473,22 +630,23 @@ class _$PriceModelImpl implements _PriceModel {
 
 abstract class _PriceModel implements PriceModel {
   factory _PriceModel(
-      {@JsonValue("before_price") final String? beforePrice,
-      @JsonValue("after_discount") final String? afterDiscount,
-      @JsonValue("has_discount") final String? hasDiscount}) = _$PriceModelImpl;
+          {@JsonKey(name: "before_price") final String? beforePrice,
+          @JsonKey(name: "after_discount") final String? afterDiscount,
+          @JsonKey(name: "has_discount") final bool? hasDiscount}) =
+      _$PriceModelImpl;
 
   factory _PriceModel.fromJson(Map<String, dynamic> json) =
       _$PriceModelImpl.fromJson;
 
   @override
-  @JsonValue("before_price")
+  @JsonKey(name: "before_price")
   String? get beforePrice;
   @override
-  @JsonValue("after_discount")
+  @JsonKey(name: "after_discount")
   String? get afterDiscount;
   @override
-  @JsonValue("has_discount")
-  String? get hasDiscount;
+  @JsonKey(name: "has_discount")
+  bool? get hasDiscount;
 
   /// Create a copy of PriceModel
   /// with the given fields replaced by the non-null parameter values.

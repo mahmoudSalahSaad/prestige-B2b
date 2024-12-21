@@ -6,7 +6,7 @@ part of 'sliders_controllers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$slidersControllerHash() => r'82dbbb6fe2fff1febfd10cc3a9be36bac900fd19';
+String _$slidersControllerHash() => r'da35c8a36f131f83aeb0e9048ac959159d42e162';
 
 /// See also [SlidersController].
 @ProviderFor(SlidersController)

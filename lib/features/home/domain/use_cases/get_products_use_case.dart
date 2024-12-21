@@ -1,12 +1,11 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
-import 'package:shop/features/home/data/models/product_model.dart';
+import 'package:shop/features/home/data/models/items_model.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 
 import '../../../../core/base/base_usecase.dart';
 
-class GetProductsUseCase extends BaseUseCase<List<ProductModels>, NoParameters> {
+class GetProductsUseCase extends BaseUseCase<ItemsModel, NoParameters> {
   final Repository homeRepo;
 
   GetProductsUseCase({required this.homeRepo});
@@ -19,13 +18,12 @@ class GetProductsUseCase extends BaseUseCase<List<ProductModels>, NoParameters> 
   * */
 
   @override
-  Future<Either<ErrorModel, List<ProductModels>>> call(
-      NoParameters parameters) async {
+  Future<Either<ErrorModel, ItemsModel>> call(NoParameters parameters) async {
     return await homeRepo.getProducts(parameters: parameters);
   }
 
   @override
-  Future<Either<ErrorModel, List<ProductModels>>> callTest(
+  Future<Either<ErrorModel, ItemsModel>> callTest(
       NoParameters parameters) async {
     return await homeRepo.getProducts(parameters: parameters);
   }

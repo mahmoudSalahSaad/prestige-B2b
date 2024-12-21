@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/models/product_model.dart';
-  
 
 import '../../../constants.dart';
 
@@ -31,12 +30,12 @@ class BookmarkScreen extends StatelessWidget {
                     image: demoPopularProducts[index].image,
                     brandName: demoPopularProducts[index].brandName,
                     title: demoPopularProducts[index].title,
-                    price: demoPopularProducts[index].price,
+                    price: demoPopularProducts[index].price.toString(),
                     priceAfetDiscount:
-                        demoPopularProducts[index].priceAfetDiscount,
+                        demoPopularProducts[index].priceAfetDiscount.toString(),
                     dicountpercent: demoPopularProducts[index].dicountpercent,
                     press: () {
-                     // Navigator.pushNamed(context, productDetailsScreenRoute);
+                      // Navigator.pushNamed(context, productDetailsScreenRoute);
                     },
                   );
                 },

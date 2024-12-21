@@ -41,7 +41,7 @@ class GetCategoriesController extends _$GetCategoriesController {
     });
 
     /// Waits for the response from the server
-    final response = await getCategoriesUseCase(const NoParameters());
+    final response = await getCategoriesUseCase.call(const NoParameters());
 
     /// Updates the state of the widget based on the response
     response.fold((l) {

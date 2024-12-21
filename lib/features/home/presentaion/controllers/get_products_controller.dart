@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/core/base/base_usecase.dart';
-import 'package:shop/features/home/data/models/product_model.dart';
+import 'package:shop/features/home/data/models/items_model.dart';
 import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
 
 part 'get_products_controller.freezed.dart';
@@ -46,19 +47,24 @@ class GetProductsController extends _$GetProductsController {
     state = const AsyncLoading();
 
     // Fetch the products from the server
-    final result = await getProductsUseCase(const NoParameters());
+    final result = await getProductsUseCase.call(const NoParameters());
+
+    print("adsjbcdjhbjsbvs===========>$result");
 
     // Handle the result of the operation
     result.fold(
       (l) {
+        print("adsjbcdjhbjsbvs===========>${l.errorMessage}");
+
         // If the result is an error, set the state to an error with the
         // error message and the current stack trace
         state = AsyncError(l, StackTrace.current);
       },
       (r) {
+        Logger().d(r.items);
         // If the result is a list of products, set the state to a successful
         // result with the list of products
-        state = AsyncData(GetProductsState(products: r));
+        state = AsyncData(GetProductsState(products: r.items ?? []));
       },
     );
   }

@@ -5,7 +5,7 @@ import 'package:shop/core/services/network/end_points.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
 import 'package:shop/features/home/data/models/category_model.dart';
-import 'package:shop/features/home/data/models/product_model.dart';
+import 'package:shop/features/home/data/models/items_model.dart';
 import 'package:shop/features/home/data/models/sliders_model.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 
@@ -14,6 +14,7 @@ class RepositoryImplementation implements Repository {
 
   RepositoryImplementation({required this.networkClient});
   @override
+
   /// Gets the list of categories
   ///
   /// This function is used to fetch the list of categories from the server.
@@ -22,7 +23,8 @@ class RepositoryImplementation implements Repository {
   /// If the request fails, it returns a [Left] containing an [ErrorModel] object.
   /// If the request is successful, it returns a [Right] containing the list of categories.
   @override
-  Future<Either<ErrorModel, List<CategoryModel>>> getCategories({required NoParameters parameters}) async {
+  Future<Either<ErrorModel, List<CategoryModel>>> getCategories(
+      {required NoParameters parameters}) async {
     NetworkCallType type = NetworkCallType.get;
 
     Either<ErrorModel, BaseResponse> result = await networkClient(
@@ -47,6 +49,7 @@ class RepositoryImplementation implements Repository {
   }
 
   @override
+
   /// Gets the list of products
   ///
   /// This function is used to fetch the list of products from the server.
@@ -55,7 +58,8 @@ class RepositoryImplementation implements Repository {
   /// If the request fails, it returns a [Left] containing an [ErrorModel] object.
   /// If the request is successful, it returns a [Right] containing the list of products.
   @override
-  Future<Either<ErrorModel, List<ProductModels>>> getProducts({required NoParameters parameters}) async {
+  Future<Either<ErrorModel, ItemsModel>> getProducts(
+      {required NoParameters parameters}) async {
     NetworkCallType type = NetworkCallType.get;
 
     Either<ErrorModel, BaseResponse> result = await networkClient(
@@ -64,12 +68,10 @@ class RepositoryImplementation implements Repository {
       data: {},
     );
     return result.fold((l) => Left(l), (r) {
-      List<ProductModels> products = [];
+      ItemsModel products = ItemsModel();
       try {
         // Iterate over the list of products and convert each one to a ProductModel object
-        for (Map<String, dynamic> item in r.data) {
-          products.add(ProductModels.fromJson(item));
-        }
+        products = ItemsModel.fromJson(r.data);
         // Return a Right containing the list of products
         return Right(products);
       } catch (e) {
@@ -80,6 +82,7 @@ class RepositoryImplementation implements Repository {
   }
 
   @override
+
   /// Gets the list of sliders
   ///
   /// This function is used to fetch the list of sliders from the server.
@@ -88,7 +91,8 @@ class RepositoryImplementation implements Repository {
   /// If the request fails, it returns a [Left] containing an [ErrorModel] object.
   /// If the request is successful, it returns a [Right] containing the list of sliders.
   @override
-  Future<Either<ErrorModel, List<SlidersModel>>> getSliders({required NoParameters parameters}) async {
+  Future<Either<ErrorModel, List<SlidersModel>>> getSliders(
+      {required NoParameters parameters}) async {
     NetworkCallType type = NetworkCallType.get;
 
     Either<ErrorModel, BaseResponse> result = await networkClient(

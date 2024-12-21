@@ -1,23 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_1.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_2.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_3.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_4.dart';
 import 'package:shop/core/components/dot_indicators.dart';
+import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class OffersCarousel extends StatefulWidget {
+class OffersCarousel extends ConsumerStatefulWidget {
   const OffersCarousel({
     super.key,
   });
 
   @override
-  State<OffersCarousel> createState() => _OffersCarouselState();
+  ConsumerState<OffersCarousel> createState() => _OffersCarouselState();
 }
 
-class _OffersCarouselState extends State<OffersCarousel> {
+class _OffersCarouselState extends ConsumerState<OffersCarousel> {
   int _selectedIndex = 0;
   late PageController _pageController;
   late Timer _timer;
@@ -51,19 +54,19 @@ class _OffersCarouselState extends State<OffersCarousel> {
   @override
   void initState() {
     _pageController = PageController(initialPage: 0);
-    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
-      if (_selectedIndex < offers.length - 1) {
-        _selectedIndex++;
-      } else {
-        _selectedIndex = 0;
-      }
+    // _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+    //   if (_selectedIndex < offers.length - 1) {
+    //     _selectedIndex++;
+    //   } else {
+    //     _selectedIndex = 0;
+    //   }
 
-      _pageController.animateToPage(
-        _selectedIndex,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-      );
-    });
+    //   _pageController.animateToPage(
+    //     _selectedIndex,
+    //     duration: const Duration(milliseconds: 350),
+    //     curve: Curves.easeOutCubic,
+    //   );
+    // });
     super.initState();
   }
 
@@ -76,47 +79,65 @@ class _OffersCarouselState extends State<OffersCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.87,
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          PageView.builder(
-            controller: _pageController,
-            itemCount: offers.length,
-            onPageChanged: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            itemBuilder: (context, index) => offers[index],
-          ),
-          FittedBox(
-            child: Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: SizedBox(
-                height: 16,
-                child: Row(
-                  children: List.generate(
-                    offers.length,
-                    (index) {
-                      return Padding(
-                        padding:
-                            const EdgeInsets.only(left: defaultPadding / 4),
-                        child: DotIndicator(
-                          isActive: index == _selectedIndex,
-                          activeColor: Colors.white70,
-                          inActiveColor: Colors.white54,
-                        ),
-                      );
+    return ref.watch(slidersControllerProvider).when(
+        data: (data) => AspectRatio(
+              aspectRatio: 1.87,
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  PageView.builder(
+                    controller: _pageController,
+                    itemCount: data.sliders.length,
+                    onPageChanged: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
                     },
+                    itemBuilder: (context, index) => BannerMStyle1(
+                      text: data.sliders[index].title ?? "",
+                      press: () {},
+                      image: data.sliders[index].images?.first ?? "",
+                    ),
                   ),
-                ),
+                  FittedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding),
+                      child: SizedBox(
+                        height: 16,
+                        child: Row(
+                          children: List.generate(
+                            data.sliders.length,
+                            (index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: defaultPadding / 4),
+                                child: DotIndicator(
+                                  isActive: index == _selectedIndex,
+                                  activeColor: Colors.white70,
+                                  inActiveColor: Colors.white54,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-          )
-        ],
-      ),
-    );
+        error: (err, stackTrance) => Text("Error==>$err"),
+        loading: () => AspectRatio(
+              aspectRatio: 1.87,
+              child: Skeletonizer(
+                enabled: true,
+                containersColor: const Color(0xffe5e5e5),
+                child: BannerMStyle3(
+                  title: "Black \nfriday",
+                  discountParcent: 50,
+                  press: () {},
+                ),
+              ),
+            ));
   }
 }
