@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
-import 'package:shop/features/home/domain/repository/repository.dart';
+import 'package:shop/features/discover/domain/repository/repository.dart';
 
 import '../../../../core/base/base_usecase.dart';
 
-class GetCategoriesUseCase
+class GetFullCategoriesUseCase
     extends BaseUseCase<List<CategoryModel>, NoParameters> {
-  final Repository homeRepo;
+  final DiscoverRepository discoverRepository;
 
-  GetCategoriesUseCase({required this.homeRepo});
+  GetFullCategoriesUseCase({required this.discoverRepository});
   /*
   * USE CASE
   * base on BaseUseCase
@@ -21,12 +21,12 @@ class GetCategoriesUseCase
   @override
   Future<Either<ErrorModel, List<CategoryModel>>> call(
       NoParameters parameters) async {
-    return await homeRepo.getCategories(parameters: parameters);
+    return await discoverRepository.getFullCategories(parameters: parameters);
   }
 
   @override
   Future<Either<ErrorModel, List<CategoryModel>>> callTest(
       NoParameters parameters) async {
-    return await homeRepo.getCategories(parameters: parameters);
+    return await discoverRepository.getFullCategories(parameters: parameters);
   }
 }

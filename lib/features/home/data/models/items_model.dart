@@ -29,8 +29,8 @@ class ProductModels with _$ProductModels {
 @freezed
 class PriceModel with _$PriceModel {
   factory PriceModel(
-      {@JsonKey(name: "before_price") final String? beforePrice,
-      @JsonKey(name: "after_discount") final String? afterDiscount,
+      {@JsonKey(name: "before_discount") final double? beforeDiscount,
+      @JsonKey(name: "after_discount") final double? afterDiscount,
       @JsonKey(name: "has_discount") final bool? hasDiscount}) = _PriceModel;
 
   factory PriceModel.fromJson(Map<String, dynamic> json) =>

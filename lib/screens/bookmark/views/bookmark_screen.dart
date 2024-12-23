@@ -30,7 +30,7 @@ class BookmarkScreen extends StatelessWidget {
                     image: demoPopularProducts[index].image,
                     brandName: demoPopularProducts[index].brandName,
                     title: demoPopularProducts[index].title,
-                    price: demoPopularProducts[index].price.toString(),
+                    price: demoPopularProducts[index].price,
                     priceAfetDiscount:
                         demoPopularProducts[index].priceAfetDiscount.toString(),
                     dicountpercent: demoPopularProducts[index].dicountpercent,

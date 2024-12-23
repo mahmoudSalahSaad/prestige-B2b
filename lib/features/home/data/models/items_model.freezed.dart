@@ -455,10 +455,10 @@ PriceModel _$PriceModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PriceModel {
-  @JsonKey(name: "before_price")
-  String? get beforePrice => throw _privateConstructorUsedError;
+  @JsonKey(name: "before_discount")
+  double? get beforeDiscount => throw _privateConstructorUsedError;
   @JsonKey(name: "after_discount")
-  String? get afterDiscount => throw _privateConstructorUsedError;
+  double? get afterDiscount => throw _privateConstructorUsedError;
   @JsonKey(name: "has_discount")
   bool? get hasDiscount => throw _privateConstructorUsedError;
 
@@ -479,8 +479,8 @@ abstract class $PriceModelCopyWith<$Res> {
       _$PriceModelCopyWithImpl<$Res, PriceModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: "before_price") String? beforePrice,
-      @JsonKey(name: "after_discount") String? afterDiscount,
+      {@JsonKey(name: "before_discount") double? beforeDiscount,
+      @JsonKey(name: "after_discount") double? afterDiscount,
       @JsonKey(name: "has_discount") bool? hasDiscount});
 }
 
@@ -499,19 +499,19 @@ class _$PriceModelCopyWithImpl<$Res, $Val extends PriceModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? beforePrice = freezed,
+    Object? beforeDiscount = freezed,
     Object? afterDiscount = freezed,
     Object? hasDiscount = freezed,
   }) {
     return _then(_value.copyWith(
-      beforePrice: freezed == beforePrice
-          ? _value.beforePrice
-          : beforePrice // ignore: cast_nullable_to_non_nullable
-              as String?,
+      beforeDiscount: freezed == beforeDiscount
+          ? _value.beforeDiscount
+          : beforeDiscount // ignore: cast_nullable_to_non_nullable
+              as double?,
       afterDiscount: freezed == afterDiscount
           ? _value.afterDiscount
           : afterDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       hasDiscount: freezed == hasDiscount
           ? _value.hasDiscount
           : hasDiscount // ignore: cast_nullable_to_non_nullable
@@ -529,8 +529,8 @@ abstract class _$$PriceModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "before_price") String? beforePrice,
-      @JsonKey(name: "after_discount") String? afterDiscount,
+      {@JsonKey(name: "before_discount") double? beforeDiscount,
+      @JsonKey(name: "after_discount") double? afterDiscount,
       @JsonKey(name: "has_discount") bool? hasDiscount});
 }
 
@@ -547,19 +547,19 @@ class __$$PriceModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? beforePrice = freezed,
+    Object? beforeDiscount = freezed,
     Object? afterDiscount = freezed,
     Object? hasDiscount = freezed,
   }) {
     return _then(_$PriceModelImpl(
-      beforePrice: freezed == beforePrice
-          ? _value.beforePrice
-          : beforePrice // ignore: cast_nullable_to_non_nullable
-              as String?,
+      beforeDiscount: freezed == beforeDiscount
+          ? _value.beforeDiscount
+          : beforeDiscount // ignore: cast_nullable_to_non_nullable
+              as double?,
       afterDiscount: freezed == afterDiscount
           ? _value.afterDiscount
           : afterDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double?,
       hasDiscount: freezed == hasDiscount
           ? _value.hasDiscount
           : hasDiscount // ignore: cast_nullable_to_non_nullable
@@ -572,7 +572,7 @@ class __$$PriceModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PriceModelImpl implements _PriceModel {
   _$PriceModelImpl(
-      {@JsonKey(name: "before_price") this.beforePrice,
+      {@JsonKey(name: "before_discount") this.beforeDiscount,
       @JsonKey(name: "after_discount") this.afterDiscount,
       @JsonKey(name: "has_discount") this.hasDiscount});
 
@@ -580,18 +580,18 @@ class _$PriceModelImpl implements _PriceModel {
       _$$PriceModelImplFromJson(json);
 
   @override
-  @JsonKey(name: "before_price")
-  final String? beforePrice;
+  @JsonKey(name: "before_discount")
+  final double? beforeDiscount;
   @override
   @JsonKey(name: "after_discount")
-  final String? afterDiscount;
+  final double? afterDiscount;
   @override
   @JsonKey(name: "has_discount")
   final bool? hasDiscount;
 
   @override
   String toString() {
-    return 'PriceModel(beforePrice: $beforePrice, afterDiscount: $afterDiscount, hasDiscount: $hasDiscount)';
+    return 'PriceModel(beforeDiscount: $beforeDiscount, afterDiscount: $afterDiscount, hasDiscount: $hasDiscount)';
   }
 
   @override
@@ -599,8 +599,8 @@ class _$PriceModelImpl implements _PriceModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PriceModelImpl &&
-            (identical(other.beforePrice, beforePrice) ||
-                other.beforePrice == beforePrice) &&
+            (identical(other.beforeDiscount, beforeDiscount) ||
+                other.beforeDiscount == beforeDiscount) &&
             (identical(other.afterDiscount, afterDiscount) ||
                 other.afterDiscount == afterDiscount) &&
             (identical(other.hasDiscount, hasDiscount) ||
@@ -610,7 +610,7 @@ class _$PriceModelImpl implements _PriceModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, beforePrice, afterDiscount, hasDiscount);
+      Object.hash(runtimeType, beforeDiscount, afterDiscount, hasDiscount);
 
   /// Create a copy of PriceModel
   /// with the given fields replaced by the non-null parameter values.
@@ -630,8 +630,8 @@ class _$PriceModelImpl implements _PriceModel {
 
 abstract class _PriceModel implements PriceModel {
   factory _PriceModel(
-          {@JsonKey(name: "before_price") final String? beforePrice,
-          @JsonKey(name: "after_discount") final String? afterDiscount,
+          {@JsonKey(name: "before_discount") final double? beforeDiscount,
+          @JsonKey(name: "after_discount") final double? afterDiscount,
           @JsonKey(name: "has_discount") final bool? hasDiscount}) =
       _$PriceModelImpl;
 
@@ -639,11 +639,11 @@ abstract class _PriceModel implements PriceModel {
       _$PriceModelImpl.fromJson;
 
   @override
-  @JsonKey(name: "before_price")
-  String? get beforePrice;
+  @JsonKey(name: "before_discount")
+  double? get beforeDiscount;
   @override
   @JsonKey(name: "after_discount")
-  String? get afterDiscount;
+  double? get afterDiscount;
   @override
   @JsonKey(name: "has_discount")
   bool? get hasDiscount;

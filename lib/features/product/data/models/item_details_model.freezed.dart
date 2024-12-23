@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'poduct_details_model.dart';
+part of 'item_details_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,209 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PoductDetailsModel _$PoductDetailsModelFromJson(Map<String, dynamic> json) {
-  return _PoductDetailsModel.fromJson(json);
+ItemDetailsModel _$ItemDetailsModelFromJson(Map<String, dynamic> json) {
+  return _ItemDetailsModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$PoductDetailsModel {
+mixin _$ItemDetailsModel {
+  ProductDetailsModel? get product => throw _privateConstructorUsedError;
+  List<ProductDetailsModel>? get related => throw _privateConstructorUsedError;
+
+  /// Serializes this ItemDetailsModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ItemDetailsModelCopyWith<ItemDetailsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemDetailsModelCopyWith<$Res> {
+  factory $ItemDetailsModelCopyWith(
+          ItemDetailsModel value, $Res Function(ItemDetailsModel) then) =
+      _$ItemDetailsModelCopyWithImpl<$Res, ItemDetailsModel>;
+  @useResult
+  $Res call({ProductDetailsModel? product, List<ProductDetailsModel>? related});
+
+  $ProductDetailsModelCopyWith<$Res>? get product;
+}
+
+/// @nodoc
+class _$ItemDetailsModelCopyWithImpl<$Res, $Val extends ItemDetailsModel>
+    implements $ItemDetailsModelCopyWith<$Res> {
+  _$ItemDetailsModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? product = freezed,
+    Object? related = freezed,
+  }) {
+    return _then(_value.copyWith(
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductDetailsModel?,
+      related: freezed == related
+          ? _value.related
+          : related // ignore: cast_nullable_to_non_nullable
+              as List<ProductDetailsModel>?,
+    ) as $Val);
+  }
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductDetailsModelCopyWith<$Res>? get product {
+    if (_value.product == null) {
+      return null;
+    }
+
+    return $ProductDetailsModelCopyWith<$Res>(_value.product!, (value) {
+      return _then(_value.copyWith(product: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemDetailsModelImplCopyWith<$Res>
+    implements $ItemDetailsModelCopyWith<$Res> {
+  factory _$$ItemDetailsModelImplCopyWith(_$ItemDetailsModelImpl value,
+          $Res Function(_$ItemDetailsModelImpl) then) =
+      __$$ItemDetailsModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ProductDetailsModel? product, List<ProductDetailsModel>? related});
+
+  @override
+  $ProductDetailsModelCopyWith<$Res>? get product;
+}
+
+/// @nodoc
+class __$$ItemDetailsModelImplCopyWithImpl<$Res>
+    extends _$ItemDetailsModelCopyWithImpl<$Res, _$ItemDetailsModelImpl>
+    implements _$$ItemDetailsModelImplCopyWith<$Res> {
+  __$$ItemDetailsModelImplCopyWithImpl(_$ItemDetailsModelImpl _value,
+      $Res Function(_$ItemDetailsModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? product = freezed,
+    Object? related = freezed,
+  }) {
+    return _then(_$ItemDetailsModelImpl(
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductDetailsModel?,
+      related: freezed == related
+          ? _value._related
+          : related // ignore: cast_nullable_to_non_nullable
+              as List<ProductDetailsModel>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemDetailsModelImpl implements _ItemDetailsModel {
+  _$ItemDetailsModelImpl(
+      {this.product, final List<ProductDetailsModel>? related})
+      : _related = related;
+
+  factory _$ItemDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemDetailsModelImplFromJson(json);
+
+  @override
+  final ProductDetailsModel? product;
+  final List<ProductDetailsModel>? _related;
+  @override
+  List<ProductDetailsModel>? get related {
+    final value = _related;
+    if (value == null) return null;
+    if (_related is EqualUnmodifiableListView) return _related;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ItemDetailsModel(product: $product, related: $related)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemDetailsModelImpl &&
+            (identical(other.product, product) || other.product == product) &&
+            const DeepCollectionEquality().equals(other._related, _related));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, product, const DeepCollectionEquality().hash(_related));
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemDetailsModelImplCopyWith<_$ItemDetailsModelImpl> get copyWith =>
+      __$$ItemDetailsModelImplCopyWithImpl<_$ItemDetailsModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemDetailsModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemDetailsModel implements ItemDetailsModel {
+  factory _ItemDetailsModel(
+      {final ProductDetailsModel? product,
+      final List<ProductDetailsModel>? related}) = _$ItemDetailsModelImpl;
+
+  factory _ItemDetailsModel.fromJson(Map<String, dynamic> json) =
+      _$ItemDetailsModelImpl.fromJson;
+
+  @override
+  ProductDetailsModel? get product;
+  @override
+  List<ProductDetailsModel>? get related;
+
+  /// Create a copy of ItemDetailsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ItemDetailsModelImplCopyWith<_$ItemDetailsModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ProductDetailsModel _$ProductDetailsModelFromJson(Map<String, dynamic> json) {
+  return _ProductDetailsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProductDetailsModel {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get slug => throw _privateConstructorUsedError;
@@ -40,7 +237,7 @@ mixin _$PoductDetailsModel {
   @JsonKey(name: "is_featured")
   int? get isFeatured => throw _privateConstructorUsedError;
   @JsonKey(name: "thumbnail_url")
-  int? get thumbnailUrl => throw _privateConstructorUsedError;
+  String? get thumbnailUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "tax_amount")
   int? get taxAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "tax_id")
@@ -48,21 +245,21 @@ mixin _$PoductDetailsModel {
   CategoryModel? get categoryModel => throw _privateConstructorUsedError;
   Brand? get brand => throw _privateConstructorUsedError;
 
-  /// Serializes this PoductDetailsModel to a JSON map.
+  /// Serializes this ProductDetailsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PoductDetailsModelCopyWith<PoductDetailsModel> get copyWith =>
+  $ProductDetailsModelCopyWith<ProductDetailsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PoductDetailsModelCopyWith<$Res> {
-  factory $PoductDetailsModelCopyWith(
-          PoductDetailsModel value, $Res Function(PoductDetailsModel) then) =
-      _$PoductDetailsModelCopyWithImpl<$Res, PoductDetailsModel>;
+abstract class $ProductDetailsModelCopyWith<$Res> {
+  factory $ProductDetailsModelCopyWith(
+          ProductDetailsModel value, $Res Function(ProductDetailsModel) then) =
+      _$ProductDetailsModelCopyWithImpl<$Res, ProductDetailsModel>;
   @useResult
   $Res call(
       {int? id,
@@ -80,7 +277,7 @@ abstract class $PoductDetailsModelCopyWith<$Res> {
       int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
-      @JsonKey(name: "thumbnail_url") int? thumbnailUrl,
+      @JsonKey(name: "thumbnail_url") String? thumbnailUrl,
       @JsonKey(name: "tax_amount") int? taxAmount,
       @JsonKey(name: "tax_id") TaxId? taxId,
       CategoryModel? categoryModel,
@@ -93,16 +290,16 @@ abstract class $PoductDetailsModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
-    implements $PoductDetailsModelCopyWith<$Res> {
-  _$PoductDetailsModelCopyWithImpl(this._value, this._then);
+class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
+    implements $ProductDetailsModelCopyWith<$Res> {
+  _$ProductDetailsModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -192,7 +389,7 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
       thumbnailUrl: freezed == thumbnailUrl
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       taxAmount: freezed == taxAmount
           ? _value.taxAmount
           : taxAmount // ignore: cast_nullable_to_non_nullable
@@ -212,7 +409,7 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
     ) as $Val);
   }
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -226,7 +423,7 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
     });
   }
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -240,7 +437,7 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
     });
   }
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -254,7 +451,7 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
     });
   }
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -270,11 +467,11 @@ class _$PoductDetailsModelCopyWithImpl<$Res, $Val extends PoductDetailsModel>
 }
 
 /// @nodoc
-abstract class _$$PoductDetailsModelImplCopyWith<$Res>
-    implements $PoductDetailsModelCopyWith<$Res> {
-  factory _$$PoductDetailsModelImplCopyWith(_$PoductDetailsModelImpl value,
-          $Res Function(_$PoductDetailsModelImpl) then) =
-      __$$PoductDetailsModelImplCopyWithImpl<$Res>;
+abstract class _$$ProductDetailsModelImplCopyWith<$Res>
+    implements $ProductDetailsModelCopyWith<$Res> {
+  factory _$$ProductDetailsModelImplCopyWith(_$ProductDetailsModelImpl value,
+          $Res Function(_$ProductDetailsModelImpl) then) =
+      __$$ProductDetailsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -293,7 +490,7 @@ abstract class _$$PoductDetailsModelImplCopyWith<$Res>
       int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
-      @JsonKey(name: "thumbnail_url") int? thumbnailUrl,
+      @JsonKey(name: "thumbnail_url") String? thumbnailUrl,
       @JsonKey(name: "tax_amount") int? taxAmount,
       @JsonKey(name: "tax_id") TaxId? taxId,
       CategoryModel? categoryModel,
@@ -310,14 +507,14 @@ abstract class _$$PoductDetailsModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PoductDetailsModelImplCopyWithImpl<$Res>
-    extends _$PoductDetailsModelCopyWithImpl<$Res, _$PoductDetailsModelImpl>
-    implements _$$PoductDetailsModelImplCopyWith<$Res> {
-  __$$PoductDetailsModelImplCopyWithImpl(_$PoductDetailsModelImpl _value,
-      $Res Function(_$PoductDetailsModelImpl) _then)
+class __$$ProductDetailsModelImplCopyWithImpl<$Res>
+    extends _$ProductDetailsModelCopyWithImpl<$Res, _$ProductDetailsModelImpl>
+    implements _$$ProductDetailsModelImplCopyWith<$Res> {
+  __$$ProductDetailsModelImplCopyWithImpl(_$ProductDetailsModelImpl _value,
+      $Res Function(_$ProductDetailsModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -343,7 +540,7 @@ class __$$PoductDetailsModelImplCopyWithImpl<$Res>
     Object? categoryModel = freezed,
     Object? brand = freezed,
   }) {
-    return _then(_$PoductDetailsModelImpl(
+    return _then(_$ProductDetailsModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -407,7 +604,7 @@ class __$$PoductDetailsModelImplCopyWithImpl<$Res>
       thumbnailUrl: freezed == thumbnailUrl
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       taxAmount: freezed == taxAmount
           ? _value.taxAmount
           : taxAmount // ignore: cast_nullable_to_non_nullable
@@ -430,8 +627,8 @@ class __$$PoductDetailsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PoductDetailsModelImpl implements _PoductDetailsModel {
-  _$PoductDetailsModelImpl(
+class _$ProductDetailsModelImpl implements _ProductDetailsModel {
+  _$ProductDetailsModelImpl(
       {this.id,
       this.name,
       this.slug,
@@ -454,8 +651,8 @@ class _$PoductDetailsModelImpl implements _PoductDetailsModel {
       this.brand})
       : _images = images;
 
-  factory _$PoductDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PoductDetailsModelImplFromJson(json);
+  factory _$ProductDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductDetailsModelImplFromJson(json);
 
   @override
   final int? id;
@@ -501,7 +698,7 @@ class _$PoductDetailsModelImpl implements _PoductDetailsModel {
   final int? isFeatured;
   @override
   @JsonKey(name: "thumbnail_url")
-  final int? thumbnailUrl;
+  final String? thumbnailUrl;
   @override
   @JsonKey(name: "tax_amount")
   final int? taxAmount;
@@ -515,14 +712,14 @@ class _$PoductDetailsModelImpl implements _PoductDetailsModel {
 
   @override
   String toString() {
-    return 'PoductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, unit: $unit, images: $images, isVariable: $isVariable, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
+    return 'ProductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, unit: $unit, images: $images, isVariable: $isVariable, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PoductDetailsModelImpl &&
+            other is _$ProductDetailsModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.slug, slug) || other.slug == slug) &&
@@ -581,25 +778,25 @@ class _$PoductDetailsModelImpl implements _PoductDetailsModel {
         brand
       ]);
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PoductDetailsModelImplCopyWith<_$PoductDetailsModelImpl> get copyWith =>
-      __$$PoductDetailsModelImplCopyWithImpl<_$PoductDetailsModelImpl>(
+  _$$ProductDetailsModelImplCopyWith<_$ProductDetailsModelImpl> get copyWith =>
+      __$$ProductDetailsModelImplCopyWithImpl<_$ProductDetailsModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PoductDetailsModelImplToJson(
+    return _$$ProductDetailsModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _PoductDetailsModel implements PoductDetailsModel {
-  factory _PoductDetailsModel(
+abstract class _ProductDetailsModel implements ProductDetailsModel {
+  factory _ProductDetailsModel(
       {final int? id,
       final String? name,
       final String? slug,
@@ -615,14 +812,14 @@ abstract class _PoductDetailsModel implements PoductDetailsModel {
       final int? quantity,
       @JsonKey(name: "is_active") final int? isActive,
       @JsonKey(name: "is_featured") final int? isFeatured,
-      @JsonKey(name: "thumbnail_url") final int? thumbnailUrl,
+      @JsonKey(name: "thumbnail_url") final String? thumbnailUrl,
       @JsonKey(name: "tax_amount") final int? taxAmount,
       @JsonKey(name: "tax_id") final TaxId? taxId,
       final CategoryModel? categoryModel,
-      final Brand? brand}) = _$PoductDetailsModelImpl;
+      final Brand? brand}) = _$ProductDetailsModelImpl;
 
-  factory _PoductDetailsModel.fromJson(Map<String, dynamic> json) =
-      _$PoductDetailsModelImpl.fromJson;
+  factory _ProductDetailsModel.fromJson(Map<String, dynamic> json) =
+      _$ProductDetailsModelImpl.fromJson;
 
   @override
   int? get id;
@@ -660,7 +857,7 @@ abstract class _PoductDetailsModel implements PoductDetailsModel {
   int? get isFeatured;
   @override
   @JsonKey(name: "thumbnail_url")
-  int? get thumbnailUrl;
+  String? get thumbnailUrl;
   @override
   @JsonKey(name: "tax_amount")
   int? get taxAmount;
@@ -672,11 +869,11 @@ abstract class _PoductDetailsModel implements PoductDetailsModel {
   @override
   Brand? get brand;
 
-  /// Create a copy of PoductDetailsModel
+  /// Create a copy of ProductDetailsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PoductDetailsModelImplCopyWith<_$PoductDetailsModelImpl> get copyWith =>
+  _$$ProductDetailsModelImplCopyWith<_$ProductDetailsModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -851,9 +1048,9 @@ mixin _$TaxId {
   String? get name => throw _privateConstructorUsedError;
   num? get rate => throw _privateConstructorUsedError;
   @JsonKey(name: "is_default")
-  bool? get isDefault => throw _privateConstructorUsedError;
+  int? get isDefault => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
-  bool? get isActive => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
 
   /// Serializes this TaxId to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -873,8 +1070,8 @@ abstract class $TaxIdCopyWith<$Res> {
       {int? id,
       String? name,
       num? rate,
-      @JsonKey(name: "is_default") bool? isDefault,
-      @JsonKey(name: "is_active") bool? isActive});
+      @JsonKey(name: "is_default") int? isDefault,
+      @JsonKey(name: "is_active") int? isActive});
 }
 
 /// @nodoc
@@ -914,11 +1111,11 @@ class _$TaxIdCopyWithImpl<$Res, $Val extends TaxId>
       isDefault: freezed == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as int?,
     ) as $Val);
   }
 }
@@ -934,8 +1131,8 @@ abstract class _$$TaxIdImplCopyWith<$Res> implements $TaxIdCopyWith<$Res> {
       {int? id,
       String? name,
       num? rate,
-      @JsonKey(name: "is_default") bool? isDefault,
-      @JsonKey(name: "is_active") bool? isActive});
+      @JsonKey(name: "is_default") int? isDefault,
+      @JsonKey(name: "is_active") int? isActive});
 }
 
 /// @nodoc
@@ -973,11 +1170,11 @@ class __$$TaxIdImplCopyWithImpl<$Res>
       isDefault: freezed == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as int?,
     ));
   }
 }
@@ -1003,10 +1200,10 @@ class _$TaxIdImpl implements _TaxId {
   final num? rate;
   @override
   @JsonKey(name: "is_default")
-  final bool? isDefault;
+  final int? isDefault;
   @override
   @JsonKey(name: "is_active")
-  final bool? isActive;
+  final int? isActive;
 
   @override
   String toString() {
@@ -1053,8 +1250,8 @@ abstract class _TaxId implements TaxId {
       {final int? id,
       final String? name,
       final num? rate,
-      @JsonKey(name: "is_default") final bool? isDefault,
-      @JsonKey(name: "is_active") final bool? isActive}) = _$TaxIdImpl;
+      @JsonKey(name: "is_default") final int? isDefault,
+      @JsonKey(name: "is_active") final int? isActive}) = _$TaxIdImpl;
 
   factory _TaxId.fromJson(Map<String, dynamic> json) = _$TaxIdImpl.fromJson;
 
@@ -1066,10 +1263,10 @@ abstract class _TaxId implements TaxId {
   num? get rate;
   @override
   @JsonKey(name: "is_default")
-  bool? get isDefault;
+  int? get isDefault;
   @override
   @JsonKey(name: "is_active")
-  bool? get isActive;
+  int? get isActive;
 
   /// Create a copy of TaxId
   /// with the given fields replaced by the non-null parameter values.

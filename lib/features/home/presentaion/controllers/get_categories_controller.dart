@@ -4,7 +4,7 @@ import 'package:shop/base_injection.dart';
 import 'package:shop/core/base/base_usecase.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
 
-import '../../data/models/category_model.dart';
+import '../../../discover/data/models/category_model.dart';
 
 part 'get_categories_controller.freezed.dart';
 part 'get_categories_controller.g.dart';

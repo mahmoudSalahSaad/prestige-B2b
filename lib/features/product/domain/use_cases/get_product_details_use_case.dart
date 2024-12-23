@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
-import 'package:shop/features/product/data/models/poduct_details_model.dart';
+import 'package:shop/features/product/data/models/item_details_model.dart';
 import 'package:shop/features/product/domain/entity/product_entity.dart';
 import 'package:shop/features/product/domain/repository/repository.dart';
 
 import '../../../../core/base/base_usecase.dart';
 
 class GetProductDetailsUseCase
-    extends BaseUseCase<PoductDetailsModel, ProductEntity> {
+    extends BaseUseCase<ItemDetailsModel, ProductEntity> {
   final ProductRepository productRepository;
 
   GetProductDetailsUseCase({required this.productRepository});
@@ -20,13 +20,13 @@ class GetProductDetailsUseCase
   * */
 
   @override
-  Future<Either<ErrorModel, PoductDetailsModel>> call(
+  Future<Either<ErrorModel, ItemDetailsModel>> call(
       ProductEntity parameters) async {
     return await productRepository.getProductDetails(parameters: parameters);
   }
 
   @override
-  Future<Either<ErrorModel, PoductDetailsModel>> callTest(
+  Future<Either<ErrorModel, ItemDetailsModel>> callTest(
       ProductEntity parameters) async {
     return await productRepository.getProductDetails(parameters: parameters);
   }

@@ -1,10 +1,10 @@
 class CategoryModel {
-  final String title;
+  final String name;
   final String? image, svgSrc;
   final List<CategoryModel>? subCategories;
 
   CategoryModel({
-    required this.title,
+    required this.name,
     this.image,
     this.svgSrc,
     this.subCategories,
@@ -12,48 +12,48 @@ class CategoryModel {
 }
 
 final List<CategoryModel> demoCategoriesWithImage = [
-  CategoryModel(title: "Woman’s", image: "https://i.imgur.com/5M89G2P.png"),
-  CategoryModel(title: "Man’s", image: "https://i.imgur.com/UM3GdWg.png"),
-  CategoryModel(title: "Kid’s", image: "https://i.imgur.com/Lp0D6k5.png"),
-  CategoryModel(title: "Accessories", image: "https://i.imgur.com/3mSE5sN.png"),
+  CategoryModel(name: "Woman’s", image: "https://i.imgur.com/5M89G2P.png"),
+  CategoryModel(name: "Man’s", image: "https://i.imgur.com/UM3GdWg.png"),
+  CategoryModel(name: "Kid’s", image: "https://i.imgur.com/Lp0D6k5.png"),
+  CategoryModel(name: "Accessories", image: "https://i.imgur.com/3mSE5sN.png"),
 ];
 
 final List<CategoryModel> demoCategories = [
   CategoryModel(
-    title: "On sale",
+    name: "On sale",
     svgSrc: "assets/icons/Sale.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
-      CategoryModel(title: "Dresses"),
-      CategoryModel(title: "Jeans"),
+      CategoryModel(name: "All Clothing"),
+      CategoryModel(name: "New In"),
+      CategoryModel(name: "Coats & Jackets"),
+      CategoryModel(name: "Dresses"),
+      CategoryModel(name: "Jeans"),
     ],
   ),
   CategoryModel(
-    title: "Man’s & Woman’s",
+    name: "Man’s & Woman’s",
     svgSrc: "assets/icons/Man&Woman.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
+      CategoryModel(name: "All Clothing"),
+      CategoryModel(name: "New In"),
+      CategoryModel(name: "Coats & Jackets"),
     ],
   ),
   CategoryModel(
-    title: "Kids",
+    name: "Kids",
     svgSrc: "assets/icons/Child.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
+      CategoryModel(name: "All Clothing"),
+      CategoryModel(name: "New In"),
+      CategoryModel(name: "Coats & Jackets"),
     ],
   ),
   CategoryModel(
-    title: "Accessories",
+    name: "Accessories",
     svgSrc: "assets/icons/Accessories.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
+      CategoryModel(name: "All Clothing"),
+      CategoryModel(name: "New In"),
     ],
   ),
 ];

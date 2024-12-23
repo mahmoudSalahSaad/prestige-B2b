@@ -2,6 +2,6 @@ part of 'products_details_controller.dart';
 
 @freezed
 abstract class ProductsDetailsState with _$ProductsDetailsState {
-  factory ProductsDetailsState({final PoductDetailsModel? productDetails}) =
+  factory ProductsDetailsState({final ItemDetailsModel? productDetails}) =
       _ProductsDetailsState;
 }

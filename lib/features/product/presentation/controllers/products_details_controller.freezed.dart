@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProductsDetailsState {
-  PoductDetailsModel? get productDetails => throw _privateConstructorUsedError;
+  ItemDetailsModel? get productDetails => throw _privateConstructorUsedError;
 
   /// Create a copy of ProductsDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,9 +31,9 @@ abstract class $ProductsDetailsStateCopyWith<$Res> {
           $Res Function(ProductsDetailsState) then) =
       _$ProductsDetailsStateCopyWithImpl<$Res, ProductsDetailsState>;
   @useResult
-  $Res call({PoductDetailsModel? productDetails});
+  $Res call({ItemDetailsModel? productDetails});
 
-  $PoductDetailsModelCopyWith<$Res>? get productDetails;
+  $ItemDetailsModelCopyWith<$Res>? get productDetails;
 }
 
 /// @nodoc
@@ -58,7 +58,7 @@ class _$ProductsDetailsStateCopyWithImpl<$Res,
       productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
-              as PoductDetailsModel?,
+              as ItemDetailsModel?,
     ) as $Val);
   }
 
@@ -66,12 +66,12 @@ class _$ProductsDetailsStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PoductDetailsModelCopyWith<$Res>? get productDetails {
+  $ItemDetailsModelCopyWith<$Res>? get productDetails {
     if (_value.productDetails == null) {
       return null;
     }
 
-    return $PoductDetailsModelCopyWith<$Res>(_value.productDetails!, (value) {
+    return $ItemDetailsModelCopyWith<$Res>(_value.productDetails!, (value) {
       return _then(_value.copyWith(productDetails: value) as $Val);
     });
   }
@@ -85,10 +85,10 @@ abstract class _$$ProductsDetailsStateImplCopyWith<$Res>
       __$$ProductsDetailsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PoductDetailsModel? productDetails});
+  $Res call({ItemDetailsModel? productDetails});
 
   @override
-  $PoductDetailsModelCopyWith<$Res>? get productDetails;
+  $ItemDetailsModelCopyWith<$Res>? get productDetails;
 }
 
 /// @nodoc
@@ -110,7 +110,7 @@ class __$$ProductsDetailsStateImplCopyWithImpl<$Res>
       productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
-              as PoductDetailsModel?,
+              as ItemDetailsModel?,
     ));
   }
 }
@@ -121,7 +121,7 @@ class _$ProductsDetailsStateImpl implements _ProductsDetailsState {
   _$ProductsDetailsStateImpl({this.productDetails});
 
   @override
-  final PoductDetailsModel? productDetails;
+  final ItemDetailsModel? productDetails;
 
   @override
   String toString() {
@@ -152,11 +152,11 @@ class _$ProductsDetailsStateImpl implements _ProductsDetailsState {
 }
 
 abstract class _ProductsDetailsState implements ProductsDetailsState {
-  factory _ProductsDetailsState({final PoductDetailsModel? productDetails}) =
+  factory _ProductsDetailsState({final ItemDetailsModel? productDetails}) =
       _$ProductsDetailsStateImpl;
 
   @override
-  PoductDetailsModel? get productDetails;
+  ItemDetailsModel? get productDetails;
 
   /// Create a copy of ProductsDetailsState
   /// with the given fields replaced by the non-null parameter values.

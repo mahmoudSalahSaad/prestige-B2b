@@ -47,7 +47,7 @@ class PopularProducts extends ConsumerWidget {
                       image: data.products[index].thumbnail ?? "",
                       brandName: data.products[index].slug ?? "",
                       title: data.products[index].name ?? "",
-                      price: data.products[index].price!.beforePrice ?? "",
+                      price: data.products[index].price!.beforeDiscount ?? 0,
                       priceAfetDiscount:
                           data.products[index].price!.afterDiscount.toString(),
                       dicountpercent: 0,

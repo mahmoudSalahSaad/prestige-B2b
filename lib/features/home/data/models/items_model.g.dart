@@ -42,14 +42,14 @@ Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
 
 _$PriceModelImpl _$$PriceModelImplFromJson(Map<String, dynamic> json) =>
     _$PriceModelImpl(
-      beforePrice: json['before_price'] as String?,
-      afterDiscount: json['after_discount'].toString() as String?,
+      beforeDiscount: (json['before_discount'] as num?)?.toDouble(),
+      afterDiscount: (json['after_discount'] as num?)?.toDouble(),
       hasDiscount: json['has_discount'] as bool?,
     );
 
 Map<String, dynamic> _$$PriceModelImplToJson(_$PriceModelImpl instance) =>
     <String, dynamic>{
-      'before_price': instance.beforePrice,
+      'before_discount': instance.beforeDiscount,
       'after_discount': instance.afterDiscount,
       'has_discount': instance.hasDiscount,
     };

@@ -1,13 +1,23 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shop/features/home/data/models/category_model.dart';
+import 'package:shop/features/discover/data/models/category_model.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
 
-part 'poduct_details_model.freezed.dart';
-part 'poduct_details_model.g.dart';
+part 'item_details_model.freezed.dart';
+part 'item_details_model.g.dart';
 
 @freezed
-class PoductDetailsModel with _$PoductDetailsModel {
-  factory PoductDetailsModel({
+class ItemDetailsModel with _$ItemDetailsModel {
+  factory ItemDetailsModel(
+      {final ProductDetailsModel? product,
+      final List<ProductDetailsModel>? related}) = _ItemDetailsModel;
+
+  factory ItemDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemDetailsModelFromJson(json);
+}
+
+@freezed
+class ProductDetailsModel with _$ProductDetailsModel {
+  factory ProductDetailsModel({
     final int? id,
     final String? name,
     final String? slug,
@@ -23,15 +33,15 @@ class PoductDetailsModel with _$PoductDetailsModel {
     final int? quantity,
     @JsonKey(name: "is_active") final int? isActive,
     @JsonKey(name: "is_featured") final int? isFeatured,
-    @JsonKey(name: "thumbnail_url") final int? thumbnailUrl,
+    @JsonKey(name: "thumbnail_url") final String? thumbnailUrl,
     @JsonKey(name: "tax_amount") final int? taxAmount,
     @JsonKey(name: "tax_id") final TaxId? taxId,
     final CategoryModel? categoryModel,
     final Brand? brand,
-  }) = _PoductDetailsModel;
+  }) = _ProductDetailsModel;
 
-  factory PoductDetailsModel.fromJson(Map<String, dynamic> json) =>
-      _$PoductDetailsModelFromJson(json);
+  factory ProductDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailsModelFromJson(json);
 }
 
 @freezed
@@ -50,8 +60,8 @@ class TaxId with _$TaxId {
     final int? id,
     final String? name,
     final num? rate,
-    @JsonKey(name: "is_default") final bool? isDefault,
-    @JsonKey(name: "is_active") final bool? isActive,
+    @JsonKey(name: "is_default") final int? isDefault,
+    @JsonKey(name: "is_active") final int? isActive,
   }) = _TaxId;
 
   factory TaxId.fromJson(Map<String, dynamic> json) => _$TaxIdFromJson(json);

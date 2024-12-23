@@ -15,7 +15,7 @@ class ProductCard extends StatelessWidget {
     required this.press,
   });
   final String image, brandName, title;
-  final String price;
+  final double price;
   final String? priceAfetDiscount;
   final int? dicountpercent;
   final VoidCallback press;
@@ -81,7 +81,7 @@ class ProductCard extends StatelessWidget {
                             const SizedBox(width: defaultPadding / 4),
                             if (price == "0")
                               Text(
-                                price,
+                                price.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme

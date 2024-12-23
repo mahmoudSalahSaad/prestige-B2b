@@ -1,14 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'poduct_details_model.dart';
+part of 'item_details_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PoductDetailsModelImpl _$$PoductDetailsModelImplFromJson(
+_$ItemDetailsModelImpl _$$ItemDetailsModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$PoductDetailsModelImpl(
+    _$ItemDetailsModelImpl(
+      product: json['product'] == null
+          ? null
+          : ProductDetailsModel.fromJson(
+              json['product'] as Map<String, dynamic>),
+      related: (json['related'] as List<dynamic>?)
+          ?.map((e) => ProductDetailsModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ItemDetailsModelImplToJson(
+        _$ItemDetailsModelImpl instance) =>
+    <String, dynamic>{
+      'product': instance.product,
+      'related': instance.related,
+    };
+
+_$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductDetailsModelImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       slug: json['slug'] as String?,
@@ -28,7 +47,7 @@ _$PoductDetailsModelImpl _$$PoductDetailsModelImplFromJson(
       quantity: (json['quantity'] as num?)?.toInt(),
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
-      thumbnailUrl: (json['thumbnail_url'] as num?)?.toInt(),
+      thumbnailUrl: json['thumbnail_url'] as String?,
       taxAmount: (json['tax_amount'] as num?)?.toInt(),
       taxId: json['tax_id'] == null
           ? null
@@ -42,8 +61,8 @@ _$PoductDetailsModelImpl _$$PoductDetailsModelImplFromJson(
           : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$PoductDetailsModelImplToJson(
-        _$PoductDetailsModelImpl instance) =>
+Map<String, dynamic> _$$ProductDetailsModelImplToJson(
+        _$ProductDetailsModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -82,8 +101,8 @@ _$TaxIdImpl _$$TaxIdImplFromJson(Map<String, dynamic> json) => _$TaxIdImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       rate: json['rate'] as num?,
-      isDefault: json['is_default'] as bool?,
-      isActive: json['is_active'] as bool?,
+      isDefault: (json['is_default'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$TaxIdImplToJson(_$TaxIdImpl instance) =>

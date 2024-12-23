@@ -10,8 +10,6 @@ import 'package:shop/features/product/presentation/views/size_guide_screen.dart'
 
 import '../../../../constants.dart';
 import 'components/product_quantity.dart';
-import 'components/selected_colors.dart';
-import 'components/selected_size.dart';
 import 'components/unit_price.dart';
 
 class ProductBuyNowScreen extends StatefulWidget {
@@ -26,7 +24,7 @@ class _ProductBuyNowScreenState extends State<ProductBuyNowScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CartButton(
-        price: 269.4,
+        price: 0,
         title: "Add to cart",
         subTitle: "Total price",
         press: () {
@@ -92,26 +90,6 @@ class _ProductBuyNowScreenState extends State<ProductBuyNowScreen> {
                   ),
                 ),
                 const SliverToBoxAdapter(child: Divider()),
-                SliverToBoxAdapter(
-                  child: SelectedColors(
-                    colors: const [
-                      Color(0xFFEA6262),
-                      Color(0xFFB1CC63),
-                      Color(0xFFFFBF5F),
-                      Color(0xFF9FE1DD),
-                      Color(0xFFC482DB),
-                    ],
-                    selectedColorIndex: 2,
-                    press: (value) {},
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: SelectedSize(
-                    sizes: const ["S", "M", "L", "XL", "XXL"],
-                    selectedIndex: 1,
-                    press: (value) {},
-                  ),
-                ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(vertical: defaultPadding),
                   sliver: ProductListTile(

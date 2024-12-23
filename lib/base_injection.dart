@@ -6,6 +6,10 @@ import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/dio/dio_client.dart';
 import 'package:shop/data/datasource/remote/dio/logging_interceptor.dart';
+import 'package:shop/features/discover/data/repository_implementation/repository_implementation.dart';
+import 'package:shop/features/discover/domain/repository/repository.dart';
+import 'package:shop/features/discover/domain/use_cases/get_full_categories_use_case.dart';
+import 'package:shop/features/discover/domain/use_cases/get_products_by_categories_use_case.dart';
 import 'package:shop/features/home/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
@@ -13,14 +17,14 @@ import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_sliders_use_case.dart';
 import 'package:shop/features/product/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/product/domain/repository/repository.dart';
-import 'package:shop/features/product/domain/use_cases/get_categories_use_case.dart';
+import 'package:shop/features/product/domain/use_cases/get_product_details_use_case.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> init() async {
   /*
   * >USECASES<
-  *
+  * 
   *
   * */
 
@@ -29,6 +33,10 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetSlidersUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(
       () => GetProductDetailsUseCase(productRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => GetFullCategoriesUseCase(discoverRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => GetProductsByCategoriesUseCase(discoverRepository: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
@@ -54,6 +62,8 @@ Future<void> init() async {
 
   getIt.registerLazySingleton<ProductRepository>(
       () => ProductRepositoryImplementation(networkClient: getIt()));
+  getIt.registerLazySingleton<DiscoverRepository>(
+      () => DiscoverdRepositoryImplementation(networkClient: getIt()));
 
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));

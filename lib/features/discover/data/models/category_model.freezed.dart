@@ -31,6 +31,9 @@ mixin _$CategoryModel {
   int? get isPrivate => throw _privateConstructorUsedError;
   @JsonValue('is_active')
   int? get isActive => throw _privateConstructorUsedError;
+  @JsonValue('parent_id')
+  int? get parentId => throw _privateConstructorUsedError;
+  List<CategoryModel>? get children => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +59,9 @@ abstract class $CategoryModelCopyWith<$Res> {
       String? thumbnail,
       @JsonValue('cover_image') String? coverImage,
       @JsonValue('is_private') int? isPrivate,
-      @JsonValue('is_active') int? isActive});
+      @JsonValue('is_active') int? isActive,
+      @JsonValue('parent_id') int? parentId,
+      List<CategoryModel>? children});
 }
 
 /// @nodoc
@@ -82,6 +87,8 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? coverImage = freezed,
     Object? isPrivate = freezed,
     Object? isActive = freezed,
+    Object? parentId = freezed,
+    Object? children = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -116,6 +123,14 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      children: freezed == children
+          ? _value.children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>?,
     ) as $Val);
   }
 }
@@ -136,7 +151,9 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
       String? thumbnail,
       @JsonValue('cover_image') String? coverImage,
       @JsonValue('is_private') int? isPrivate,
-      @JsonValue('is_active') int? isActive});
+      @JsonValue('is_active') int? isActive,
+      @JsonValue('parent_id') int? parentId,
+      List<CategoryModel>? children});
 }
 
 /// @nodoc
@@ -160,6 +177,8 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
     Object? coverImage = freezed,
     Object? isPrivate = freezed,
     Object? isActive = freezed,
+    Object? parentId = freezed,
+    Object? children = freezed,
   }) {
     return _then(_$CategoryModelImpl(
       id: freezed == id
@@ -194,6 +213,14 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      children: freezed == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>?,
     ));
   }
 }
@@ -209,7 +236,10 @@ class _$CategoryModelImpl implements _CategoryModel {
       this.thumbnail,
       @JsonValue('cover_image') this.coverImage,
       @JsonValue('is_private') this.isPrivate,
-      @JsonValue('is_active') this.isActive});
+      @JsonValue('is_active') this.isActive,
+      @JsonValue('parent_id') this.parentId,
+      final List<CategoryModel>? children})
+      : _children = children;
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryModelImplFromJson(json);
@@ -233,10 +263,22 @@ class _$CategoryModelImpl implements _CategoryModel {
   @override
   @JsonValue('is_active')
   final int? isActive;
+  @override
+  @JsonValue('parent_id')
+  final int? parentId;
+  final List<CategoryModel>? _children;
+  @override
+  List<CategoryModel>? get children {
+    final value = _children;
+    if (value == null) return null;
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description, slug: $slug, thumbnail: $thumbnail, coverImage: $coverImage, isPrivate: $isPrivate, isActive: $isActive)';
+    return 'CategoryModel(id: $id, name: $name, description: $description, slug: $slug, thumbnail: $thumbnail, coverImage: $coverImage, isPrivate: $isPrivate, isActive: $isActive, parentId: $parentId, children: $children)';
   }
 
   @override
@@ -256,13 +298,26 @@ class _$CategoryModelImpl implements _CategoryModel {
             (identical(other.isPrivate, isPrivate) ||
                 other.isPrivate == isPrivate) &&
             (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+                other.isActive == isActive) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
+            const DeepCollectionEquality().equals(other._children, _children));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description, slug,
-      thumbnail, coverImage, isPrivate, isActive);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      slug,
+      thumbnail,
+      coverImage,
+      isPrivate,
+      isActive,
+      parentId,
+      const DeepCollectionEquality().hash(_children));
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -289,7 +344,9 @@ abstract class _CategoryModel implements CategoryModel {
       final String? thumbnail,
       @JsonValue('cover_image') final String? coverImage,
       @JsonValue('is_private') final int? isPrivate,
-      @JsonValue('is_active') final int? isActive}) = _$CategoryModelImpl;
+      @JsonValue('is_active') final int? isActive,
+      @JsonValue('parent_id') final int? parentId,
+      final List<CategoryModel>? children}) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$CategoryModelImpl.fromJson;
@@ -313,6 +370,11 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   @JsonValue('is_active')
   int? get isActive;
+  @override
+  @JsonValue('parent_id')
+  int? get parentId;
+  @override
+  List<CategoryModel>? get children;
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.

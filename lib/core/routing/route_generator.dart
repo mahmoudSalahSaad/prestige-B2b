@@ -3,6 +3,7 @@ import 'package:shop/core/routing/routes.dart';
 import 'package:shop/entry_point.dart';
 import 'package:shop/features/auth/presentation/views/login_screen.dart';
 import 'package:shop/features/auth/presentation/views/signup_screen.dart';
+import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/features/product/presentation/views/product_details_screen.dart';
 import 'package:shop/features/splash/persentation/views/splash_screen.dart';
 
@@ -38,8 +39,16 @@ class RouteGenerator {
     }
     if (settings.name == Routes.productDetails) {
       final args = settings.arguments as Map<String, dynamic>;
+
       return platformPageRoute(ProductDetailsScreen(
         productSlug: args['productSlug'],
+      ));
+    }
+    if (settings.name == Routes.productsByCategory) {
+      final args = settings.arguments as Map<String, dynamic>;
+
+      return platformPageRoute(ProductByCategoryScreen(
+        categoryName: args['categoryName'],
       ));
     }
 
