@@ -34,7 +34,7 @@ class ProductDetailsScreen extends ConsumerWidget {
         .when(
             data: (data) {
               return Scaffold(
-                bottomNavigationBar: data.productDetails!.product!.isActive == 1
+                bottomNavigationBar: data.productDetails?.product?.isActive == 1
                     ? CartButton(
                         price: data.productDetails?.product?.price
                                 ?.beforeDiscount ??

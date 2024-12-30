@@ -48,7 +48,7 @@ class RouteGenerator {
       final args = settings.arguments as Map<String, dynamic>;
 
       return platformPageRoute(ProductByCategoryScreen(
-        categoryName: args['categoryName'],
+        categoryName: args['category_name'],
       ));
     }
 

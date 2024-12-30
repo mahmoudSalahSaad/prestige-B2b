@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
-import 'package:shop/core/routing/navigation_services.dart';
-import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
-import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
+import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 
 import '../../../../../constants.dart';
 
@@ -25,11 +23,14 @@ class ExpansionCategory extends ConsumerWidget {
     return InkWell(
       onTap: () {
         if (subCategory.isEmpty) {
-          ref
-              .read(productsByCategoriesControllerProvider.notifier)
-              .getProducts(slug);
-          NavigationService.push(Routes.productsByCategory,
-              arguments: {'categoryName': slug});
+          // ref
+          //     .read(productsByCategoriesControllerProvider(slug).notifier)
+          //     .getProducts(slug);
+          // NavigationService.push(Routes.productsByCategory,
+          //     arguments: {'category_name': slug});
+
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => ProductByCategoryScreen(categoryName: slug)));
         }
       },
       child: ExpansionTile(
@@ -49,13 +50,9 @@ class ExpansionCategory extends ConsumerWidget {
             children: [
               ListTile(
                 onTap: () {
-                  ref
-                      .read(productsByCategoriesControllerProvider.notifier)
-                      .getProducts(slug);
-
-                  // Navigator.pushNamed(context, onSaleScreenRoute);
-                  NavigationService.push(Routes.productsByCategory,
-                      arguments: {'categoryName': subCategory[index].slug});
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                          ProductByCategoryScreen(categoryName: slug)));
                 },
                 title: Text(
                   subCategory[index].name ?? "",

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
-import 'package:shop/core/routing/navigation_services.dart';
-import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
-import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
 import 'package:shop/features/discover/presentaion/views/components/expansion_category.dart';
+import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/models/category_model.dart';
 import 'package:shop/screens/search/views/components/search_form.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -44,14 +42,20 @@ class DiscoverScreen extends ConsumerWidget {
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
                           if (data.categories[index].children!.isEmpty) {
-                            ref
-                                .read(productsByCategoriesControllerProvider
-                                    .notifier)
-                                .getProducts(data.categories[index].slug!);
-                            NavigationService.push(Routes.productsByCategory,
-                                arguments: {
-                                  'categoryName': data.categories[index].slug!
-                                });
+                            // ref
+                            //     .read(productsByCategoriesControllerProvider(
+                            //             data.categories[index].slug!)
+                            //         .notifier)
+                            //     .getProducts(data.categories[index].slug!);
+                            // NavigationService.push(Routes.productsByCategory,
+                            //     arguments: {
+                            //       'category_name': data.categories[index].slug!
+                            //     });
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => ProductByCategoryScreen(
+                                    categoryName:
+                                        data.categories[index].slug!)));
                           }
                         },
                         child: ExpansionCategory(

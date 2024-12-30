@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
+import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -51,7 +54,16 @@ class Categories extends ConsumerWidget {
                         category: data.categories[index].name ?? "",
                         svgSrc: data.categories[index].thumbnail ?? "",
                         isActive: index == 0,
-                        press: () {},
+                        press: () {
+                          ref
+                              .read(productsByCategoriesControllerProvider(data.categories[index].slug!)
+                                  .notifier)
+                              .getProducts(data.categories[index].slug!);
+                          NavigationService.push(Routes.productsByCategory,
+                              arguments: {
+                                'categoryName': data.categories[index].slug!
+                              });
+                        },
                       ),
                     ),
                   ),

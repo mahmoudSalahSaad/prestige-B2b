@@ -9,11 +9,12 @@ part 'products_by_categories_controller.freezed.dart';
 part 'products_by_categories_controller.g.dart';
 part 'products_by_categories_state.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ProductsByCategoriesController extends _$ProductsByCategoriesController {
   @override
-  Future<ProductsByCategoriesState> build() async {
+  Future<ProductsByCategoriesState> build(String categorySlug) async {
     state = AsyncData(ProductsByCategoriesState());
+    await getProducts(categorySlug);
     return state.requireValue;
   }
 
@@ -24,7 +25,10 @@ class ProductsByCategoriesController extends _$ProductsByCategoriesController {
     });
     final response = await getProductsByCategoriesUseCase
         .call(ProductEntity(productSlug: categorySlug));
-    response.fold((l) => state = AsyncError(l, StackTrace.current),
-        (r) => state = AsyncData(ProductsByCategoriesState(items: r)));
+    response.fold((l) => state = AsyncError(l, StackTrace.current), (r) {
+      state = AsyncData(ProductsByCategoriesState(items: r));
+
+      print("pfpdokgdf======>${state.requireValue.items?.toJson()}");
+    });
   }
 }

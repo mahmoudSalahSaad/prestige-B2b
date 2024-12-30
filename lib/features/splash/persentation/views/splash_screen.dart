@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/core/resources/assets_menager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
@@ -27,9 +28,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   @override
+/*************  ✨ Codeium Command ⭐  *************/
+  /// Returns a [Scaffold] widget with an empty [Container] as its body.
+  ///
+  /// This is a placeholder screen that is displayed for 3 seconds at app
+  /// startup, while the app is loading the main content.
+  /// ****  c07403d6-5460-4402-8306-da5baf1539b9  ******
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Image.asset(AssetsManager.appLogo),
+        ),
+      ),
     );
   }
 }

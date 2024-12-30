@@ -94,7 +94,11 @@ class DiscoverdRepositoryImplementation extends DiscoverRepository {
           //print("pfpdokgdf======>${r.data}");
 
           /// Iterate over the list of products and convert each one to a CategoryModel object
+          ///
+          print("pfpdokgdf======>${r.data}");
           products = ItemsModel.fromJson(r.data);
+
+          print("pfpdokgdf======>${products.toJson()}");
 
           /// Return a Right containing the list of products
           return Right(products);
