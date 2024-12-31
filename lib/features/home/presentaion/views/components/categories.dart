@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
-import 'package:shop/core/routing/navigation_services.dart';
-import 'package:shop/core/routing/routes.dart';
-import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
+import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -55,14 +53,10 @@ class Categories extends ConsumerWidget {
                         svgSrc: data.categories[index].thumbnail ?? "",
                         isActive: index == 0,
                         press: () {
-                          ref
-                              .read(productsByCategoriesControllerProvider(data.categories[index].slug!)
-                                  .notifier)
-                              .getProducts(data.categories[index].slug!);
-                          NavigationService.push(Routes.productsByCategory,
-                              arguments: {
-                                'categoryName': data.categories[index].slug!
-                              });
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => ProductByCategoryScreen(
+                                  categoryName:
+                                      data.categories[index].slug ?? "")));
                         },
                       ),
                     ),
@@ -129,9 +123,8 @@ class CategoryBtn extends StatelessWidget {
         decoration: BoxDecoration(
           color: isActive ? primaryColor : Colors.transparent,
           border: Border.all(
-              color: isActive
-                  ? Colors.transparent
-                  : Theme.of(context).dividerColor),
+              color:
+                  isActive ? Colors.transparent : Theme.of(context).hintColor),
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         child: Row(

@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 
 import '../../constants.dart';
 
-class CartButton extends StatelessWidget {
+class CartButton extends ConsumerWidget {
   const CartButton({
     super.key,
     required this.price,
     this.title = "Buy Now",
     this.subTitle = "Unit price",
     required this.press,
+    this.isLoading = false,
   });
 
   final double price;
   final String title, subTitle;
   final VoidCallback press;
+  final bool? isLoading;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -41,13 +45,17 @@ class CartButton extends StatelessWidget {
                       alignment: Alignment.center,
                       height: double.infinity,
                       color: Colors.black.withOpacity(0.15),
-                      child: Text(
-                        title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white),
-                      ),
+                      child: ref.watch(cartControllerProvider).isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Colors.white),
+                            ),
                     ),
                   ),
                 ],

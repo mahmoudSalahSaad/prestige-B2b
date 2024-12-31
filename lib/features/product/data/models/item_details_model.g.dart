@@ -43,7 +43,12 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
       unit: json['unit'] as String?,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      isVariable: json['is_variable'] as String?,
+      isVariable: json['is_variable'] as bool?,
+      variations: (json['variations'] as List<dynamic>?)
+              ?.map((e) =>
+                  ProductDetailsModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       quantity: (json['quantity'] as num?)?.toInt(),
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
@@ -76,6 +81,7 @@ Map<String, dynamic> _$$ProductDetailsModelImplToJson(
       'unit': instance.unit,
       'images': instance.images,
       'is_variable': instance.isVariable,
+      'variations': instance.variations,
       'quantity': instance.quantity,
       'is_active': instance.isActive,
       'is_featured': instance.isFeatured,

@@ -14,6 +14,8 @@ class SecondaryProductCard extends StatelessWidget {
     this.dicountpercent,
     this.press,
     this.style,
+    required this.total,
+    required this.quantity,
   });
   final String image, brandName, title;
   final double price;
@@ -22,6 +24,9 @@ class SecondaryProductCard extends StatelessWidget {
   final VoidCallback? press;
 
   final ButtonStyle? style;
+
+  final double total;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -94,39 +99,27 @@ class SecondaryProductCard extends StatelessWidget {
                         .copyWith(fontSize: 12),
                   ),
                   const Spacer(),
-                  priceAfetDiscount != null
-                      ? Row(
-                          children: [
-                            Text(
-                              "\$$priceAfetDiscount",
-                              style: const TextStyle(
-                                color: Color(0xFF31B0D8),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const SizedBox(width: defaultPadding / 4),
-                            Text(
-                              "\$$price",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .color,
-                                fontSize: 10,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          "\$$price",
-                          style: const TextStyle(
-                            color: Color(0xFF31B0D8),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "$price X $quantity",
+                        style: const TextStyle(
+                          color: Color(0xFF31B0D8),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
                         ),
+                      ),
+                      const SizedBox(width: defaultPadding / 4),
+                      Text(
+                        "Total: $total JOD",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

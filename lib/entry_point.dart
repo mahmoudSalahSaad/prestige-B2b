@@ -92,7 +92,7 @@ class _EntryPointState extends State<EntryPoint> {
         },
         child: _pages[_currentIndex],
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: Container( 
         padding: const EdgeInsets.only(top: defaultPadding / 2),
         color: Theme.of(context).brightness == Brightness.light
             ? Colors.white

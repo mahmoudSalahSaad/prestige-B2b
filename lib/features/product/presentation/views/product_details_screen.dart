@@ -7,6 +7,9 @@ import 'package:shop/core/components/cart_button.dart';
 import 'package:shop/core/components/custom_modal_bottom_sheet.dart';
 import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/resources/values_manager.dart';
+import 'package:shop/core/utils/alerts.dart';
+import 'package:shop/features/cart/domain/entities/cart_entity.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/product/presentation/controllers/products_details_controller.dart';
 import 'package:shop/features/product/presentation/views/components/notify_me_card.dart';
 import 'package:shop/features/product/presentation/views/components/product_quantity.dart';
@@ -39,13 +42,32 @@ class ProductDetailsScreen extends ConsumerWidget {
                         price: data.productDetails?.product?.price
                                 ?.beforeDiscount ??
                             0,
-                        press: () {
-                          customModalBottomSheet(
-                            context,
-                            height: MediaQuery.of(context).size.height * 0.92,
-                            child: const ProductBuyNowScreen(),
-                          );
-                        },
+                        press: ref.watch(cartControllerProvider).isLoading
+                            ? () {}
+                            : () async {
+                                await ref
+                                    .read(cartControllerProvider.notifier)
+                                    .addToCart(CartEntity(
+                                        quantity: data.productDetails?.product
+                                                ?.quantity ??
+                                            0,
+                                        productID:
+                                            data.productDetails?.product?.id ??
+                                                0,
+                                        variationID: data
+                                                    .productDetails
+                                                    ?.product
+                                                    ?.variations
+                                                    .isNotEmpty ??
+                                                false
+                                            ? data.productDetails?.product
+                                                ?.variations.first.id
+                                            : null))
+                                    .then((value) {
+                                  Alerts.showSnackBar("Product added to cart",
+                                      alertsType: AlertsType.success);
+                                });
+                              },
                       )
                     :
 

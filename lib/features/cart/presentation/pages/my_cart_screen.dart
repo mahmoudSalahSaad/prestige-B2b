@@ -5,6 +5,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/core/components/product/secondary_product_card.dart';
 import 'package:shop/core/extensions/num_extensions.dart';
 import 'package:shop/core/resources/values_manager.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 
 class MyCartScreen extends ConsumerWidget {
   const MyCartScreen({super.key});
@@ -12,40 +13,59 @@ class MyCartScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 300.h,
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 10.h),
-                    child: const SecondaryProductCard(
-                        image:
-                            'https://cdn.prod.website-files.com/64022de562115a8189fe542a/6616718fe4a871d7278a2037_Product-Concept-What-Is-It-And-How-Can-You-Best-Use-It.jpg',
-                        brandName: "MAHMOUD SALAH PRODUCTS",
-                        title: "products name",
-                        price: 1600.0),
-                  );
-                },
+      body: ref.watch(cartControllerProvider).when(
+            data: (data) => SingleChildScrollView(
+              padding: EdgeInsets.all(16.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 300.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: data.cartModel?.items?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10.h),
+                          child: SecondaryProductCard(
+                              total: data.cartModel?.items?[index].total ?? 0,
+                              quantity:
+                                  data.cartModel?.items?[index].quantity ?? 0,
+                              image:
+                                  '${data.cartModel?.items?[index].product?.thumbnail}',
+                              brandName:
+                                  data.cartModel?.items?[index].product?.slug ??
+                                      "",
+                              title:
+                                  "${data.cartModel?.items?[index].product?.name}",
+                              price: data.cartModel?.items?[index].product
+                                      ?.price?.afterDiscount ??
+                                  0),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    "Have coupon?",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const CouponWidget(),
+                  SizedBox(height: 16.h),
+                  PaymentSummaryWidget(
+                    total: data.cartModel?.total ?? 0,
+                    discount: data.cartModel?.discount ?? 0,
+                    shippingAmount: data.cartModel?.shippingAmount ?? 0,
+                    pormationAmount: data.cartModel?.promotionDiscount ?? 0,
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 16.h),
-            Text(
-              "Have coupon?",
-              style: Theme.of(context).textTheme.titleMedium,
+            error: (error, stackTrace) => Text("$error"),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
-            const CouponWidget(),
-            SizedBox(height: 16.h),
-            const PaymentSummaryWidget()
-          ],
-        ),
-      ),
+          ),
     );
   }
 }
@@ -117,7 +137,16 @@ class CouponWidget extends StatelessWidget {
 class PaymentSummaryWidget extends StatelessWidget {
   const PaymentSummaryWidget({
     super.key,
+    required this.total,
+    required this.discount,
+    required this.shippingAmount,
+    required this.pormationAmount,
   });
+
+  final double total;
+  final double discount;
+  final double shippingAmount;
+  final double pormationAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -141,13 +170,13 @@ class PaymentSummaryWidget extends StatelessWidget {
           SizedBox(height: 6.h),
           const PaymentInfoRow(),
           SizedBox(height: 6.h),
-          const PaymentInfoRow(title: "VAT", value: "14% (150 EGP)"),
+          PaymentInfoRow(title: "Discount", value: "$discount JOD"),
           SizedBox(height: 6.h),
-          const PaymentInfoRow(title: "Delivery Fee", value: "200 EGP"),
+          PaymentInfoRow(title: "Delivery Fee", value: "$shippingAmount JOD"),
           SizedBox(height: 6.h),
           Divider(height: 1.h, color: Theme.of(context).hintColor),
           SizedBox(height: 6.h),
-          const PaymentInfoRow(title: "Total", value: "1950 EGP"),
+          PaymentInfoRow(title: "Total", value: "$total JOD"),
         ],
       ),
     );

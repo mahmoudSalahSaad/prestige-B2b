@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(140, 220),
           maximumSize: const Size(140, 220),
-          side: BorderSide(color: Theme.of(context).dividerColor),
+          side: BorderSide(color: Theme.of(context).hintColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadious),
           ),

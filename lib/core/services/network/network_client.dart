@@ -34,6 +34,8 @@ class NetworkClient {
     );
     String? token = await prefs.getSecuredData(PrefKeys.token);
     token ??= await prefs.get(PrefKeys.token);
+
+    print("Tokkkkken====>$token");
     if (token != null) {
       options.headers?.addAll({'Authorization': 'Bearer $token'});
     }

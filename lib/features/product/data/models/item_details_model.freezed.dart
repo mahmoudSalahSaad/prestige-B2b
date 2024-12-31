@@ -230,7 +230,9 @@ mixin _$ProductDetailsModel {
   String? get unit => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
   @JsonKey(name: "is_variable")
-  String? get isVariable => throw _privateConstructorUsedError;
+  bool? get isVariable => throw _privateConstructorUsedError;
+  List<ProductDetailsModel> get variations =>
+      throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
   int? get isActive => throw _privateConstructorUsedError;
@@ -273,7 +275,8 @@ abstract class $ProductDetailsModelCopyWith<$Res> {
       String? sku,
       String? unit,
       List<String>? images,
-      @JsonKey(name: "is_variable") String? isVariable,
+      @JsonKey(name: "is_variable") bool? isVariable,
+      List<ProductDetailsModel> variations,
       int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
@@ -316,6 +319,7 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
     Object? unit = freezed,
     Object? images = freezed,
     Object? isVariable = freezed,
+    Object? variations = null,
     Object? quantity = freezed,
     Object? isActive = freezed,
     Object? isFeatured = freezed,
@@ -373,7 +377,11 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
       isVariable: freezed == isVariable
           ? _value.isVariable
           : isVariable // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
+      variations: null == variations
+          ? _value.variations
+          : variations // ignore: cast_nullable_to_non_nullable
+              as List<ProductDetailsModel>,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -486,7 +494,8 @@ abstract class _$$ProductDetailsModelImplCopyWith<$Res>
       String? sku,
       String? unit,
       List<String>? images,
-      @JsonKey(name: "is_variable") String? isVariable,
+      @JsonKey(name: "is_variable") bool? isVariable,
+      List<ProductDetailsModel> variations,
       int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
@@ -531,6 +540,7 @@ class __$$ProductDetailsModelImplCopyWithImpl<$Res>
     Object? unit = freezed,
     Object? images = freezed,
     Object? isVariable = freezed,
+    Object? variations = null,
     Object? quantity = freezed,
     Object? isActive = freezed,
     Object? isFeatured = freezed,
@@ -588,7 +598,11 @@ class __$$ProductDetailsModelImplCopyWithImpl<$Res>
       isVariable: freezed == isVariable
           ? _value.isVariable
           : isVariable // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
+      variations: null == variations
+          ? _value._variations
+          : variations // ignore: cast_nullable_to_non_nullable
+              as List<ProductDetailsModel>,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -641,6 +655,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
       this.unit,
       final List<String>? images,
       @JsonKey(name: "is_variable") this.isVariable,
+      final List<ProductDetailsModel> variations = const [],
       this.quantity,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "is_featured") this.isFeatured,
@@ -649,7 +664,8 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
       @JsonKey(name: "tax_id") this.taxId,
       this.categoryModel,
       this.brand})
-      : _images = images;
+      : _images = images,
+        _variations = variations;
 
   factory _$ProductDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductDetailsModelImplFromJson(json);
@@ -687,7 +703,16 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
 
   @override
   @JsonKey(name: "is_variable")
-  final String? isVariable;
+  final bool? isVariable;
+  final List<ProductDetailsModel> _variations;
+  @override
+  @JsonKey()
+  List<ProductDetailsModel> get variations {
+    if (_variations is EqualUnmodifiableListView) return _variations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_variations);
+  }
+
   @override
   final int? quantity;
   @override
@@ -712,7 +737,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
 
   @override
   String toString() {
-    return 'ProductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, unit: $unit, images: $images, isVariable: $isVariable, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
+    return 'ProductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, unit: $unit, images: $images, isVariable: $isVariable, variations: $variations, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
   }
 
   @override
@@ -736,6 +761,8 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.isVariable, isVariable) ||
                 other.isVariable == isVariable) &&
+            const DeepCollectionEquality()
+                .equals(other._variations, _variations) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.isActive, isActive) ||
@@ -768,6 +795,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
         unit,
         const DeepCollectionEquality().hash(_images),
         isVariable,
+        const DeepCollectionEquality().hash(_variations),
         quantity,
         isActive,
         isFeatured,
@@ -808,7 +836,8 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
       final String? sku,
       final String? unit,
       final List<String>? images,
-      @JsonKey(name: "is_variable") final String? isVariable,
+      @JsonKey(name: "is_variable") final bool? isVariable,
+      final List<ProductDetailsModel> variations,
       final int? quantity,
       @JsonKey(name: "is_active") final int? isActive,
       @JsonKey(name: "is_featured") final int? isFeatured,
@@ -846,7 +875,9 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
   List<String>? get images;
   @override
   @JsonKey(name: "is_variable")
-  String? get isVariable;
+  bool? get isVariable;
+  @override
+  List<ProductDetailsModel> get variations;
   @override
   int? get quantity;
   @override

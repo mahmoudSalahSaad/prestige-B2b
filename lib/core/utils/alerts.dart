@@ -17,7 +17,7 @@ class Alerts {
     ScaffoldMessenger.of(NavigationService.navigationKey.currentContext!)
         .showSnackBar(
       SnackBar(
-        // margin: EdgeInsets.only(bottom: 100.0),
+        margin: const EdgeInsets.only(bottom: 10.0, left: 16, right: 16),
         content: Text(
           message,
           style: const TextStyle().regularStyle(),
@@ -28,10 +28,9 @@ class Alerts {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kFormRadius),
         ),
-
+        dismissDirection: DismissDirection.down,
         behavior: SnackBarBehavior.floating,
         backgroundColor: _getColor(alertsType),
-        margin: const EdgeInsets.all(kScreenPaddingNormal),
       ),
     );
   }

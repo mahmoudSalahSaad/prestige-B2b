@@ -7,6 +7,10 @@ import 'package:shop/core/routing/routes.dart';
 
 import 'base_injection.dart' as injection;
 
+/* 
+  vendora@b2b.com
+  87654321
+ */
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

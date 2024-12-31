@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shop/base_injection.dart';
+import 'package:shop/constants.dart';
 import 'package:shop/core/components/list_tile/divider_list_tile.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
-import 'package:shop/constants.dart';
-   
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
+import 'package:shop/core/services/local/cache_consumer.dart';
+import 'package:shop/features/auth/presentation/controller/login_controller.dart';
+
 import 'components/profile_card.dart';
 import 'components/profile_menu_item_list_tile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(loginControllerProvider).requireValue;
     return Scaffold(
       body: ListView(
         children: [
           ProfileCard(
-            name: "Sepide",
-            email: "theflutterway@gmail.com",
+            name: "${state.userModel?.user?.name}",
+            email: "${state.userModel?.user?.email}",
             imageSrc: "https://i.imgur.com/IXnwbLk.png",
             // proLableText: "Sliver",
             // isPro: true, if the user is pro
             press: () {
-             // Navigator.pushNamed(context, userInfoScreenRoute);
+              // Navigator.pushNamed(context, userInfoScreenRoute);
             },
           ),
           Padding(
@@ -50,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
             text: "Orders",
             svgSrc: "assets/icons/Order.svg",
             press: () {
-             // Navigator.pushNamed(context, ordersScreenRoute);
+              // Navigator.pushNamed(context, ordersScreenRoute);
             },
           ),
           ProfileMenuListTile(
@@ -67,21 +74,21 @@ class ProfileScreen extends StatelessWidget {
             text: "Addresses",
             svgSrc: "assets/icons/Address.svg",
             press: () {
-             // Navigator.pushNamed(context, addressesScreenRoute);
+              // Navigator.pushNamed(context, addressesScreenRoute);
             },
           ),
           ProfileMenuListTile(
             text: "Payment",
             svgSrc: "assets/icons/card.svg",
             press: () {
-             // Navigator.pushNamed(context, emptyPaymentScreenRoute);
+              // Navigator.pushNamed(context, emptyPaymentScreenRoute);
             },
           ),
           ProfileMenuListTile(
             text: "Wallet",
             svgSrc: "assets/icons/Wallet.svg",
             press: () {
-             // Navigator.pushNamed(context, walletScreenRoute);
+              // Navigator.pushNamed(context, walletScreenRoute);
             },
           ),
           const SizedBox(height: defaultPadding),
@@ -98,14 +105,14 @@ class ProfileScreen extends StatelessWidget {
             title: "Notification",
             trilingText: "Off",
             press: () {
-             // Navigator.pushNamed(context, enableNotificationScreenRoute);
+              // Navigator.pushNamed(context, enableNotificationScreenRoute);
             },
           ),
           ProfileMenuListTile(
             text: "Preferences",
             svgSrc: "assets/icons/Preferences.svg",
             press: () {
-             // Navigator.pushNamed(context, preferencesScreenRoute);
+              // Navigator.pushNamed(context, preferencesScreenRoute);
             },
           ),
           const SizedBox(height: defaultPadding),
@@ -121,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
             text: "Language",
             svgSrc: "assets/icons/Language.svg",
             press: () {
-             // Navigator.pushNamed(context, selectLanguageScreenRoute);
+              // Navigator.pushNamed(context, selectLanguageScreenRoute);
             },
           ),
           ProfileMenuListTile(
@@ -142,7 +149,7 @@ class ProfileScreen extends StatelessWidget {
             text: "Get Help",
             svgSrc: "assets/icons/Help.svg",
             press: () {
-             // Navigator.pushNamed(context, getHelpScreenRoute);
+              // Navigator.pushNamed(context, getHelpScreenRoute);
             },
           ),
           ProfileMenuListTile(
@@ -155,7 +162,11 @@ class ProfileScreen extends StatelessWidget {
 
           // Log Out
           ListTile(
-            onTap: () {},
+            onTap: () {
+              AppPrefs appPrefs = getIt();
+              appPrefs.clear();
+              NavigationService.pushNamedAndRemoveUntil(Routes.login);
+            },
             minLeadingWidth: 24,
             leading: SvgPicture.asset(
               "assets/icons/Logout.svg",

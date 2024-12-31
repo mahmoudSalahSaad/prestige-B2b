@@ -7,10 +7,13 @@ class LogInForm extends StatelessWidget {
   const LogInForm({
     super.key,
     required this.formKey,
+    required this.emailController,
+    required this.passwordController,
   });
 
   final GlobalKey<FormState> formKey;
-
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -18,6 +21,7 @@ class LogInForm extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            controller: emailController,
             onSaved: (emal) {
               // Email
             },
@@ -51,6 +55,7 @@ class LogInForm extends StatelessWidget {
             },
             validator: passwordValidator.call,
             obscureText: true,
+            controller: passwordController,
             decoration: InputDecoration(
               hintText: "Password",
               prefixIcon: Padding(

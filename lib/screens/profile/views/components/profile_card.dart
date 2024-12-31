@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop/core/components/network_image_with_loader.dart';
 
 import '../../../../constants.dart';
 
@@ -27,11 +26,9 @@ class ProfileCard extends StatelessWidget {
     return ListTile(
       onTap: press,
       leading: CircleAvatar(
+        backgroundColor: Colors.grey.shade200,
         radius: 28,
-        child: NetworkImageWithLoader(
-          imageSrc,
-          radius: 100,
-        ),
+        child: SvgPicture.asset("assets/icons/FaceId.svg"),
       ),
       title: Row(
         children: [
