@@ -44,4 +44,40 @@ class CartRepositoryImplementation extends CartRepository {
       return Right(CartModel.fromJson(r.data));
     });
   }
+
+  @override
+  Future<Either<ErrorModel, CartModel>> addItemToCart(
+      CartEntity parameters) async {
+    NetworkCallType networkCallType = NetworkCallType.post;
+
+    final Either<ErrorModel, BaseResponse> response = await networkClient.call(
+        data: {
+          'product_id': parameters.productID,
+        },
+        url: EndPoints.addItemToCart(parameters.productID.toString()),
+        type: networkCallType);
+
+    return response.fold((l) {
+      return Left(l);
+    }, (r) {
+      return Right(CartModel.fromJson(r.data));
+    });
+  }
+
+  @override
+  Future<Either<ErrorModel, CartModel>> removeItemToCart(
+      CartEntity parameters) async {
+    NetworkCallType networkCallType = NetworkCallType.post;
+
+    final Either<ErrorModel, BaseResponse> response = await networkClient.call(
+        data: {},
+        url: EndPoints.removeItemToCart(parameters.productID.toString()),
+        type: networkCallType);
+
+    return response.fold((l) {
+      return Left(l);
+    }, (r) {
+      return Right(CartModel.fromJson(r.data));
+    });
+  }
 }

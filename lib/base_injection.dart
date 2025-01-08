@@ -11,8 +11,10 @@ import 'package:shop/features/auth/doman/repository/repository.dart';
 import 'package:shop/features/auth/doman/use_cases/login_use_case.dart';
 import 'package:shop/features/cart/data/repo/cart_repository_implementation.dart';
 import 'package:shop/features/cart/domain/repo/cart_repository.dart';
+import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/add_to_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/get_my_cart_use_case.dart';
+import 'package:shop/features/cart/domain/usecases/remove_item_tocart_use_case.dart';
 import 'package:shop/features/discover/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/discover/domain/repository/repository.dart';
 import 'package:shop/features/discover/domain/use_cases/get_full_categories_use_case.dart';
@@ -47,6 +49,10 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt()));
   getIt.registerLazySingleton(() => AddToCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(() => GetMyCartUseCase(cartRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => AddItemToCartUseCase(cartRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => RemoveItemToCartUseCase(cartRepository: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(

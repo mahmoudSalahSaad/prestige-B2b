@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/core/base/base_usecase.dart';
-import 'package:shop/core/utils/alerts.dart';
 import 'package:shop/features/cart/data/models/cart_model.dart';
 import 'package:shop/features/cart/domain/entities/cart_entity.dart';
 import 'package:shop/features/cart/domain/usecases/add_to_cart_use_case.dart';
@@ -52,9 +51,12 @@ class CartController extends _$CartController {
         state = AsyncError(l.errorMessage ?? "", StackTrace.current);
       },
       (r) {
-        
         state = AsyncData(CartState(cartModel: r));
       },
     );
+  }
+
+  updateCart(CartModel cartModel) {
+    state = AsyncData(CartState(cartModel: cartModel));
   }
 }

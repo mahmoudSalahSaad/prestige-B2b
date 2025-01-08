@@ -5,7 +5,6 @@ import 'package:shop/core/components/Banner/S/banner_s_style_5.dart';
 
 import 'components/best_sellers.dart';
 import 'components/flash_sale.dart';
-import 'components/most_popular.dart';
 import 'components/offer_carousel_and_categories.dart';
 import 'components/popular_products.dart';
 

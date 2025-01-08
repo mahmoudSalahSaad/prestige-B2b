@@ -28,6 +28,7 @@ class MyCartScreen extends ConsumerWidget {
                         return Padding(
                           padding: EdgeInsets.only(bottom: 10.h),
                           child: SecondaryProductCard(
+                              itemId: data.cartModel?.items?[index].id ?? 0,
                               total: data.cartModel?.items?[index].total ?? 0,
                               quantity:
                                   data.cartModel?.items?[index].quantity ?? 0,
@@ -168,7 +169,10 @@ class PaymentSummaryWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(height: 6.h),
-          const PaymentInfoRow(),
+          PaymentInfoRow(
+            title: "Sub Total",
+            value: "${total - shippingAmount} JOD",
+          ),
           SizedBox(height: 6.h),
           PaymentInfoRow(title: "Discount", value: "$discount JOD"),
           SizedBox(height: 6.h),

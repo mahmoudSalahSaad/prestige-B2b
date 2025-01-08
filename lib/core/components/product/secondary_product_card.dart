@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/features/cart/domain/entities/cart_entity.dart';
+import 'package:shop/features/cart/presentation/controllers/add_item_to_cart_controller.dart';
+import 'package:shop/features/cart/presentation/controllers/remove_item_to_cart_controller.dart';
 
 import '../../../constants.dart';
 import '../network_image_with_loader.dart';
 
-class SecondaryProductCard extends StatelessWidget {
+class SecondaryProductCard extends ConsumerWidget {
   const SecondaryProductCard({
     super.key,
     required this.image,
     required this.brandName,
     required this.title,
     required this.price,
+    required this.itemId,
     this.priceAfetDiscount,
     this.dicountpercent,
     this.press,
@@ -27,9 +32,10 @@ class SecondaryProductCard extends StatelessWidget {
 
   final double total;
   final int quantity;
+  final int itemId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return OutlinedButton(
       onPressed: () {},
       style: style ??
@@ -81,22 +87,110 @@ class SecondaryProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    brandName.toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 10),
-                  ),
-                  const SizedBox(height: defaultPadding / 2),
-                  Text(
-                    title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            brandName.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: 10),
+                          ),
+                          const SizedBox(height: defaultPadding / 2),
+                          Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: ref
+                                    .watch(
+                                        addItemToCartControllerProvider(itemId))
+                                    .isLoading
+                                ? () {}
+                                : () => ref
+                                    .read(
+                                        addItemToCartControllerProvider(itemId)
+                                            .notifier)
+                                    .addItemToCart(
+                                        parameters: CartEntity(
+                                            quantity: 0, productID: itemId)),
+                            child: Container(
+                              height: 24,
+                              width: 24,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: primaryMaterialColor.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: ref
+                                        .watch(addItemToCartControllerProvider(
+                                            itemId))
+                                        .isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.black87,
+                                        strokeWidth: 2,
+                                      )
+                                    : const Icon(Icons.add, size: 16),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: defaultPadding / 3),
+                          Text("$quantity",
+                              style: const TextStyle(fontSize: 12)),
+                          const SizedBox(width: defaultPadding / 3),
+                          InkWell(
+                            onTap: ref
+                                    .watch(removeItemToCartControllerProvider(
+                                        itemId))
+                                    .isLoading
+                                ? () {}
+                                : () => ref
+                                    .read(removeItemToCartControllerProvider(
+                                            itemId)
+                                        .notifier)
+                                    .removeItemFromCart(
+                                        parameters: CartEntity(
+                                            quantity: 0, productID: itemId)),
+                            child: Container(
+                              height: 24,
+                              width: 24,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: primaryMaterialColor.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: ref
+                                        .watch(
+                                            removeItemToCartControllerProvider(
+                                                itemId))
+                                        .isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.black87,
+                                        strokeWidth: 2,
+                                      )
+                                    : const Icon(Icons.remove, size: 16),
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                   const Spacer(),
                   Row(

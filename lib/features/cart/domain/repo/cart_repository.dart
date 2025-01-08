@@ -10,4 +10,7 @@ abstract class CartRepository {
 
   Future<Either<ErrorModel, CartModel>> getMyCartData(
       {required NoParameters parameters});
+
+  Future<Either<ErrorModel, CartModel>> addItemToCart(CartEntity parameters);
+  Future<Either<ErrorModel, CartModel>> removeItemToCart(CartEntity parameters);
 }
