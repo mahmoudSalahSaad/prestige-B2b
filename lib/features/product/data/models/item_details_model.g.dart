@@ -49,7 +49,7 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
                   ProductDetailsModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      quantity: (json['quantity'] as num?)?.toInt(),
+      quantity: (json['item_quantity'] as num?)?.toInt() ?? 0,
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
       thumbnailUrl: json['thumbnail_url'] as String?,
@@ -82,7 +82,7 @@ Map<String, dynamic> _$$ProductDetailsModelImplToJson(
       'images': instance.images,
       'is_variable': instance.isVariable,
       'variations': instance.variations,
-      'quantity': instance.quantity,
+      'item_quantity': instance.quantity,
       'is_active': instance.isActive,
       'is_featured': instance.isFeatured,
       'thumbnail_url': instance.thumbnailUrl,

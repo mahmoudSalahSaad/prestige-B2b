@@ -9,4 +9,5 @@ class Routes {
   static const String entryPoint = '/entry_point';
   static const String productDetails = '/product_details_screen';
   static const String productsByCategory = '/products_by_category_screen';
+  static const String checkoutScreen = '/checkout_screen';
 }

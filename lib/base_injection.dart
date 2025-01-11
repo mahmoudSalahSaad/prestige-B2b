@@ -15,6 +15,9 @@ import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dar
 import 'package:shop/features/cart/domain/usecases/add_to_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/get_my_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/remove_item_tocart_use_case.dart';
+import 'package:shop/features/check_out/data/repo/checkout_repo_impl.dart';
+import 'package:shop/features/check_out/domain/repo/checkout_repo.dart';
+import 'package:shop/features/check_out/domain/usecases/checkout_use_case.dart';
 import 'package:shop/features/discover/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/discover/domain/repository/repository.dart';
 import 'package:shop/features/discover/domain/use_cases/get_full_categories_use_case.dart';
@@ -53,6 +56,7 @@ Future<void> init() async {
       () => AddItemToCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(
       () => RemoveItemToCartUseCase(cartRepository: getIt()));
+  getIt.registerLazySingleton(() => CheckoutUseCase(checkoutRepo: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
@@ -84,6 +88,8 @@ Future<void> init() async {
       () => DiscoverdRepositoryImplementation(networkClient: getIt()));
   getIt.registerLazySingleton<CartRepository>(
       () => CartRepositoryImplementation(networkClient: getIt()));
+  getIt.registerLazySingleton<CheckoutRepo>(
+      () => CheckoutRepoImpl(networkClient: getIt()));
 
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));

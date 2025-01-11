@@ -233,6 +233,7 @@ mixin _$ProductDetailsModel {
   bool? get isVariable => throw _privateConstructorUsedError;
   List<ProductDetailsModel> get variations =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: "item_quantity")
   int? get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
   int? get isActive => throw _privateConstructorUsedError;
@@ -277,7 +278,7 @@ abstract class $ProductDetailsModelCopyWith<$Res> {
       List<String>? images,
       @JsonKey(name: "is_variable") bool? isVariable,
       List<ProductDetailsModel> variations,
-      int? quantity,
+      @JsonKey(name: "item_quantity") int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
       @JsonKey(name: "thumbnail_url") String? thumbnailUrl,
@@ -496,7 +497,7 @@ abstract class _$$ProductDetailsModelImplCopyWith<$Res>
       List<String>? images,
       @JsonKey(name: "is_variable") bool? isVariable,
       List<ProductDetailsModel> variations,
-      int? quantity,
+      @JsonKey(name: "item_quantity") int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
       @JsonKey(name: "thumbnail_url") String? thumbnailUrl,
@@ -656,7 +657,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
       final List<String>? images,
       @JsonKey(name: "is_variable") this.isVariable,
       final List<ProductDetailsModel> variations = const [],
-      this.quantity,
+      @JsonKey(name: "item_quantity") this.quantity = 0,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "is_featured") this.isFeatured,
       @JsonKey(name: "thumbnail_url") this.thumbnailUrl,
@@ -714,6 +715,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
   }
 
   @override
+  @JsonKey(name: "item_quantity")
   final int? quantity;
   @override
   @JsonKey(name: "is_active")
@@ -838,7 +840,7 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
       final List<String>? images,
       @JsonKey(name: "is_variable") final bool? isVariable,
       final List<ProductDetailsModel> variations,
-      final int? quantity,
+      @JsonKey(name: "item_quantity") final int? quantity,
       @JsonKey(name: "is_active") final int? isActive,
       @JsonKey(name: "is_featured") final int? isFeatured,
       @JsonKey(name: "thumbnail_url") final String? thumbnailUrl,
@@ -879,6 +881,7 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
   @override
   List<ProductDetailsModel> get variations;
   @override
+  @JsonKey(name: "item_quantity")
   int? get quantity;
   @override
   @JsonKey(name: "is_active")

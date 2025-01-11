@@ -7,7 +7,7 @@ part of 'add_item_to_cart_controller.dart';
 // **************************************************************************
 
 String _$addItemToCartControllerHash() =>
-    r'7269fe5e56a91718cf1d29f6a8342dff6bd18851';
+    r'23000d886c7bb7f4bd6d63e637f96e0bb294d350';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -5,6 +5,8 @@ import 'package:shop/constants.dart';
 import 'package:shop/core/components/product/secondary_product_card.dart';
 import 'package:shop/core/extensions/num_extensions.dart';
 import 'package:shop/core/resources/values_manager.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 
 class MyCartScreen extends ConsumerWidget {
@@ -58,6 +60,28 @@ class MyCartScreen extends ConsumerWidget {
                     discount: data.cartModel?.discount ?? 0,
                     shippingAmount: data.cartModel?.shippingAmount ?? 0,
                     pormationAmount: data.cartModel?.promotionDiscount ?? 0,
+                  ),
+                  SizedBox(height: 16.h),
+                  InkWell(
+                    onTap: () {
+                      NavigationService.push(Routes.checkoutScreen);
+                    },
+                    child: Container(
+                      width: deviceWidth,
+                      padding: EdgeInsets.all(16.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                        color: primaryColor,
+                      ),
+                      child: Text(
+                        "Place Order",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -157,7 +181,7 @@ class PaymentSummaryWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: Theme.of(context).hintColor,
+          color: Theme.of(context).hintColor.withOpacity(0.5),
           width: 1,
         ),
       ),
@@ -178,7 +202,8 @@ class PaymentSummaryWidget extends StatelessWidget {
           SizedBox(height: 6.h),
           PaymentInfoRow(title: "Delivery Fee", value: "$shippingAmount JOD"),
           SizedBox(height: 6.h),
-          Divider(height: 1.h, color: Theme.of(context).hintColor),
+          Divider(
+              height: 1.h, color: Theme.of(context).hintColor.withOpacity(0.5)),
           SizedBox(height: 6.h),
           PaymentInfoRow(title: "Total", value: "$total JOD"),
         ],
@@ -204,7 +229,10 @@ class PaymentInfoRow extends StatelessWidget {
       children: [
         Text(
           title ?? "Sub Total",
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(color: Colors.grey.shade400),
         ),
         Text(
           value ?? "1600 EGP",

@@ -40,7 +40,7 @@ class LoginController extends _$LoginController {
       await prefs.save(PrefKeys.token, r.authorization?.token ?? "");
       await prefs.save(PrefKeys.user, (r.user?.toJson() ?? "").toString());
       state = AsyncData(state.requireValue.copyWith(userModel: r));
-      NavigationService.push(Routes.entryPoint);
+      NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
     });
   }
 }
