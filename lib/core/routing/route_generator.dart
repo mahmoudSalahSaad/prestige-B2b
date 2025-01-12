@@ -5,6 +5,7 @@ import 'package:shop/features/auth/presentation/views/login_screen.dart';
 import 'package:shop/features/auth/presentation/views/signup_screen.dart';
 import 'package:shop/features/check_out/presentation/pages/check_out_screen.dart';
 import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
+import 'package:shop/features/orders/presentation/pages/my_orders_screen.dart';
 import 'package:shop/features/product/presentation/views/product_details_screen.dart';
 import 'package:shop/features/splash/persentation/views/splash_screen.dart';
 
@@ -55,6 +56,9 @@ class RouteGenerator {
 
     if (settings.name == Routes.checkoutScreen) {
       return platformPageRoute(const CheckOutScreen());
+    }
+    if (settings.name == Routes.myOrdersScreen) {
+      return platformPageRoute(const MyOrdersScreen());
     }
 
     // if (settings.name == Routes.startWorkScreen) {

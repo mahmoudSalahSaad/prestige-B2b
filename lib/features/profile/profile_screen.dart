@@ -58,6 +58,8 @@ class ProfileScreen extends ConsumerWidget {
             svgSrc: "assets/icons/Order.svg",
             press: () {
               // Navigator.pushNamed(context, ordersScreenRoute);
+
+              NavigationService.push(Routes.myOrdersScreen);
             },
           ),
           ProfileMenuListTile(

@@ -13,4 +13,5 @@ class EndPoints {
   static String removeItemToCart(String id) => "/cart/$id/decrease";
   static String myCart = "/my-cart";
   static String checkout = "/orders/checkout";
+  static String myOrders = "/my-orders";
 }

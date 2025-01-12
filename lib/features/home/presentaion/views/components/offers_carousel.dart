@@ -73,7 +73,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
   @override
   void dispose() {
     _pageController.dispose();
-    _timer.cancel();
+
     super.dispose();
   }
 
