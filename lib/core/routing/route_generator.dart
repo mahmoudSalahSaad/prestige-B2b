@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/features/auth/presentation/views/forgot_password_screen.dart';
 import 'package:shop/features/auth/presentation/views/login_screen.dart';
+import 'package:shop/features/auth/presentation/views/otp_screen.dart';
 import 'package:shop/features/auth/presentation/views/signup_screen.dart';
 import 'package:shop/features/check_out/presentation/pages/check_out_screen.dart';
 import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
@@ -34,6 +36,13 @@ class RouteGenerator {
     }
     if (settings.name == Routes.register) {
       return platformPageRoute(const SignUpScreen());
+    }
+
+    if (settings.name == Routes.forgetPassword) {
+      return platformPageRoute(const ForgotPasswordScreen());
+    }
+    if (settings.name == Routes.otpPassword) {
+      return platformPageRoute(const OtpScreen());
     }
 
     if (settings.name == Routes.entryPoint) {

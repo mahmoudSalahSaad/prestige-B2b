@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shop/features/settings/data/models/city_model.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
@@ -47,11 +48,4 @@ class AuthrizationModel with _$AuthrizationModel {
       _$AuthrizationModelFromJson(json);
 }
 
-@freezed
-class CityModel with _$CityModel {
-  factory CityModel({final int? id, final String? name, final String? slug}) =
-      _CityModel;
 
-  factory CityModel.fromJson(Map<String, dynamic> json) =>
-      _$CityModelFromJson(json);
-}

@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'my_orders_controller.dart';
+part of 'register_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myOrdersControllerHash() =>
-    r'ab35e176cc8972dfda98fd8dcc86e17930c9a547';
+String _$registerControllerHash() =>
+    r'3f122d89f81e2a096eb9fe919b44fbd1a2478a91';
 
-/// See also [MyOrdersController].
-@ProviderFor(MyOrdersController)
-final myOrdersControllerProvider = AutoDisposeAsyncNotifierProvider<
-    MyOrdersController, MyOrdersState>.internal(
-  MyOrdersController.new,
-  name: r'myOrdersControllerProvider',
+/// See also [RegisterController].
+@ProviderFor(RegisterController)
+final registerControllerProvider = AutoDisposeAsyncNotifierProvider<
+    RegisterController, RegisterState>.internal(
+  RegisterController.new,
+  name: r'registerControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$myOrdersControllerHash,
+      : _$registerControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$MyOrdersController = AutoDisposeAsyncNotifier<MyOrdersState>;
+typedef _$RegisterController = AutoDisposeAsyncNotifier<RegisterState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

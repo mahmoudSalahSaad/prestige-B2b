@@ -5,4 +5,5 @@ import 'package:shop/features/auth/doman/entity/auth_entity.dart';
 
 abstract class AuthRepository {
   Future<Either<ErrorModel, UserModel>> login({required AuthEntity parameters});
+  Future<Either<ErrorModel, UserModel>> register({required AuthEntity parameters});
 }

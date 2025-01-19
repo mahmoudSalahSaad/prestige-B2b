@@ -49,7 +49,11 @@ class PopularProducts extends ConsumerWidget {
                       title: data.products[index].name ?? "",
                       price: data.products[index].price!.beforeDiscount ?? 0,
                       priceAfetDiscount:
-                          data.products[index].price!.afterDiscount.toString(),
+                          data.products[index].price!.beforeDiscount != null
+                              ? data.products[index].price!.beforeDiscount
+                                  .toString()
+                              : data.products[index].price!.beforeDiscount
+                                  .toString(),
                       dicountpercent: 0,
                       press: () {
                         NavigationService.push(Routes.productDetails,

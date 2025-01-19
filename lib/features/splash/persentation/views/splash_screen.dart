@@ -6,6 +6,7 @@ import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_products_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
+import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -17,9 +18,9 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
+      await ref.watch(countriesControllerProvider.notifier).getCountries();
       ref.watch(slidersControllerProvider.notifier);
       ref.watch(getCategoriesControllerProvider.notifier);
       ref.watch(getProductsControllerProvider.notifier);

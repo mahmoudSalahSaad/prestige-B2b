@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ProductsDetailsState {
   ItemDetailsModel? get productDetails => throw _privateConstructorUsedError;
+  int? get variationID => throw _privateConstructorUsedError;
 
   /// Create a copy of ProductsDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $ProductsDetailsStateCopyWith<$Res> {
           $Res Function(ProductsDetailsState) then) =
       _$ProductsDetailsStateCopyWithImpl<$Res, ProductsDetailsState>;
   @useResult
-  $Res call({ItemDetailsModel? productDetails});
+  $Res call({ItemDetailsModel? productDetails, int? variationID});
 
   $ItemDetailsModelCopyWith<$Res>? get productDetails;
 }
@@ -53,12 +54,17 @@ class _$ProductsDetailsStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? productDetails = freezed,
+    Object? variationID = freezed,
   }) {
     return _then(_value.copyWith(
       productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
               as ItemDetailsModel?,
+      variationID: freezed == variationID
+          ? _value.variationID
+          : variationID // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -85,7 +91,7 @@ abstract class _$$ProductsDetailsStateImplCopyWith<$Res>
       __$$ProductsDetailsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ItemDetailsModel? productDetails});
+  $Res call({ItemDetailsModel? productDetails, int? variationID});
 
   @override
   $ItemDetailsModelCopyWith<$Res>? get productDetails;
@@ -105,12 +111,17 @@ class __$$ProductsDetailsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? productDetails = freezed,
+    Object? variationID = freezed,
   }) {
     return _then(_$ProductsDetailsStateImpl(
       productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
               as ItemDetailsModel?,
+      variationID: freezed == variationID
+          ? _value.variationID
+          : variationID // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -118,14 +129,16 @@ class __$$ProductsDetailsStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProductsDetailsStateImpl implements _ProductsDetailsState {
-  _$ProductsDetailsStateImpl({this.productDetails});
+  _$ProductsDetailsStateImpl({this.productDetails, this.variationID});
 
   @override
   final ItemDetailsModel? productDetails;
+  @override
+  final int? variationID;
 
   @override
   String toString() {
-    return 'ProductsDetailsState(productDetails: $productDetails)';
+    return 'ProductsDetailsState(productDetails: $productDetails, variationID: $variationID)';
   }
 
   @override
@@ -134,11 +147,13 @@ class _$ProductsDetailsStateImpl implements _ProductsDetailsState {
         (other.runtimeType == runtimeType &&
             other is _$ProductsDetailsStateImpl &&
             (identical(other.productDetails, productDetails) ||
-                other.productDetails == productDetails));
+                other.productDetails == productDetails) &&
+            (identical(other.variationID, variationID) ||
+                other.variationID == variationID));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, productDetails);
+  int get hashCode => Object.hash(runtimeType, productDetails, variationID);
 
   /// Create a copy of ProductsDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -152,11 +167,14 @@ class _$ProductsDetailsStateImpl implements _ProductsDetailsState {
 }
 
 abstract class _ProductsDetailsState implements ProductsDetailsState {
-  factory _ProductsDetailsState({final ItemDetailsModel? productDetails}) =
-      _$ProductsDetailsStateImpl;
+  factory _ProductsDetailsState(
+      {final ItemDetailsModel? productDetails,
+      final int? variationID}) = _$ProductsDetailsStateImpl;
 
   @override
   ItemDetailsModel? get productDetails;
+  @override
+  int? get variationID;
 
   /// Create a copy of ProductsDetailsState
   /// with the given fields replaced by the non-null parameter values.

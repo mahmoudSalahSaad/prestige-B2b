@@ -227,12 +227,12 @@ mixin _$ProductDetailsModel {
   PriceModel? get price => throw _privateConstructorUsedError;
   String? get barcode => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
+  String? get options => throw _privateConstructorUsedError;
   String? get unit => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
   @JsonKey(name: "is_variable")
   bool? get isVariable => throw _privateConstructorUsedError;
-  List<ProductDetailsModel> get variations =>
-      throw _privateConstructorUsedError;
+  List<VariationModel> get variations => throw _privateConstructorUsedError;
   @JsonKey(name: "item_quantity")
   int? get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
@@ -274,10 +274,11 @@ abstract class $ProductDetailsModelCopyWith<$Res> {
       @JsonKey(name: "display_price_value") PriceModel? price,
       String? barcode,
       String? sku,
+      String? options,
       String? unit,
       List<String>? images,
       @JsonKey(name: "is_variable") bool? isVariable,
-      List<ProductDetailsModel> variations,
+      List<VariationModel> variations,
       @JsonKey(name: "item_quantity") int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
@@ -317,6 +318,7 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
     Object? price = freezed,
     Object? barcode = freezed,
     Object? sku = freezed,
+    Object? options = freezed,
     Object? unit = freezed,
     Object? images = freezed,
     Object? isVariable = freezed,
@@ -367,6 +369,10 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
               as String?,
+      options: freezed == options
+          ? _value.options
+          : options // ignore: cast_nullable_to_non_nullable
+              as String?,
       unit: freezed == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -382,7 +388,7 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
       variations: null == variations
           ? _value.variations
           : variations // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetailsModel>,
+              as List<VariationModel>,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -493,10 +499,11 @@ abstract class _$$ProductDetailsModelImplCopyWith<$Res>
       @JsonKey(name: "display_price_value") PriceModel? price,
       String? barcode,
       String? sku,
+      String? options,
       String? unit,
       List<String>? images,
       @JsonKey(name: "is_variable") bool? isVariable,
-      List<ProductDetailsModel> variations,
+      List<VariationModel> variations,
       @JsonKey(name: "item_quantity") int? quantity,
       @JsonKey(name: "is_active") int? isActive,
       @JsonKey(name: "is_featured") int? isFeatured,
@@ -538,6 +545,7 @@ class __$$ProductDetailsModelImplCopyWithImpl<$Res>
     Object? price = freezed,
     Object? barcode = freezed,
     Object? sku = freezed,
+    Object? options = freezed,
     Object? unit = freezed,
     Object? images = freezed,
     Object? isVariable = freezed,
@@ -588,6 +596,10 @@ class __$$ProductDetailsModelImplCopyWithImpl<$Res>
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
               as String?,
+      options: freezed == options
+          ? _value.options
+          : options // ignore: cast_nullable_to_non_nullable
+              as String?,
       unit: freezed == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -603,7 +615,7 @@ class __$$ProductDetailsModelImplCopyWithImpl<$Res>
       variations: null == variations
           ? _value._variations
           : variations // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetailsModel>,
+              as List<VariationModel>,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -653,10 +665,11 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
       @JsonKey(name: "display_price_value") this.price,
       this.barcode,
       this.sku,
+      this.options,
       this.unit,
       final List<String>? images,
       @JsonKey(name: "is_variable") this.isVariable,
-      final List<ProductDetailsModel> variations = const [],
+      final List<VariationModel> variations = const [],
       @JsonKey(name: "item_quantity") this.quantity = 0,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "is_featured") this.isFeatured,
@@ -691,6 +704,8 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
   @override
   final String? sku;
   @override
+  final String? options;
+  @override
   final String? unit;
   final List<String>? _images;
   @override
@@ -705,10 +720,10 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
   @override
   @JsonKey(name: "is_variable")
   final bool? isVariable;
-  final List<ProductDetailsModel> _variations;
+  final List<VariationModel> _variations;
   @override
   @JsonKey()
-  List<ProductDetailsModel> get variations {
+  List<VariationModel> get variations {
     if (_variations is EqualUnmodifiableListView) return _variations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_variations);
@@ -739,7 +754,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
 
   @override
   String toString() {
-    return 'ProductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, unit: $unit, images: $images, isVariable: $isVariable, variations: $variations, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
+    return 'ProductDetailsModel(id: $id, name: $name, slug: $slug, description: $description, shortDescription: $shortDescription, thumbnail: $thumbnail, price: $price, barcode: $barcode, sku: $sku, options: $options, unit: $unit, images: $images, isVariable: $isVariable, variations: $variations, quantity: $quantity, isActive: $isActive, isFeatured: $isFeatured, thumbnailUrl: $thumbnailUrl, taxAmount: $taxAmount, taxId: $taxId, categoryModel: $categoryModel, brand: $brand)';
   }
 
   @override
@@ -759,6 +774,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.sku, sku) || other.sku == sku) &&
+            (identical(other.options, options) || other.options == options) &&
             (identical(other.unit, unit) || other.unit == unit) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.isVariable, isVariable) ||
@@ -794,6 +810,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
         price,
         barcode,
         sku,
+        options,
         unit,
         const DeepCollectionEquality().hash(_images),
         isVariable,
@@ -836,10 +853,11 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
       @JsonKey(name: "display_price_value") final PriceModel? price,
       final String? barcode,
       final String? sku,
+      final String? options,
       final String? unit,
       final List<String>? images,
       @JsonKey(name: "is_variable") final bool? isVariable,
-      final List<ProductDetailsModel> variations,
+      final List<VariationModel> variations,
       @JsonKey(name: "item_quantity") final int? quantity,
       @JsonKey(name: "is_active") final int? isActive,
       @JsonKey(name: "is_featured") final int? isFeatured,
@@ -872,6 +890,8 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
   @override
   String? get sku;
   @override
+  String? get options;
+  @override
   String? get unit;
   @override
   List<String>? get images;
@@ -879,7 +899,7 @@ abstract class _ProductDetailsModel implements ProductDetailsModel {
   @JsonKey(name: "is_variable")
   bool? get isVariable;
   @override
-  List<ProductDetailsModel> get variations;
+  List<VariationModel> get variations;
   @override
   @JsonKey(name: "item_quantity")
   int? get quantity;
@@ -1307,5 +1327,265 @@ abstract class _TaxId implements TaxId {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaxIdImplCopyWith<_$TaxIdImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+VariationModel _$VariationModelFromJson(Map<String, dynamic> json) {
+  return _VariationModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$VariationModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get sku => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  double? get price => throw _privateConstructorUsedError;
+  String? get options => throw _privateConstructorUsedError;
+  @JsonKey(name: "discount_price")
+  double? get discountPrice => throw _privateConstructorUsedError;
+
+  /// Serializes this VariationModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of VariationModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VariationModelCopyWith<VariationModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VariationModelCopyWith<$Res> {
+  factory $VariationModelCopyWith(
+          VariationModel value, $Res Function(VariationModel) then) =
+      _$VariationModelCopyWithImpl<$Res, VariationModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? sku,
+      String? name,
+      double? price,
+      String? options,
+      @JsonKey(name: "discount_price") double? discountPrice});
+}
+
+/// @nodoc
+class _$VariationModelCopyWithImpl<$Res, $Val extends VariationModel>
+    implements $VariationModelCopyWith<$Res> {
+  _$VariationModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of VariationModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? sku = freezed,
+    Object? name = freezed,
+    Object? price = freezed,
+    Object? options = freezed,
+    Object? discountPrice = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      options: freezed == options
+          ? _value.options
+          : options // ignore: cast_nullable_to_non_nullable
+              as String?,
+      discountPrice: freezed == discountPrice
+          ? _value.discountPrice
+          : discountPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$VariationModelImplCopyWith<$Res>
+    implements $VariationModelCopyWith<$Res> {
+  factory _$$VariationModelImplCopyWith(_$VariationModelImpl value,
+          $Res Function(_$VariationModelImpl) then) =
+      __$$VariationModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? sku,
+      String? name,
+      double? price,
+      String? options,
+      @JsonKey(name: "discount_price") double? discountPrice});
+}
+
+/// @nodoc
+class __$$VariationModelImplCopyWithImpl<$Res>
+    extends _$VariationModelCopyWithImpl<$Res, _$VariationModelImpl>
+    implements _$$VariationModelImplCopyWith<$Res> {
+  __$$VariationModelImplCopyWithImpl(
+      _$VariationModelImpl _value, $Res Function(_$VariationModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of VariationModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? sku = freezed,
+    Object? name = freezed,
+    Object? price = freezed,
+    Object? options = freezed,
+    Object? discountPrice = freezed,
+  }) {
+    return _then(_$VariationModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      options: freezed == options
+          ? _value.options
+          : options // ignore: cast_nullable_to_non_nullable
+              as String?,
+      discountPrice: freezed == discountPrice
+          ? _value.discountPrice
+          : discountPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VariationModelImpl implements _VariationModel {
+  _$VariationModelImpl(
+      {this.id,
+      this.sku,
+      this.name,
+      this.price,
+      this.options,
+      @JsonKey(name: "discount_price") this.discountPrice});
+
+  factory _$VariationModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VariationModelImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? sku;
+  @override
+  final String? name;
+  @override
+  final double? price;
+  @override
+  final String? options;
+  @override
+  @JsonKey(name: "discount_price")
+  final double? discountPrice;
+
+  @override
+  String toString() {
+    return 'VariationModel(id: $id, sku: $sku, name: $name, price: $price, options: $options, discountPrice: $discountPrice)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VariationModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.sku, sku) || other.sku == sku) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.options, options) || other.options == options) &&
+            (identical(other.discountPrice, discountPrice) ||
+                other.discountPrice == discountPrice));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, sku, name, price, options, discountPrice);
+
+  /// Create a copy of VariationModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VariationModelImplCopyWith<_$VariationModelImpl> get copyWith =>
+      __$$VariationModelImplCopyWithImpl<_$VariationModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VariationModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _VariationModel implements VariationModel {
+  factory _VariationModel(
+          {final int? id,
+          final String? sku,
+          final String? name,
+          final double? price,
+          final String? options,
+          @JsonKey(name: "discount_price") final double? discountPrice}) =
+      _$VariationModelImpl;
+
+  factory _VariationModel.fromJson(Map<String, dynamic> json) =
+      _$VariationModelImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get sku;
+  @override
+  String? get name;
+  @override
+  double? get price;
+  @override
+  String? get options;
+  @override
+  @JsonKey(name: "discount_price")
+  double? get discountPrice;
+
+  /// Create a copy of VariationModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VariationModelImplCopyWith<_$VariationModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,6 +9,7 @@ import 'package:shop/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:shop/features/auth/data/repowsitory_implemrntion/repository_implementation.dart';
 import 'package:shop/features/auth/doman/repository/repository.dart';
 import 'package:shop/features/auth/doman/use_cases/login_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/register_use_case.dart';
 import 'package:shop/features/cart/data/repo/cart_repository_implementation.dart';
 import 'package:shop/features/cart/domain/repo/cart_repository.dart';
 import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dart';
@@ -33,6 +34,10 @@ import 'package:shop/features/orders/domain/usecases/my_orders_use_case.dart';
 import 'package:shop/features/product/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/product/domain/repository/repository.dart';
 import 'package:shop/features/product/domain/use_cases/get_product_details_use_case.dart';
+import 'package:shop/features/settings/data/repo/settings_repo_impl.dart';
+import 'package:shop/features/settings/domain/repo/settings_repo.dart';
+import 'package:shop/features/settings/domain/usecases/get_cities_use_case.dart';
+import 'package:shop/features/settings/domain/usecases/get_countries_use_case.dart';
 
 final getIt = GetIt.instance;
 
@@ -53,6 +58,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(
       () => GetProductsByCategoriesUseCase(discoverRepository: getIt()));
   getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(() => RegisterUseCase(authRepository: getIt()));
   getIt.registerLazySingleton(() => AddToCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(() => GetMyCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(
@@ -61,6 +67,8 @@ Future<void> init() async {
       () => RemoveItemToCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(() => CheckoutUseCase(checkoutRepo: getIt()));
   getIt.registerLazySingleton(() => MyOrdersUseCase(myOrdersRepo: getIt()));
+  getIt.registerLazySingleton(() => GetCitiesUseCase(settingsRepo: getIt()));
+  getIt.registerLazySingleton(() => GetCountriesUseCase(settingsRepo: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
@@ -96,6 +104,8 @@ Future<void> init() async {
       () => CheckoutRepoImpl(networkClient: getIt()));
   getIt.registerLazySingleton<MyOrdersRepo>(
       () => MyOrdersRepoImpl(networkClient: getIt()));
+  getIt.registerLazySingleton<SettingsRepo>(
+      () => SettingsRepoImpl(networkClient: getIt()));
 
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));

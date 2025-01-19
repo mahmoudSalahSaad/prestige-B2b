@@ -40,13 +40,13 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
               json['display_price_value'] as Map<String, dynamic>),
       barcode: json['barcode'] as String?,
       sku: json['sku'] as String?,
+      options: json['options'] as String?,
       unit: json['unit'] as String?,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       isVariable: json['is_variable'] as bool?,
       variations: (json['variations'] as List<dynamic>?)
-              ?.map((e) =>
-                  ProductDetailsModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => VariationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       quantity: (json['item_quantity'] as num?)?.toInt() ?? 0,
@@ -78,6 +78,7 @@ Map<String, dynamic> _$$ProductDetailsModelImplToJson(
       'display_price_value': instance.price,
       'barcode': instance.barcode,
       'sku': instance.sku,
+      'options': instance.options,
       'unit': instance.unit,
       'images': instance.images,
       'is_variable': instance.isVariable,
@@ -118,4 +119,25 @@ Map<String, dynamic> _$$TaxIdImplToJson(_$TaxIdImpl instance) =>
       'rate': instance.rate,
       'is_default': instance.isDefault,
       'is_active': instance.isActive,
+    };
+
+_$VariationModelImpl _$$VariationModelImplFromJson(Map<String, dynamic> json) =>
+    _$VariationModelImpl(
+      id: (json['id'] as num?)?.toInt(),
+      sku: json['sku'] as String?,
+      name: json['name'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+      options: json['options'] as String?,
+      discountPrice: (json['discount_price'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$$VariationModelImplToJson(
+        _$VariationModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'sku': instance.sku,
+      'name': instance.name,
+      'price': instance.price,
+      'options': instance.options,
+      'discount_price': instance.discountPrice,
     };

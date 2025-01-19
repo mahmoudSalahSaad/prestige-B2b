@@ -1,5 +1,6 @@
 class EndPoints {
   static const String login = '/customers/login';
+  static const String register = '/customers/register';
   static const String categories = '/categories';
   static const String categoriesChildern = '/categories/children';
   static const String sliders = '/sliders';
@@ -14,4 +15,6 @@ class EndPoints {
   static String myCart = "/my-cart";
   static String checkout = "/orders/checkout";
   static String myOrders = "/my-orders";
+  static String getCountries = "/countries";
+  static String getCities(int countryId) => "/countries/$countryId/cities";
 }

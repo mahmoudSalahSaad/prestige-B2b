@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:shop/core/base/base_response.dart';
 import 'package:shop/core/services/network/end_points.dart';
 import 'package:shop/core/services/network/network_client.dart';
@@ -25,7 +26,36 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
       type: type,
     );
     return result.fold((l) => Left(l), (r) {
-      print("Tokkkkken====>${r.data.toString()}");
+      UserModel userModel = UserModel.fromJson(r.data);
+      return Right(userModel);
+    });
+  }
+
+  @override
+  Future<Either<ErrorModel, UserModel>> register(
+      {required AuthEntity parameters}) async {
+    NetworkCallType type = NetworkCallType.post;
+    FormData formData = FormData.fromMap({
+      'email': parameters.email,
+      'password': parameters.password,
+      "name": parameters.name,
+      "phone": parameters.phone,
+      "address": parameters.address,
+      "postal_code": parameters.postalCode,
+      'password_confirmation': parameters.confirmPassword,
+      'city_id': parameters.cityId,
+      'country_id': parameters.countryId,
+      "attachment": parameters.attachment != null
+          ? await MultipartFile.fromFile(parameters.attachment ?? '')
+          : "",
+    });
+    Either<ErrorModel, BaseResponse> result = await networkClient.call(
+      data: {},
+      formData: formData,
+      url: EndPoints.register,
+      type: type,
+    );
+    return result.fold((l) => Left(l), (r) {
       UserModel userModel = UserModel.fromJson(r.data);
       return Right(userModel);
     });

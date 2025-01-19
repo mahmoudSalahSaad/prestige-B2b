@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/auth/doman/entity/auth_entity.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 
@@ -57,14 +59,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     emailController: emailController,
                     passwordController: passwordController,
                   ),
-                  // Align(
-                  //   child: TextButton(
-                  //     child: const Text("Forgot password"),
-                  //     onPressed: () {
-
-                  //     },
-                  //   ),
-                  // ),
+                  Align(
+                    child: TextButton(
+                      child: const Text("Forgot password"),
+                      onPressed: () {
+                        NavigationService.push(Routes.forgetPassword);
+                      },
+                    ),
+                  ),
                   SizedBox(
                     height:
                         size.height > 700 ? size.height * 0.1 : defaultPadding,
@@ -100,18 +102,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const Text("Don't have an account?"),
-                  //     TextButton(
-                  //       onPressed: () {
-                  //        //// Navigator.pushNamed(context, signUpScreenRoute);
-                  //       },
-                  //       child: const Text("Sign up"),
-                  //     )
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () {
+                          //// Navigator.pushNamed(context, signUpScreenRoute);
+                          NavigationService.push(Routes.register);
+                        },
+                        child: const Text("Sign up"),
+                      )
+                    ],
+                  ),
                 ],
               ),
             )

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
+import 'package:shop/features/home/data/models/items_model.dart';
 import 'package:shop/features/product/data/models/item_details_model.dart';
 import 'package:shop/features/product/domain/entity/product_entity.dart';
 import 'package:shop/features/product/domain/use_cases/get_product_details_use_case.dart';
@@ -37,10 +38,15 @@ class ProductsDetailsController extends _$ProductsDetailsController {
   onIncrement() {
     int count = state.requireValue.productDetails!.product!.quantity!.toInt();
     count++;
-    state = AsyncData(ProductsDetailsState(
+    state = AsyncData(
+      ProductsDetailsState(
         productDetails: state.requireValue.productDetails!.copyWith(
-            product: state.requireValue.productDetails!.product!
-                .copyWith(quantity: count))));
+          product: state.requireValue.productDetails!.product!.copyWith(
+            quantity: count,
+          ),
+        ),
+      ),
+    );
   }
 
   onDecrement() {
@@ -50,9 +56,30 @@ class ProductsDetailsController extends _$ProductsDetailsController {
     if (count < 1) {
       count = 1;
     }
-    state = AsyncData(ProductsDetailsState(
+    state = AsyncData(
+      ProductsDetailsState(
         productDetails: state.requireValue.productDetails!.copyWith(
-            product: state.requireValue.productDetails!.product!
-                .copyWith(quantity: count))));
+          product: state.requireValue.productDetails!.product!
+              .copyWith(quantity: count),
+        ),
+      ),
+    );
+  }
+
+  selectVariation(VariationModel variation) {
+    state = AsyncData(
+      ProductsDetailsState(
+        variationID: variation.id,
+        productDetails: state.requireValue.productDetails!.copyWith(
+          product: state.requireValue.productDetails!.product!.copyWith(
+              price: PriceModel(
+            hasDiscount: variation.discountPrice != 0 ? true : false,
+            afterDiscount: variation.price ?? 0,
+            beforeDiscount:
+                (variation.price ?? 0) + (variation.discountPrice ?? 0),
+          )),
+        ),
+      ),
+    );
   }
 }

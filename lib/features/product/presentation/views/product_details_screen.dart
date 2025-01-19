@@ -54,15 +54,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                         productID:
                                             data.productDetails?.product?.id ??
                                                 0,
-                                        variationID: data
-                                                    .productDetails
-                                                    ?.product
-                                                    ?.variations
-                                                    .isNotEmpty ??
-                                                false
-                                            ? data.productDetails?.product
-                                                ?.variations.first.id
-                                            : null))
+                                        variationID: data.variationID))
                                     .then((value) {
                                   Alerts.showSnackBar("Product added to cart",
                                       alertsType: AlertsType.success);
@@ -167,6 +159,100 @@ class ProductDetailsScreen extends ConsumerWidget {
                                       .onDecrement();
                                 },
                               ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (data.productDetails?.product?.variations
+                                      .isNotEmpty ??
+                                  false)
+                                Text(
+                                  "Variations",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              if (data.productDetails?.product?.variations
+                                      .isNotEmpty ??
+                                  false)
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              if (data.productDetails?.product?.variations
+                                      .isNotEmpty ??
+                                  false)
+                                SizedBox(
+                                  width: deviceWidth,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                        children: List.generate(
+                                            data.productDetails?.product
+                                                    ?.variations.length ??
+                                                0,
+                                            (index) => InkWell(
+                                                  onTap: () {
+                                                    ref
+                                                        .read(productsDetailsControllerProvider(
+                                                                productSlug ??
+                                                                    "product-1")
+                                                            .notifier)
+                                                        .selectVariation(data
+                                                            .productDetails!
+                                                            .product!
+                                                            .variations[index]);
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: index == 0
+                                                            ? 0
+                                                            : defaultPadding /
+                                                                2),
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade200,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        border: Border.all(
+                                                          color: ref
+                                                                      .watch(productsDetailsControllerProvider(
+                                                                          productSlug ??
+                                                                              "product-1"))
+                                                                      .requireValue
+                                                                      .variationID ==
+                                                                  data
+                                                                      .productDetails
+                                                                      ?.product
+                                                                      ?.variations[
+                                                                          index]
+                                                                      .id
+                                                              ? primaryColor
+                                                              : Theme.of(
+                                                                      context)
+                                                                  .hintColor
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                        ),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                            "${data.productDetails?.product?.variations[index].options}"),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ))),
+                                  ),
+                                )
                             ],
                           ),
                         ),

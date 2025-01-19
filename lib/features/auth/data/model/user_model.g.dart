@@ -77,17 +77,3 @@ Map<String, dynamic> _$$AuthrizationModelImplToJson(
     <String, dynamic>{
       'token': instance.token,
     };
-
-_$CityModelImpl _$$CityModelImplFromJson(Map<String, dynamic> json) =>
-    _$CityModelImpl(
-      id: (json['id'] as num?)?.toInt(),
-      name: json['name'] as String?,
-      slug: json['slug'] as String?,
-    );
-
-Map<String, dynamic> _$$CityModelImplToJson(_$CityModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'slug': instance.slug,
-    };

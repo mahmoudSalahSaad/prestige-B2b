@@ -27,10 +27,11 @@ class ProductDetailsModel with _$ProductDetailsModel {
     @JsonKey(name: "display_price_value") final PriceModel? price,
     final String? barcode,
     final String? sku,
+    final String? options,
     final String? unit,
     final List<String>? images,
     @JsonKey(name: "is_variable") final bool? isVariable,
-    @Default([]) final List<ProductDetailsModel> variations,
+    @Default([]) final List<VariationModel> variations,
     @Default(0) @JsonKey(name: "item_quantity") final int? quantity,
     @JsonKey(name: "is_active") final int? isActive,
     @JsonKey(name: "is_featured") final int? isFeatured,
@@ -66,4 +67,19 @@ class TaxId with _$TaxId {
   }) = _TaxId;
 
   factory TaxId.fromJson(Map<String, dynamic> json) => _$TaxIdFromJson(json);
+}
+
+@freezed
+class VariationModel with _$VariationModel {
+  factory VariationModel({
+    final int? id,
+    final String? sku,
+    final String? name,
+    final double? price,
+    final String? options,
+    @JsonKey(name: "discount_price") final double? discountPrice,
+  }) = _VariationModel;
+
+  factory VariationModel.fromJson(Map<String, dynamic> json) =>
+      _$VariationModelFromJson(json);
 }
