@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
   const OtpScreen({super.key});
@@ -62,6 +64,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     ElevatedButton(
                       onPressed: () {
                         // if (formKey.currentState!.validate()) {}
+                        NavigationService.push(Routes.resetPassword);
                       },
                       child: const Text("Send"),
                     ),
