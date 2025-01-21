@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/password_text_feild_widget.dart';
+import 'package:shop/features/auth/doman/entity/auth_entity.dart';
+import 'package:shop/features/auth/presentation/controller/forgot_password_controller.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -12,7 +14,7 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
-  final foemKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final passwordTextEditingController = TextEditingController();
   final confirmPasswordTextEditingController = TextEditingController();
   @override
@@ -52,26 +54,49 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     ),
                     const SizedBox(height: defaultPadding),
                     Form(
-                        key: foemKey,
+                        key: formKey,
                         child: Column(
                           children: [
                             PasswordTextEditingController(
                               controller: passwordTextEditingController,
                               validate: passwordValidator.call,
                               hintText: "Password",
+                              onChanged: (str) {
+                                passwordTextEditingController.text = str;
+                                setState(() {});
+                              },
                             ),
                             const SizedBox(height: defaultPadding),
                             PasswordTextEditingController(
                               controller: confirmPasswordTextEditingController,
-                              validate: passwordValidator.call,
+                              validate: (str) {
+                                if (str == passwordTextEditingController.text) {
+                                  return null;
+                                } else {
+                                  return "Password does not match";
+                                }
+                              },
                               hintText: "Confirm Password",
+                              onChanged: (str) {
+                                confirmPasswordTextEditingController.text = str;
+                                setState(() {});
+                              },
                             ),
                           ],
                         )),
                     const SizedBox(height: defaultPadding),
                     ElevatedButton(
                       onPressed: () {
-                        // if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+                          ref
+                              .read(forgotPasswordControllerProvider.notifier)
+                              .resetPassword(AuthEntity(
+                                  email: "",
+                                  password: passwordTextEditingController.text,
+                                  confirmPassword:
+                                      confirmPasswordTextEditingController
+                                          .text));
+                        }
                       },
                       child: const Text("Submit"),
                     ),

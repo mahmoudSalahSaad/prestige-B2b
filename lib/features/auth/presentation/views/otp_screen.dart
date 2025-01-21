@@ -4,6 +4,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
+import 'package:shop/features/auth/presentation/controller/forgot_password_controller.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
   const OtpScreen({super.key});
@@ -63,23 +64,24 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     const SizedBox(height: defaultPadding),
                     ElevatedButton(
                       onPressed: () {
-                        // if (formKey.currentState!.validate()) {}
-                        NavigationService.push(Routes.resetPassword);
+                         if (formKey.currentState!.validate()) {
+                          ref.read(forgotPasswordControllerProvider.notifier).verify( otp.text);
+                         }
                       },
                       child: const Text("Send"),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("60 sec left to try again"),
-                        TextButton(
-                          onPressed: () {
-                            //// Navigator.pushNamed(context, logInScreenRoute);
-                          },
-                          child: const Text("Resend"),
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     const Text("60 sec left to try again"),
+                    //     TextButton(
+                    //       onPressed: () {
+                    //         //// Navigator.pushNamed(context, logInScreenRoute);
+                    //       },
+                    //       child: const Text("Resend"),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
               )

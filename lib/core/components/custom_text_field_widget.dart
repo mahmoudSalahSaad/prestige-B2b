@@ -16,6 +16,7 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.suffixIcon,
     this.maxLines,
     this.prefixWidget,
+    this.initialValue,
   });
 
   final TextEditingController controller;
@@ -28,6 +29,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final int? maxLines;
   final Widget? prefixWidget;
+  final String? initialValue;
 
 /*************  ✨ Codeium Command ⭐  *************/
   /// Returns a [TextFormField] widget with a email address keyboard type.
@@ -42,6 +44,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      initialValue: initialValue,
       maxLines: maxLines ?? 1,
       onChanged: onChanged,
       readOnly: readOnly ?? false,

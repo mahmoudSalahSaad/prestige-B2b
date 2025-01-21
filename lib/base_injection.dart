@@ -8,8 +8,11 @@ import 'package:shop/data/datasource/remote/dio/dio_client.dart';
 import 'package:shop/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:shop/features/auth/data/repowsitory_implemrntion/repository_implementation.dart';
 import 'package:shop/features/auth/doman/repository/repository.dart';
+import 'package:shop/features/auth/doman/use_cases/change_password_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/login_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/register_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/remove_account_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/update_profile_use_case.dart';
 import 'package:shop/features/cart/data/repo/cart_repository_implementation.dart';
 import 'package:shop/features/cart/domain/repo/cart_repository.dart';
 import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dart';
@@ -69,6 +72,12 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => MyOrdersUseCase(myOrdersRepo: getIt()));
   getIt.registerLazySingleton(() => GetCitiesUseCase(settingsRepo: getIt()));
   getIt.registerLazySingleton(() => GetCountriesUseCase(settingsRepo: getIt()));
+  getIt.registerLazySingleton(
+      () => UpdateProfileUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => ChangePasswordUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => RemoveAccountUseCase(authRepository: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(

@@ -37,10 +37,18 @@ class LoginController extends _$LoginController {
       AppPrefs prefs = getIt();
 
       print("Tokkkkken======>${r.authorization?.token}");
-      await prefs.save(PrefKeys.token, r.authorization?.token ?? "");
       await prefs.save(PrefKeys.user, (r.user?.toJson() ?? "").toString());
       state = AsyncData(state.requireValue.copyWith(userModel: r));
       NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
     });
+  }
+
+  saveUser(User userModel) async {
+    AppPrefs prefs = getIt();
+
+    state = AsyncData(state.requireValue.copyWith(
+        userModel: state.requireValue.userModel?.copyWith(user: userModel)));
+    await prefs.save(PrefKeys.user,
+        (state.requireValue.userModel?.toJson() ?? "").toString());
   }
 }

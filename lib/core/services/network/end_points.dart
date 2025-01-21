@@ -1,11 +1,15 @@
 class EndPoints {
   static const String login = '/customers/login';
   static const String register = '/customers/register';
+  static const String changePassword = '/customers/change-password';
+  static const String removeAccount = '/customers/remove-account';
+  static const String updateProfile = '/customers/update-profile';
   static const String categories = '/categories';
   static const String categoriesChildern = '/categories/children';
   static const String sliders = '/sliders';
   static const String productList = '/products';
   static String productdetails(String slug) => '/products/product-1';
+
   static String getProductsByCategory(String category) =>
       '/categories/$category/products';
 
@@ -16,5 +20,7 @@ class EndPoints {
   static String checkout = "/orders/checkout";
   static String myOrders = "/my-orders";
   static String getCountries = "/countries";
+  static String resetPassword = "/customers/reset-password";
+  static String forgetPassword = "/customers/forget-password/send-otp";
   static String getCities(int countryId) => "/countries/$countryId/cities";
 }

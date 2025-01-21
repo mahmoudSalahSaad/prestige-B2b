@@ -33,6 +33,8 @@ abstract class $CitiesStateCopyWith<$Res> {
       _$CitiesStateCopyWithImpl<$Res, CitiesState>;
   @useResult
   $Res call({List<CityModel>? cities, CityModel? selectedCity});
+
+  $CityModelCopyWith<$Res>? get selectedCity;
 }
 
 /// @nodoc
@@ -64,6 +66,20 @@ class _$CitiesStateCopyWithImpl<$Res, $Val extends CitiesState>
               as CityModel?,
     ) as $Val);
   }
+
+  /// Create a copy of CitiesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CityModelCopyWith<$Res>? get selectedCity {
+    if (_value.selectedCity == null) {
+      return null;
+    }
+
+    return $CityModelCopyWith<$Res>(_value.selectedCity!, (value) {
+      return _then(_value.copyWith(selectedCity: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -75,6 +91,9 @@ abstract class _$$CitiesStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({List<CityModel>? cities, CityModel? selectedCity});
+
+  @override
+  $CityModelCopyWith<$Res>? get selectedCity;
 }
 
 /// @nodoc
@@ -138,15 +157,13 @@ class _$CitiesStateImpl implements _CitiesState {
         (other.runtimeType == runtimeType &&
             other is _$CitiesStateImpl &&
             const DeepCollectionEquality().equals(other._cities, _cities) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedCity, selectedCity));
+            (identical(other.selectedCity, selectedCity) ||
+                other.selectedCity == selectedCity));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_cities),
-      const DeepCollectionEquality().hash(selectedCity));
+      runtimeType, const DeepCollectionEquality().hash(_cities), selectedCity);
 
   /// Create a copy of CitiesState
   /// with the given fields replaced by the non-null parameter values.

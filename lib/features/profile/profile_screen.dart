@@ -30,6 +30,7 @@ class ProfileScreen extends ConsumerWidget {
             // isPro: true, if the user is pro
             press: () {
               // Navigator.pushNamed(context, userInfoScreenRoute);
+              NavigationService.push(Routes.updateProfileScreen);
             },
           ),
           Padding(

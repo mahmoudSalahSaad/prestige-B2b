@@ -20,6 +20,13 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>we need access to your gallary</string>
+	<key>NSCameraUsageDescription</key>
+	<string>we need access to camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>we need access to microphone</string>
+
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

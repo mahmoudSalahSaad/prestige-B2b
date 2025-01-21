@@ -11,9 +11,15 @@ class AuthEntity extends Equatable {
   final String? postalCode;
   final int? cityId;
   final String? attachment;
+  final String? oldPassword;
+  final String? otp;
+  final String? token;
 
   const AuthEntity({
     required this.email,
+    this.token,
+    this.oldPassword,
+    this.otp,
     required this.password,
     this.name,
     this.phone,

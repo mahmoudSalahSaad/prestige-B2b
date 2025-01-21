@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
 import 'package:shop/core/routing/navigation_services.dart';
-import 'package:shop/core/routing/routes.dart';
+import 'package:shop/features/auth/presentation/controller/forgot_password_controller.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -54,8 +54,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                     const SizedBox(height: defaultPadding),
                     ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
-                        NavigationService.push(Routes.otpPassword);
+                        if (formKey.currentState!.validate()) {
+                          ref
+                              .read(forgotPasswordControllerProvider.notifier)
+                              .forgotPassword(emailController.text);
+                        }
                       },
                       child: const Text("Send"),
                     ),
