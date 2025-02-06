@@ -46,6 +46,8 @@ class BestSellers extends ConsumerWidget {
                       brandName: demoPopularProducts[index].brandName,
                       title: demoPopularProducts[index].title,
                       price: demoPopularProducts[index].price,
+                      priceBeforeDiscount: demoPopularProducts[index].priceAfetDiscount,
+                      hasDiscount: false,
                       priceAfetDiscount: demoPopularProducts[index]
                           .priceAfetDiscount
                           .toString(),

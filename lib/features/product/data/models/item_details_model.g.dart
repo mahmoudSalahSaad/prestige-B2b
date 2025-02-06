@@ -49,7 +49,7 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
               ?.map((e) => VariationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      quantity: (json['item_quantity'] as num?)?.toInt() ?? 0,
+      quantity: (json['item_quantity'] as num?)?.toInt() ?? 1,
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
       thumbnailUrl: json['thumbnail_url'] as String?,

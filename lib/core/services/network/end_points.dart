@@ -23,4 +23,8 @@ class EndPoints {
   static String resetPassword = "/customers/reset-password";
   static String forgetPassword = "/customers/forget-password/send-otp";
   static String getCities(int countryId) => "/countries/$countryId/cities";
+  static String getAddresses = "/addresses";
+  static String addAddress = "/addresses/store";
+  static String updateAddress(String id) => "/addresses/$id/update";
+  static String deleteAddress(String id) => "/addresses/$id/delete";
 }

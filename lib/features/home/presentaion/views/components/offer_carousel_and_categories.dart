@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
 
 import 'categories.dart';
 import 'offers_carousel.dart';
 
-class OffersCarouselAndCategories extends StatelessWidget {
+class OffersCarouselAndCategories extends ConsumerWidget {
   const OffersCarouselAndCategories({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // While loading use 👇
         // const OffersSkelton(),
-        const OffersCarousel(),
+        if (ref
+            .watch(slidersControllerProvider)
+            .requireValue
+            .sliders
+            .isNotEmpty)
+          const OffersCarousel(),
         const SizedBox(height: defaultPadding / 2),
         Padding(
           padding: const EdgeInsets.all(defaultPadding),

@@ -13,4 +13,7 @@ class Routes {
   static const String myOrdersScreen = '/my_orders_screen';
   static const String updateProfileScreen = '/update_profile_screen';
   static const String chnagePasswordScreen = '/change_password_screen';
+  static const String addressScreen = '/address_screen';
+  static const String createNewAddressScreen = '/create_new_address_screen';
+  static const String updateAddressScreen = '/update_address_screen';
 }

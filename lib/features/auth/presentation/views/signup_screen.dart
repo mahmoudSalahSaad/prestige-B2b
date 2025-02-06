@@ -12,6 +12,7 @@ import 'package:shop/features/settings/presentation/controllers/cities_controlle
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
 
 import '../../../../constants.dart';
+import '../../../../core/resources/values_manager.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -119,35 +120,76 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         counteryController: counteryController,
                         addressController: addressController),
                     const SizedBox(height: defaultPadding),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ref
-                              .read(registerControllerProvider.notifier)
-                              .register(
-                                  parameters: AuthEntity(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      name: nameController.text,
-                                      phone: phoneController.text,
-                                      confirmPassword:
-                                          confirmPasswordController.text,
-                                      address: addressController.text,
-                                      attachment: file?.path ?? "",
-                                      cityId: ref
-                                          .watch(citiesControllerProvider)
-                                          .requireValue
-                                          .selectedCity!
-                                          .id,
-                                      countryId: ref
-                                          .watch(countriesControllerProvider)
-                                          .requireValue
-                                          .selectedCountry!
-                                          .id,
-                                      postalCode: postalCodeController.text));
-                        } else {}
-                      },
-                      child: const Text("Continue"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: ref.watch(registerControllerProvider).isLoading
+                              ? () {}
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    ref
+                                        .read(
+                                            registerControllerProvider.notifier)
+                                        .register(
+                                            parameters: AuthEntity(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                                name: nameController.text,
+                                                phone: phoneController.text,
+                                                confirmPassword:
+                                                    confirmPasswordController
+                                                        .text,
+                                                address: addressController.text,
+                                                attachment: file?.path ?? "",
+                                                cityId: ref
+                                                    .watch(
+                                                        citiesControllerProvider)
+                                                    .requireValue
+                                                    .selectedCity!
+                                                    .id,
+                                                countryId: ref
+                                                    .watch(
+                                                        countriesControllerProvider)
+                                                    .requireValue
+                                                    .selectedCountry!
+                                                    .id,
+                                                postalCode:
+                                                    postalCodeController.text));
+                                  } else {}
+                                },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child:
+                                ref.watch(registerControllerProvider).isLoading
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: deviceWidth * 0.3),
+                                        child: Text(
+                                          "Register",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium
+                                              ?.copyWith(color: Colors.white),
+                                        )),
+                          ),
+                        )
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

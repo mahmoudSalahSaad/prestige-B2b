@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
+import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/features/auth/presentation/controller/forgot_password_controller.dart';
 
@@ -52,15 +53,54 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                           prefixIcon: "assets/icons/Message.svg",
                         )),
                     const SizedBox(height: defaultPadding),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          ref
-                              .read(forgotPasswordControllerProvider.notifier)
-                              .forgotPassword(emailController.text);
-                        }
-                      },
-                      child: const Text("Send"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: ref
+                                  .watch(forgotPasswordControllerProvider)
+                                  .isLoading
+                              ? () {}
+                              : () {
+                                  if (formKey.currentState!.validate()) {
+                                    ref
+                                        .read(forgotPasswordControllerProvider
+                                            .notifier)
+                                        .forgotPassword(emailController.text);
+                                  } else {}
+                                },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ref
+                                    .watch(forgotPasswordControllerProvider)
+                                    .isLoading
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: deviceWidth * 0.3),
+                                    child: Text(
+                                      "Send",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(color: Colors.white),
+                                    )),
+                          ),
+                        ),
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/features/Address/data/models/address_model.dart';
+import 'package:shop/features/Address/presentation/pages/address_screen.dart';
+import 'package:shop/features/Address/presentation/pages/create_new_address.dart';
+import 'package:shop/features/Address/presentation/pages/update_address_screen.dart';
 import 'package:shop/features/auth/presentation/views/forgot_password_screen.dart';
 import 'package:shop/features/auth/presentation/views/login_screen.dart';
 import 'package:shop/features/auth/presentation/views/otp_screen.dart';
@@ -66,11 +70,25 @@ class RouteGenerator {
 
       return platformPageRoute(ProductByCategoryScreen(
         categoryName: args['category_name'],
+        title: args['title'],
       ));
     }
 
     if (settings.name == Routes.checkoutScreen) {
       return platformPageRoute(const CheckOutScreen());
+    }
+    if (settings.name == Routes.createNewAddressScreen) {
+      return platformPageRoute(const CreateNewAddressScreen());
+    }
+    if (settings.name == Routes.updateAddressScreen) {
+      final args = settings.arguments as Map<String, dynamic>;
+      return platformPageRoute(UpdateAddressScreen(
+        addressModel: args['addressModel'] as AddressModel,
+      ));
+    }
+
+    if (settings.name == Routes.addressScreen) {
+      return platformPageRoute(const AddressScreen());
     }
     if (settings.name == Routes.updateProfileScreen) {
       return platformPageRoute(const UpdatePorfileScreen());

@@ -13,12 +13,16 @@ class ProductCard extends StatelessWidget {
     this.priceAfetDiscount,
     this.dicountpercent,
     required this.press,
+    this.priceBeforeDiscount,
+    required this.hasDiscount,
   });
   final String image, brandName, title;
   final double price;
   final String? priceAfetDiscount;
   final int? dicountpercent;
   final VoidCallback press;
+  final double? priceBeforeDiscount;
+  final bool hasDiscount;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +75,9 @@ class ProductCard extends StatelessWidget {
                       ? Row(
                           children: [
                             Text(
-                              "$priceAfetDiscount",
+                              hasDiscount
+                                  ? "$priceAfetDiscount"
+                                  : "$priceBeforeDiscount",
                               style: const TextStyle(
                                 color: Color(0xFF31B0D8),
                                 fontWeight: FontWeight.w500,

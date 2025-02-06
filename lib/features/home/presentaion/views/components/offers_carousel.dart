@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
@@ -23,7 +21,6 @@ class OffersCarousel extends ConsumerStatefulWidget {
 class _OffersCarouselState extends ConsumerState<OffersCarousel> {
   int _selectedIndex = 0;
   late PageController _pageController;
-  late Timer _timer;
 
   // Offers List
   List offers = [

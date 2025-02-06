@@ -53,7 +53,7 @@ This shop app template comes with 100+ screens. Some of these pages are Splash, 
 ### Loading is no longer boring [New update V1.1] [Doc](https://abu-anwar.gitbook.io/fluttershop-doc/custom-loading)
 
 The progress indicator that comes with Flutter, by default is okay in most places, but not in every place. Especially when you build an ecommerce app. This is why we have created a custom loading effect that boosts your user engagement even during the loading process. This kind of loading is common in popular apps like YouTube and LinkedIn. It's a small detail, but it makes a big difference.
-![FlutterShop Custom loading](https://public-files.gumroad.com/qqnmt9nu5677thkq1961tlwj405u)
+
 
 ## Screens on the FlutterShop E-commerce Template
 
@@ -198,19 +198,11 @@ As mentioned, this kit contains 100+ nicely crafted minimal screens that cover e
 - Empty payment
 - Empty wallet
 
-and MORE!!!! 🤩
 
-If you want to learn how to build ecommerce template on Flutter [watch the playlist on YouTube](https://youtube.com/playlist?list=PLxUBb2A_UUy8OlaNZpS2mfL8xpHcnd_Af), In the first video, we start by making a neat onboarding screen for our shopping app. This works on both Android and iOS because it's made with Flutter. In the next video, we tackle the 'Sign In' and 'Forgot Password' screens, adding some unique error messages. The third video covers the 'Sign Up' and OTP processes. The fourth one is fun – we create the main homepage. In the fifth, we dive into the product page, and in the sixth, we craft an order page with cool features like 'swipe to delete.' Finally, in the seventh video, we design the user profile page.
 
-Visit FlutterLibrary.com to Download the [Flutter e-commerce app template](https://www.flutterlibrary.com/templates/e-commerce-app) & other templates, and components.
+Visit FlutterLibrary.com to Download the [Flutter e-commerce app template]() & other templates, and components.
 
 
 
 </br >
 </br >
-<!-- Buttons -->
-<p align="center">
-  <a href="https://app.gumroad.com/checkout?product=uxznc&option=B3wWhE6QH46cfm31C7jEmQ%3D%3D&quantity=1&referrer=https://github.com" style="text-decoration: none;" target="_blank">
-    <img src="readme image/buy_now_btn.png" alt="Full template" style="margin-right: 32px; width: 170px; height: 50px;">
-  </a>
-</p>

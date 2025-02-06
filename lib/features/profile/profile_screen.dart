@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/list_tile/divider_list_tile.dart';
-import 'package:shop/core/components/network_image_with_loader.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/services/local/cache_consumer.dart';
@@ -33,18 +32,18 @@ class ProfileScreen extends ConsumerWidget {
               NavigationService.push(Routes.updateProfileScreen);
             },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding * 1.5),
-            child: GestureDetector(
-              onTap: () {},
-              child: const AspectRatio(
-                aspectRatio: 1.8,
-                child:
-                    NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //       horizontal: defaultPadding, vertical: defaultPadding * 1.5),
+          //   child: GestureDetector(
+          //     onTap: () {},
+          //     child: const AspectRatio(
+          //       aspectRatio: 1.8,
+          //       child:
+          //           NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
+          //     ),
+          //   ),
+          // ),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -78,6 +77,7 @@ class ProfileScreen extends ConsumerWidget {
             svgSrc: "assets/icons/Address.svg",
             press: () {
               // Navigator.pushNamed(context, addressesScreenRoute);
+              NavigationService.push(Routes.addressScreen);
             },
           ),
           ProfileMenuListTile(
@@ -168,6 +168,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () {
               AppPrefs appPrefs = getIt();
               appPrefs.clear();
+              appPrefs.deleteSecuredData();
               NavigationService.pushNamedAndRemoveUntil(Routes.login);
             },
             minLeadingWidth: 24,

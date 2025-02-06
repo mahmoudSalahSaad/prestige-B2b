@@ -30,7 +30,10 @@ class ExpansionCategory extends ConsumerWidget {
           //     arguments: {'category_name': slug});
 
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => ProductByCategoryScreen(categoryName: slug)));
+              builder: (_) => ProductByCategoryScreen(
+                    categoryName: slug,
+                    title: title,
+                  )));
         }
       },
       child: ExpansionTile(
@@ -51,8 +54,10 @@ class ExpansionCategory extends ConsumerWidget {
               ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) =>
-                          ProductByCategoryScreen(categoryName: slug)));
+                      builder: (_) => ProductByCategoryScreen(
+                            categoryName: slug,
+                            title: title,
+                          )));
                 },
                 title: Text(
                   subCategory[index].name ?? "",

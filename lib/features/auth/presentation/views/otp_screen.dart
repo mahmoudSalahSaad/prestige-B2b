@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
-import 'package:shop/core/routing/navigation_services.dart';
-import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/auth/presentation/controller/forgot_password_controller.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
@@ -64,9 +62,11 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     const SizedBox(height: defaultPadding),
                     ElevatedButton(
                       onPressed: () {
-                         if (formKey.currentState!.validate()) {
-                          ref.read(forgotPasswordControllerProvider.notifier).verify( otp.text);
-                         }
+                        if (formKey.currentState!.validate()) {
+                          ref
+                              .read(forgotPasswordControllerProvider.notifier)
+                              .verify(otp.text);
+                        }
                       },
                       child: const Text("Send"),
                     ),

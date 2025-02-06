@@ -60,22 +60,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     passwordController: passwordController,
                   ),
                   Align(
+                    alignment: Alignment.centerRight,
                     child: TextButton(
-                      child: const Text("Forgot password"),
+                      child: const Text("Forgot password?"),
                       onPressed: () {
                         NavigationService.push(Routes.forgetPassword);
                       },
                     ),
                   ),
-                  SizedBox(
-                    height:
-                        size.height > 700 ? size.height * 0.1 : defaultPadding,
+                  const SizedBox(
+                    height: defaultPadding,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: ref.watch(loginControllerProvider).isLoading
+                      InkWell(
+                        onTap: ref.watch(loginControllerProvider).isLoading
                             ? () {}
                             : () {
                                 if (_formKey.currentState!.validate()) {
@@ -88,17 +88,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                                   passwordController.text));
                                 } else {}
                               },
-                        child: ref.watch(loginControllerProvider).isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: CircularProgressIndicator(
-                                  color: primaryColor,
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.3),
-                                child: const Text("Log in")),
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ref.watch(loginControllerProvider).isLoading
+                              ? const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 0.3),
+                                  child: Text(
+                                    "Log in",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: Colors.white),
+                                  )),
+                        ),
                       ),
                     ],
                   ),

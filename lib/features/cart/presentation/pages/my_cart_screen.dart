@@ -18,75 +18,108 @@ class MyCartScreen extends ConsumerWidget {
       body: ref.watch(cartControllerProvider).when(
             data: (data) => SingleChildScrollView(
               padding: EdgeInsets.all(16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 300.h,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: data.cartModel?.items?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          child: SecondaryProductCard(
-                              itemId: data.cartModel?.items?[index].id ?? 0,
-                              total: data.cartModel?.items?[index].total ?? 0,
-                              quantity:
-                                  data.cartModel?.items?[index].quantity ?? 0,
-                              image:
-                                  '${data.cartModel?.items?[index].product?.thumbnail}',
-                              brandName:
-                                  data.cartModel?.items?[index].product?.slug ??
-                                      "",
-                              title:
-                                  "${data.cartModel?.items?[index].product?.name}",
-                              price: data.cartModel?.items?[index].product
-                                      ?.price?.afterDiscount ??
-                                  0),
-                        );
-                      },
+              child: data.cartModel?.items?.isEmpty ?? true
+                  ? Column(
+                      children: [
+                        Image.asset(
+                            "assets/Illustration/EmptyState_lightTheme.png"),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text("Empty Cart")
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 300.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: data.cartModel?.items?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: 10.h),
+                                child: SecondaryProductCard(
+                                    itemId:
+                                        data.cartModel?.items?[index].id ?? 0,
+                                    total: (data.cartModel?.items?[index]
+                                                .product?.price?.hasDiscount ??
+                                            false)
+                                        ? (data.cartModel!.items![index].quantity! *
+                                            (data
+                                                    .cartModel
+                                                    ?.items?[index]
+                                                    .product
+                                                    ?.price
+                                                    ?.afterDiscount ??
+                                                0))
+                                        : (data.cartModel!.items![index].quantity! *
+                                            (data
+                                                    .cartModel
+                                                    ?.items?[index]
+                                                    .product
+                                                    ?.price
+                                                    ?.beforeDiscount ??
+                                                0)),
+                                    quantity:
+                                        data.cartModel?.items?[index].quantity ?? 0,
+                                    image: '${data.cartModel?.items?[index].product?.thumbnail}',
+                                    brandName: data.cartModel?.items?[index].product?.slug ?? "",
+                                    title: "${data.cartModel?.items?[index].product?.name}",
+                                    price: (data.cartModel?.items?[index].product?.price?.hasDiscount ?? false) ? (data.cartModel?.items?[index].product?.price?.afterDiscount ?? 0) : (data.cartModel?.items?[index].product?.price?.beforeDiscount ?? 0)),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          "Have coupon?",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const CouponWidget(),
+                        SizedBox(height: 16.h),
+                        PaymentSummaryWidget(
+                          total: data.cartModel?.total ?? 0,
+                          discount: data.cartModel?.discount ?? 0,
+                          shippingAmount: data.cartModel?.shippingAmount ?? 0,
+                          pormationAmount:
+                              data.cartModel?.promotionDiscount ?? 0,
+                        ),
+                        SizedBox(height: 16.h),
+                        InkWell(
+                          onTap: () {
+                            NavigationService.push(Routes.checkoutScreen);
+                          },
+                          child: Container(
+                            width: deviceWidth,
+                            padding: EdgeInsets.all(16.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.r),
+                              color: primaryColor,
+                            ),
+                            child: Text(
+                              "Place Order",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Text(
-                    "Have coupon?",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const CouponWidget(),
-                  SizedBox(height: 16.h),
-                  PaymentSummaryWidget(
-                    total: data.cartModel?.total ?? 0,
-                    discount: data.cartModel?.discount ?? 0,
-                    shippingAmount: data.cartModel?.shippingAmount ?? 0,
-                    pormationAmount: data.cartModel?.promotionDiscount ?? 0,
-                  ),
-                  SizedBox(height: 16.h),
-                  InkWell(
-                    onTap: () {
-                      NavigationService.push(Routes.checkoutScreen);
-                    },
-                    child: Container(
-                      width: deviceWidth,
-                      padding: EdgeInsets.all(16.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        color: primaryColor,
-                      ),
-                      child: Text(
-                        "Place Order",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(color: Colors.white),
-                      ),
-                    ),
-                  )
-                ],
-              ),
             ),
-            error: (error, stackTrace) => Text("$error"),
+            error: (error, stackTrace) => Column(
+              children: [
+                Image.asset("assets/Illustration/EmptyState_lightTheme.png"),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text("Empty Cart")
+              ],
+            ),
             loading: () => const Center(
               child: CircularProgressIndicator(),
             ),

@@ -54,6 +54,7 @@ class DiscoverScreen extends ConsumerWidget {
 
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => ProductByCategoryScreen(
+                                    title : data.categories[index].name! , 
                                     categoryName:
                                         data.categories[index].slug!)));
                           }

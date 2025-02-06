@@ -48,6 +48,10 @@ class PopularProducts extends ConsumerWidget {
                       brandName: data.products[index].slug ?? "",
                       title: data.products[index].name ?? "",
                       price: data.products[index].price!.beforeDiscount ?? 0,
+                      priceBeforeDiscount:
+                          data.products[index].price!.beforeDiscount,
+                      hasDiscount:
+                          data.products[index].price!.hasDiscount ?? false,
                       priceAfetDiscount:
                           data.products[index].price!.beforeDiscount != null
                               ? data.products[index].price!.beforeDiscount

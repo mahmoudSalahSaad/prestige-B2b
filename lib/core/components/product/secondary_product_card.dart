@@ -117,44 +117,6 @@ class SecondaryProductCard extends ConsumerWidget {
                         children: [
                           InkWell(
                             onTap: ref
-                                    .watch(
-                                        addItemToCartControllerProvider(itemId))
-                                    .isLoading
-                                ? () {}
-                                : () => ref
-                                    .read(
-                                        addItemToCartControllerProvider(itemId)
-                                            .notifier)
-                                    .addItemToCart(
-                                        parameters: CartEntity(
-                                            quantity: 0, productID: itemId)),
-                            child: Container(
-                              height: 24,
-                              width: 24,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: primaryMaterialColor.shade100,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: ref
-                                        .watch(addItemToCartControllerProvider(
-                                            itemId))
-                                        .isLoading
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.black87,
-                                        strokeWidth: 2,
-                                      )
-                                    : const Icon(Icons.add, size: 16),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: defaultPadding / 3),
-                          Text("$quantity",
-                              style: const TextStyle(fontSize: 12)),
-                          const SizedBox(width: defaultPadding / 3),
-                          InkWell(
-                            onTap: ref
                                     .watch(removeItemToCartControllerProvider(
                                         itemId))
                                     .isLoading
@@ -187,7 +149,45 @@ class SecondaryProductCard extends ConsumerWidget {
                                     : const Icon(Icons.remove, size: 16),
                               ),
                             ),
-                          )
+                          ),
+                          const SizedBox(width: defaultPadding / 3),
+                          Text("$quantity",
+                              style: const TextStyle(fontSize: 12)),
+                          const SizedBox(width: defaultPadding / 3),
+                          InkWell(
+                            onTap: ref
+                                    .watch(
+                                        addItemToCartControllerProvider(itemId))
+                                    .isLoading
+                                ? () {}
+                                : () => ref
+                                    .read(
+                                        addItemToCartControllerProvider(itemId)
+                                            .notifier)
+                                    .addItemToCart(
+                                        parameters: CartEntity(
+                                            quantity: 0, productID: itemId)),
+                            child: Container(
+                              height: 24,
+                              width: 24,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: primaryMaterialColor.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: ref
+                                        .watch(addItemToCartControllerProvider(
+                                            itemId))
+                                        .isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.black87,
+                                        strokeWidth: 2,
+                                      )
+                                    : const Icon(Icons.add, size: 16),
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     ],

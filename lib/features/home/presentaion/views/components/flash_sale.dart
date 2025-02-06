@@ -61,7 +61,8 @@ class FlashSale extends ConsumerWidget {
                       press: () {
                         // Navigator.pushNamed(context, productDetailsScreenRoute,
                         // arguments: index.isEven);
-                      },
+                      }, hasDiscount: false,
+                      
                     ),
                   ),
                 ),

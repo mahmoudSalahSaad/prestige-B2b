@@ -37,6 +37,7 @@ class BookmarkScreen extends StatelessWidget {
                     press: () {
                       // Navigator.pushNamed(context, productDetailsScreenRoute);
                     },
+                    hasDiscount: false,
                   );
                 },
                 childCount: demoPopularProducts.length,

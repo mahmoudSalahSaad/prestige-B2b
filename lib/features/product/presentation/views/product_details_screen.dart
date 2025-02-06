@@ -45,20 +45,48 @@ class ProductDetailsScreen extends ConsumerWidget {
                         press: ref.watch(cartControllerProvider).isLoading
                             ? () {}
                             : () async {
-                                await ref
-                                    .read(cartControllerProvider.notifier)
-                                    .addToCart(CartEntity(
-                                        quantity: data.productDetails?.product
-                                                ?.quantity ??
-                                            0,
-                                        productID:
-                                            data.productDetails?.product?.id ??
+                                print("variationID====>${data.variationID}");
+                                print(
+                                    "variationID====>${data.productDetails!.product!.variations.isNotEmpty}");
+                                if (data.productDetails!.product!.variations
+                                    .isNotEmpty) {
+                                  if (data.variationID != null) {
+                                    await ref
+                                        .read(cartControllerProvider.notifier)
+                                        .addToCart(CartEntity(
+                                            quantity: data.productDetails
+                                                    ?.product?.quantity ??
                                                 0,
-                                        variationID: data.variationID))
-                                    .then((value) {
-                                  Alerts.showSnackBar("Product added to cart",
-                                      alertsType: AlertsType.success);
-                                });
+                                            productID: data.productDetails
+                                                    ?.product?.id ??
+                                                0,
+                                            variationID: data.variationID))
+                                        .then((value) {
+                                      Alerts.showSnackBar(
+                                          "Product added to cart",
+                                          alertsType: AlertsType.success);
+                                    });
+                                  } else {
+                                    Alerts.showSnackBar(
+                                        "Please select a variation",
+                                        alertsType: AlertsType.success);
+                                  }
+                                } else {
+                                  await ref
+                                      .read(cartControllerProvider.notifier)
+                                      .addToCart(CartEntity(
+                                          quantity: data.productDetails?.product
+                                                  ?.quantity ??
+                                              0,
+                                          productID: data.productDetails
+                                                  ?.product?.id ??
+                                              0,
+                                          variationID: data.variationID))
+                                      .then((value) {
+                                    Alerts.showSnackBar("Product added to cart",
+                                        alertsType: AlertsType.success);
+                                  });
+                                }
                               },
                       )
                     :
@@ -120,48 +148,6 @@ class ProductDetailsScreen extends ConsumerWidget {
                             ),
                           );
                         },
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(defaultPadding),
-                        sliver: SliverToBoxAdapter(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: UnitPrice(
-                                  price: (data.productDetails?.product?.price
-                                              ?.beforeDiscount ??
-                                          0) *
-                                      (data.productDetails?.product?.quantity ??
-                                          0),
-                                  priceAfterDiscount: (data.productDetails
-                                              ?.product?.price?.afterDiscount ??
-                                          0) *
-                                      (data.productDetails?.product?.quantity ??
-                                          0),
-                                ),
-                              ),
-                              ProductQuantity(
-                                numOfItem:
-                                    data.productDetails?.product?.quantity ?? 0,
-                                onIncrement: () {
-                                  ref
-                                      .read(ProductsDetailsControllerProvider(
-                                              productSlug ?? "product-1")
-                                          .notifier)
-                                      .onIncrement();
-                                },
-                                onDecrement: () {
-                                  ref
-                                      .read(ProductsDetailsControllerProvider(
-                                              productSlug ?? "product-1")
-                                          .notifier)
-                                      .onDecrement();
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
@@ -260,6 +246,63 @@ class ProductDetailsScreen extends ConsumerWidget {
                       SliverPadding(
                         padding: const EdgeInsets.all(defaultPadding),
                         sliver: SliverToBoxAdapter(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: UnitPrice(
+                                  price: (data.productDetails?.product?.price
+                                              ?.hasDiscount ??
+                                          false)
+                                      ? (data.productDetails?.product?.price
+                                                  ?.beforeDiscount ??
+                                              0) *
+                                          (data.productDetails?.product
+                                                  ?.quantity ??
+                                              0)
+                                      : 0,
+                                  priceAfterDiscount: (data.productDetails
+                                              ?.product?.price?.hasDiscount ??
+                                          false)
+                                      ? (data.productDetails?.product?.price
+                                                  ?.afterDiscount ??
+                                              0) *
+                                          (data.productDetails?.product
+                                                  ?.quantity ??
+                                              0)
+                                      : (data.productDetails?.product?.price
+                                                  ?.beforeDiscount ??
+                                              0) *
+                                          (data.productDetails?.product
+                                                  ?.quantity ??
+                                              0),
+                                ),
+                              ),
+                              ProductQuantity(
+                                numOfItem:
+                                    data.productDetails?.product?.quantity ?? 0,
+                                onIncrement: () {
+                                  ref
+                                      .read(ProductsDetailsControllerProvider(
+                                              productSlug ?? "product-1")
+                                          .notifier)
+                                      .onIncrement();
+                                },
+                                onDecrement: () {
+                                  ref
+                                      .read(ProductsDetailsControllerProvider(
+                                              productSlug ?? "product-1")
+                                          .notifier)
+                                      .onDecrement();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        sliver: SliverToBoxAdapter(
                           child: Text(
                             "You may also like",
                             style: Theme.of(context).textTheme.titleSmall!,
@@ -285,6 +328,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                     index.isEven ? 20.99.toString() : null,
                                 dicountpercent: index.isEven ? 25 : null,
                                 press: () {},
+                                hasDiscount: false,
                               ),
                             ),
                           ),
@@ -429,6 +473,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                       index.isEven ? 20.99.toString() : null,
                                   dicountpercent: index.isEven ? 25 : null,
                                   press: () {},
+                                  hasDiscount: false,
                                 ),
                               ),
                             ),

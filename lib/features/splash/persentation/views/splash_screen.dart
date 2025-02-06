@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/base_injection.dart';
 import 'package:shop/core/resources/assets_menager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
+import 'package:shop/core/services/local/cache_consumer.dart';
+import 'package:shop/core/services/local/storage_keys.dart';
+import 'package:shop/features/auth/data/model/user_model.dart';
+import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_products_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
@@ -21,10 +28,29 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
       await ref.watch(countriesControllerProvider.notifier).getCountries();
-      ref.watch(slidersControllerProvider.notifier);
-      ref.watch(getCategoriesControllerProvider.notifier);
-      ref.watch(getProductsControllerProvider.notifier);
-      NavigationService.push(Routes.login);
+      ref.watch(slidersControllerProvider);
+      ref.watch(getProductsControllerProvider);
+      AppPrefs appPrefs = getIt();
+
+      String? user = await appPrefs.getSecuredData(PrefKeys.user);
+      print("user $user");
+
+      if (user != null && user.isNotEmpty) {
+        ref.watch(getCategoriesControllerProvider);
+
+        User userModel = User.fromJson(json.decode(user));
+        print("UserModel $userModel");
+        Future.delayed(Duration.zero, () {
+          ref
+              .read(loginControllerProvider.notifier)
+              .saveUserModel(UserModel(user: userModel));
+        });
+
+        setState(() {});
+        NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
+      } else {
+        NavigationService.pushNamedAndRemoveUntil(Routes.login);
+      }
     });
   }
 

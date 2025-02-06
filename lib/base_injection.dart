@@ -6,6 +6,12 @@ import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/dio/dio_client.dart';
 import 'package:shop/data/datasource/remote/dio/logging_interceptor.dart';
+import 'package:shop/features/Address/data/repo/address_repo_impl.dart';
+import 'package:shop/features/Address/domain/repo/address_repo.dart';
+import 'package:shop/features/Address/domain/usecases/add_address_use_case.dart';
+import 'package:shop/features/Address/domain/usecases/delete_address_use_case.dart';
+import 'package:shop/features/Address/domain/usecases/get_address_use_case.dart';
+import 'package:shop/features/Address/domain/usecases/update_address_use_case.dart';
 import 'package:shop/features/auth/data/repowsitory_implemrntion/repository_implementation.dart';
 import 'package:shop/features/auth/doman/repository/repository.dart';
 import 'package:shop/features/auth/doman/use_cases/change_password_use_case.dart';
@@ -78,6 +84,10 @@ Future<void> init() async {
       () => ChangePasswordUseCase(authRepository: getIt()));
   getIt.registerLazySingleton(
       () => RemoveAccountUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(() => AddAddressUseCase(addressRepo: getIt()));
+  getIt.registerLazySingleton(() => UpdateAddressUseCase(addressRepo: getIt()));
+  getIt.registerLazySingleton(() => DeleteAddressUseCase(addressRepo: getIt()));
+  getIt.registerLazySingleton(() => GetAddressUseCase(addressRepo: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
@@ -115,6 +125,8 @@ Future<void> init() async {
       () => MyOrdersRepoImpl(networkClient: getIt()));
   getIt.registerLazySingleton<SettingsRepo>(
       () => SettingsRepoImpl(networkClient: getIt()));
+  getIt.registerLazySingleton<AddressRepo>(
+      () => AddressRepoImpl(networkClient: getIt()));
 
   // getIt.registerLazySingleton<HomeRepository>(
   //     () => HomeRepositoryImplemention(networkClient: getIt()));

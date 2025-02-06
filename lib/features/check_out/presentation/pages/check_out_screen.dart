@@ -4,9 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/product/secondary_product_card.dart';
 import 'package:shop/core/extensions/num_extensions.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
+import 'package:shop/features/Address/data/models/address_model.dart';
+import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
 import 'package:shop/features/check_out/presentation/controllers/checkout_controller.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CheckOutScreen extends ConsumerWidget {
   const CheckOutScreen({super.key});
@@ -25,7 +30,23 @@ class CheckOutScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const LocationCardWidget(),
+              ref.watch(addressControllerProvider).isLoading
+                  ? const Skeletonizer(
+                      enabled: true,
+                      child: LocationCardWidget(),
+                    )
+                  : LocationCardWidget(
+                      isCheckout: true,
+                      addressModel: ref
+                              .watch(addressControllerProvider)
+                              .requireValue
+                              .defaultAddress ??
+                          ref
+                              .watch(addressControllerProvider)
+                              .requireValue
+                              .addresses
+                              .first,
+                    ),
               const SizedBox(
                 height: 16,
               ),
@@ -118,20 +139,48 @@ class CheckOutScreen extends ConsumerWidget {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: SecondaryProductCard(
-                        itemId: ref
-                                .read(cartControllerProvider)
-                                .requireValue
-                                .cartModel
-                                ?.items?[index]
-                                .id ??
-                            0,
-                        total: ref
-                                .read(cartControllerProvider)
-                                .requireValue
-                                .cartModel
-                                ?.items?[index]
-                                .total ??
-                            0,
+                        itemId:
+                            ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].id ??
+                                0,
+                        total: (ref
+                                    .read(cartControllerProvider)
+                                    .requireValue
+                                    .cartModel
+                                    ?.items?[index]
+                                    .product
+                                    ?.price
+                                    ?.hasDiscount ??
+                                false)
+                            ? (ref
+                                    .watch(cartControllerProvider)
+                                    .requireValue
+                                    .cartModel!
+                                    .items![index]
+                                    .quantity! *
+                                (ref
+                                        .read(cartControllerProvider)
+                                        .requireValue
+                                        .cartModel
+                                        ?.items?[index]
+                                        .product
+                                        ?.price
+                                        ?.afterDiscount ??
+                                    0))
+                            : (ref
+                                    .watch(cartControllerProvider)
+                                    .requireValue
+                                    .cartModel!
+                                    .items![index]
+                                    .quantity! *
+                                (ref
+                                        .read(cartControllerProvider)
+                                        .requireValue
+                                        .cartModel
+                                        ?.items?[index]
+                                        .product
+                                        ?.price
+                                        ?.beforeDiscount ??
+                                    0)),
                         quantity: ref
                                 .watch(cartControllerProvider)
                                 .requireValue
@@ -139,27 +188,10 @@ class CheckOutScreen extends ConsumerWidget {
                                 ?.items?[index]
                                 .quantity ??
                             0,
-                        image:
-                            '${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.thumbnail}',
-                        brandName: ref
-                                .read(cartControllerProvider)
-                                .requireValue
-                                .cartModel
-                                ?.items?[index]
-                                .product
-                                ?.slug ??
-                            "",
-                        title:
-                            "${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.name}",
-                        price: ref
-                                .read(cartControllerProvider)
-                                .requireValue
-                                .cartModel
-                                ?.items?[index]
-                                .product
-                                ?.price
-                                ?.afterDiscount ??
-                            0),
+                        image: '${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.thumbnail}',
+                        brandName: ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.slug ?? "",
+                        title: "${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.name}",
+                        price: (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.hasDiscount ?? false) ? (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.afterDiscount ?? 0) : (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.beforeDiscount ?? 0)),
                   );
                 },
               ),
@@ -212,33 +244,71 @@ class ConfirmButton extends ConsumerWidget {
   }
 }
 
-class LocationCardWidget extends StatelessWidget {
+class LocationCardWidget extends ConsumerWidget {
   const LocationCardWidget({
     super.key,
+    this.addressModel,
+    this.isCheckout = false,
   });
 
+  final AddressModel? addressModel;
+  final bool? isCheckout;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(addressControllerProvider).requireValue;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.5)),
+        border: Border.all(
+            color: state.defaultAddress?.id == addressModel?.id
+                ? primaryColor
+                : Theme.of(context).hintColor.withOpacity(0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const AddressIconWidget(),
-              const SizedBox(
-                width: 10,
+              Row(
+                children: [
+                  AddressIconWidget(
+                    isDefault: state.defaultAddress?.id == addressModel?.id,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      addressModel?.name ?? "Office",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  )
+                ],
               ),
-              Text(
-                "Office",
-                style: Theme.of(context).textTheme.titleMedium,
-              )
+              isCheckout ?? false
+                  ? InkWell(
+                      onTap: () {
+                        NavigationService.push(Routes.addressScreen);
+                      },
+                      child: Text(
+                        "Change Address",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: primaryColor),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        NavigationService.push(Routes.updateAddressScreen,
+                            arguments: {"addressModel": addressModel});
+                      },
+                      child: const Icon(Icons.edit, color: primaryColor))
             ],
           ),
           const SizedBox(
@@ -251,14 +321,15 @@ class LocationCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "8674 Thea Squares\nWatsicatown, VT 33351,Irbid, Jordan",
+                    addressModel?.line1 ??
+                        "8674 Thea Squares\nWatsicatown, VT 33351,Irbid, Jordan",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   Text(
-                    "+964 123456789",
+                    "${"${addressModel?.city?.name}"}, ${addressModel?.country?.name}",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -285,9 +356,8 @@ class LocationCardWidget extends StatelessWidget {
 }
 
 class AddressIconWidget extends StatelessWidget {
-  const AddressIconWidget({
-    super.key,
-  });
+  const AddressIconWidget({super.key, this.isDefault = false});
+  final bool? isDefault;
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +371,7 @@ class AddressIconWidget extends StatelessWidget {
             color: Colors.grey.shade200,
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.greenAccent,
+              color: isDefault ?? (false) ? primaryColor : Colors.greenAccent,
             ),
           ),
           child: Column(
@@ -317,7 +387,7 @@ class AddressIconWidget extends StatelessWidget {
           height: 16,
           width: 16,
           decoration: BoxDecoration(
-            color: Colors.greenAccent,
+            color: isDefault ?? (false) ? primaryColor : Colors.greenAccent,
             shape: BoxShape.circle,
             border: Border.all(
               color: Colors.white,

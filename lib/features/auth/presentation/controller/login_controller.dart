@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
@@ -35,11 +37,17 @@ class LoginController extends _$LoginController {
       state = AsyncError(l, StackTrace.current);
     }, (r) async {
       AppPrefs prefs = getIt();
-
+      prefs.save(PrefKeys.token, r.authorization?.token);
       print("Tokkkkken======>${r.authorization?.token}");
-      await prefs.save(PrefKeys.user, (r.user?.toJson() ?? "").toString());
+      await saveUser(r.user!);
       state = AsyncData(state.requireValue.copyWith(userModel: r));
       NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
+    });
+  }
+
+  saveUserModel(UserModel userModel) async {
+    await Future.delayed(Duration.zero, () {
+      state = AsyncData(LoginState(userModel: userModel));
     });
   }
 
@@ -48,7 +56,8 @@ class LoginController extends _$LoginController {
 
     state = AsyncData(state.requireValue.copyWith(
         userModel: state.requireValue.userModel?.copyWith(user: userModel)));
-    await prefs.save(PrefKeys.user,
-        (state.requireValue.userModel?.toJson() ?? "").toString());
+    await prefs.saveSecuredData(
+        PrefKeys.user, json.encode((userModel.toJson())));
+    print("Done11");
   }
 }
