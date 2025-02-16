@@ -15,6 +15,7 @@ part 'address_state.dart';
 @riverpod
 class AddressController extends _$AddressController {
   @override
+
   /// This function is used to initialize the state of the [AddressController]
   ///
   /// It returns a [Future] that completes with the initial state of the
@@ -59,15 +60,17 @@ class AddressController extends _$AddressController {
   /// [address]: The address to be added to the list.
   void addItem(AddressModel address) {
     // Create a new list from the current addresses and add the new address
-    final updatedAddresses = List<AddressModel>.from(state.requireValue.addresses)..add(address);
+    final updatedAddresses =
+        List<AddressModel>.from(state.requireValue.addresses)..add(address);
 
     // Update the state with the new list of addresses
     state = AsyncData(state.requireValue.copyWith(addresses: updatedAddresses));
   }
 
   void removeItem(AddressModel address) {
-    final updatedAddresses = List<AddressModel>.from(state.requireValue.addresses)
-      ..removeWhere((item) => item.id == address.id);
+    final updatedAddresses =
+        List<AddressModel>.from(state.requireValue.addresses)
+          ..removeWhere((item) => item.id == address.id);
     state = AsyncData(state.requireValue.copyWith(addresses: updatedAddresses));
   }
 
@@ -105,12 +108,35 @@ class AddressController extends _$AddressController {
     final appPrefs = getIt<AppPrefs>();
 
     // Get the default address JSON string from the preferences
-    final defaultAddressJson = await appPrefs.get("default_address");
+    final defaultAddressJson = await appPrefs.get("billing_address");
+    final defaultShippingAddressJson = await appPrefs.get("shipping_address");
 
     // If a default address is found, decode it and update the state
     if (defaultAddressJson != null) {
-      final defaultAddress = AddressModel.fromJson(json.decode(defaultAddressJson));
-      state = AsyncData(state.requireValue.copyWith(defaultAddress: defaultAddress));
+      final defaultAddress =
+          AddressModel.fromJson(json.decode(defaultAddressJson));
+      state = AsyncData(
+          state.requireValue.copyWith(billingAddress: defaultAddress));
     }
+    if (defaultShippingAddressJson != null) {
+      final defaultAddress =
+          AddressModel.fromJson(json.decode(defaultShippingAddressJson));
+      state = AsyncData(
+          state.requireValue.copyWith(shippingAddress: defaultAddress));
+    }
+  }
+
+  selectBillingAddress(AddressModel address) async {
+    final appPrefs = getIt<AppPrefs>();
+    // Save the address as a JSON string in the preferences
+    await appPrefs.save("billing_address", json.encode(address.toJson()));
+    state = AsyncData(state.requireValue.copyWith(billingAddress: address));
+  }
+
+  selectShippingAddress(AddressModel address) async {
+    final appPrefs = getIt<AppPrefs>();
+    // Save the address as a JSON string in the preferences
+    await appPrefs.save("shipping_address", json.encode(address.toJson()));
+    state = AsyncData(state.requireValue.copyWith(shippingAddress: address));
   }
 }

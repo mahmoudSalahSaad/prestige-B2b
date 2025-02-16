@@ -26,6 +26,7 @@ mixin _$AddressModel {
   String? get line2 => throw _privateConstructorUsedError;
   CityModel? get city => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
+  @JsonKey(name: "postal_code")
   String? get postalCode => throw _privateConstructorUsedError;
   CityModel? get country => throw _privateConstructorUsedError;
   @JsonKey(name: "is_billing_address")
@@ -56,7 +57,7 @@ abstract class $AddressModelCopyWith<$Res> {
       String? line2,
       CityModel? city,
       String? state,
-      String? postalCode,
+      @JsonKey(name: "postal_code") String? postalCode,
       CityModel? country,
       @JsonKey(name: "is_billing_address") bool? isBillingAddress,
       @JsonKey(name: "is_shipping_address") bool? isShippingAddress});
@@ -179,7 +180,7 @@ abstract class _$$AddressModelImplCopyWith<$Res>
       String? line2,
       CityModel? city,
       String? state,
-      String? postalCode,
+      @JsonKey(name: "postal_code") String? postalCode,
       CityModel? country,
       @JsonKey(name: "is_billing_address") bool? isBillingAddress,
       @JsonKey(name: "is_shipping_address") bool? isShippingAddress});
@@ -269,7 +270,7 @@ class _$AddressModelImpl implements _AddressModel {
       this.line2,
       this.city,
       this.state,
-      this.postalCode,
+      @JsonKey(name: "postal_code") this.postalCode,
       this.country,
       @JsonKey(name: "is_billing_address") this.isBillingAddress,
       @JsonKey(name: "is_shipping_address") this.isShippingAddress});
@@ -290,6 +291,7 @@ class _$AddressModelImpl implements _AddressModel {
   @override
   final String? state;
   @override
+  @JsonKey(name: "postal_code")
   final String? postalCode;
   @override
   final CityModel? country;
@@ -354,7 +356,7 @@ abstract class _AddressModel implements AddressModel {
       final String? line2,
       final CityModel? city,
       final String? state,
-      final String? postalCode,
+      @JsonKey(name: "postal_code") final String? postalCode,
       final CityModel? country,
       @JsonKey(name: "is_billing_address") final bool? isBillingAddress,
       @JsonKey(name: "is_shipping_address")
@@ -376,6 +378,7 @@ abstract class _AddressModel implements AddressModel {
   @override
   String? get state;
   @override
+  @JsonKey(name: "postal_code")
   String? get postalCode;
   @override
   CityModel? get country;

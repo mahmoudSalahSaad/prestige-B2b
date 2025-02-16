@@ -14,7 +14,7 @@ _$ItemDetailsModelImpl _$$ItemDetailsModelImplFromJson(
           : ProductDetailsModel.fromJson(
               json['product'] as Map<String, dynamic>),
       related: (json['related'] as List<dynamic>?)
-          ?.map((e) => ProductDetailsModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ProductModels.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -49,7 +49,7 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
               ?.map((e) => VariationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      quantity: (json['item_quantity'] as num?)?.toInt() ?? 1,
+      quantity: (json['item_quantity'] as num?)?.toInt() ?? 0,
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
       thumbnailUrl: json['thumbnail_url'] as String?,

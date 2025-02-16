@@ -28,6 +28,7 @@ import 'package:shop/features/cart/domain/usecases/remove_item_tocart_use_case.d
 import 'package:shop/features/check_out/data/repo/checkout_repo_impl.dart';
 import 'package:shop/features/check_out/domain/repo/checkout_repo.dart';
 import 'package:shop/features/check_out/domain/usecases/checkout_use_case.dart';
+import 'package:shop/features/check_out/domain/usecases/get_shipping_methods.dart';
 import 'package:shop/features/discover/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/discover/domain/repository/repository.dart';
 import 'package:shop/features/discover/domain/use_cases/get_full_categories_use_case.dart';
@@ -88,6 +89,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateAddressUseCase(addressRepo: getIt()));
   getIt.registerLazySingleton(() => DeleteAddressUseCase(addressRepo: getIt()));
   getIt.registerLazySingleton(() => GetAddressUseCase(addressRepo: getIt()));
+  getIt.registerLazySingleton(
+      () => GetShippingMethodsUseCase(checkoutRepo: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(

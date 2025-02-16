@@ -8,7 +8,9 @@ class AddressEntity extends Equatable {
   final String line;
   final bool isBillingAddress;
   final bool isShippingAddress;
-
+  final String? line2;
+  final String? state;
+  final String? postalCode;
   const AddressEntity(
       {required this.name,
       required this.cityId,
@@ -16,6 +18,9 @@ class AddressEntity extends Equatable {
       required this.line,
       required this.isBillingAddress,
       required this.isShippingAddress,
+      this.line2,
+      this.state,
+      this.postalCode,
       this.id});
   @override
   List<Object> get props =>

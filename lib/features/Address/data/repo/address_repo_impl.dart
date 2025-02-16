@@ -29,6 +29,9 @@ class AddressRepoImpl extends AddressRepo {
     Map<String, dynamic> data = {
       'name': parameters.name,
       "line1": parameters.line,
+      "line2": parameters.line2,
+      "state": parameters.state,
+      "postal_code": parameters.postalCode,
       "country_id": parameters.countryId,
       "city_id": parameters.cityId,
       "is_billing_address": parameters.isBillingAddress ? 1 : 0,
@@ -109,8 +112,11 @@ class AddressRepoImpl extends AddressRepo {
       "line1": parameters.line,
       "country_id": parameters.countryId,
       "city_id": parameters.cityId,
-      "is_billing_address": parameters.isBillingAddress,
-      "is_shipping_address": parameters.isShippingAddress
+      "line2": parameters.line2,
+      "state": parameters.state,
+      "postal_code": parameters.postalCode,
+      "is_billing_address": parameters.isBillingAddress ? 1 : 0,
+      "is_shipping_address": parameters.isShippingAddress ? 1 : 0
     };
 
     // Call the server to add the address.

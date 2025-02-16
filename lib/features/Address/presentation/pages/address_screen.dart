@@ -91,10 +91,37 @@ class AddressScreen extends ConsumerWidget {
                               padding: const EdgeInsets.only(bottom: 10),
                               child: InkWell(
                                 onTap: () {
-                                  ref
-                                      .read(addressControllerProvider.notifier)
-                                      .selectDefaultAddress(
-                                          data.addresses[index]);
+                                  if (data.addresses[index].isBillingAddress ==
+                                          true &&
+                                      data.addresses[index].isShippingAddress ==
+                                          true) {
+                                    ref
+                                        .read(
+                                            addressControllerProvider.notifier)
+                                        .selectBillingAddress(
+                                            data.addresses[index]);
+                                    ref
+                                        .read(
+                                            addressControllerProvider.notifier)
+                                        .selectShippingAddress(
+                                            data.addresses[index]);
+                                  } else if (data.addresses[index]
+                                              .isBillingAddress ==
+                                          true &&
+                                      data.addresses[index].isShippingAddress ==
+                                          false) {
+                                    ref
+                                        .read(
+                                            addressControllerProvider.notifier)
+                                        .selectBillingAddress(
+                                            data.addresses[index]);
+                                  } else {
+                                    ref
+                                        .read(
+                                            addressControllerProvider.notifier)
+                                        .selectShippingAddress(
+                                            data.addresses[index]);
+                                  }
                                 },
                                 child: LocationCardWidget(
                                   addressModel: data.addresses[index],

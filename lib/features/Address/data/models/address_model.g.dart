@@ -16,7 +16,7 @@ _$AddressModelImpl _$$AddressModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : CityModel.fromJson(json['city'] as Map<String, dynamic>),
       state: json['state'] as String?,
-      postalCode: json['postalCode'] as String?,
+      postalCode: json['postal_code'] as String?,
       country: json['country'] == null
           ? null
           : CityModel.fromJson(json['country'] as Map<String, dynamic>),
@@ -32,7 +32,7 @@ Map<String, dynamic> _$$AddressModelImplToJson(_$AddressModelImpl instance) =>
       'line2': instance.line2,
       'city': instance.city,
       'state': instance.state,
-      'postalCode': instance.postalCode,
+      'postal_code': instance.postalCode,
       'country': instance.country,
       'is_billing_address': instance.isBillingAddress,
       'is_shipping_address': instance.isShippingAddress,

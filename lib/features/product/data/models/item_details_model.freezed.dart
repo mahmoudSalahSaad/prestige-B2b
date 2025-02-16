@@ -21,7 +21,7 @@ ItemDetailsModel _$ItemDetailsModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ItemDetailsModel {
   ProductDetailsModel? get product => throw _privateConstructorUsedError;
-  List<ProductDetailsModel>? get related => throw _privateConstructorUsedError;
+  List<ProductModels>? get related => throw _privateConstructorUsedError;
 
   /// Serializes this ItemDetailsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ItemDetailsModelCopyWith<$Res> {
           ItemDetailsModel value, $Res Function(ItemDetailsModel) then) =
       _$ItemDetailsModelCopyWithImpl<$Res, ItemDetailsModel>;
   @useResult
-  $Res call({ProductDetailsModel? product, List<ProductDetailsModel>? related});
+  $Res call({ProductDetailsModel? product, List<ProductModels>? related});
 
   $ProductDetailsModelCopyWith<$Res>? get product;
 }
@@ -70,7 +70,7 @@ class _$ItemDetailsModelCopyWithImpl<$Res, $Val extends ItemDetailsModel>
       related: freezed == related
           ? _value.related
           : related // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetailsModel>?,
+              as List<ProductModels>?,
     ) as $Val);
   }
 
@@ -97,7 +97,7 @@ abstract class _$$ItemDetailsModelImplCopyWith<$Res>
       __$$ItemDetailsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ProductDetailsModel? product, List<ProductDetailsModel>? related});
+  $Res call({ProductDetailsModel? product, List<ProductModels>? related});
 
   @override
   $ProductDetailsModelCopyWith<$Res>? get product;
@@ -127,7 +127,7 @@ class __$$ItemDetailsModelImplCopyWithImpl<$Res>
       related: freezed == related
           ? _value._related
           : related // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetailsModel>?,
+              as List<ProductModels>?,
     ));
   }
 }
@@ -135,8 +135,7 @@ class __$$ItemDetailsModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ItemDetailsModelImpl implements _ItemDetailsModel {
-  _$ItemDetailsModelImpl(
-      {this.product, final List<ProductDetailsModel>? related})
+  _$ItemDetailsModelImpl({this.product, final List<ProductModels>? related})
       : _related = related;
 
   factory _$ItemDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -144,9 +143,9 @@ class _$ItemDetailsModelImpl implements _ItemDetailsModel {
 
   @override
   final ProductDetailsModel? product;
-  final List<ProductDetailsModel>? _related;
+  final List<ProductModels>? _related;
   @override
-  List<ProductDetailsModel>? get related {
+  List<ProductModels>? get related {
     final value = _related;
     if (value == null) return null;
     if (_related is EqualUnmodifiableListView) return _related;
@@ -193,7 +192,7 @@ class _$ItemDetailsModelImpl implements _ItemDetailsModel {
 abstract class _ItemDetailsModel implements ItemDetailsModel {
   factory _ItemDetailsModel(
       {final ProductDetailsModel? product,
-      final List<ProductDetailsModel>? related}) = _$ItemDetailsModelImpl;
+      final List<ProductModels>? related}) = _$ItemDetailsModelImpl;
 
   factory _ItemDetailsModel.fromJson(Map<String, dynamic> json) =
       _$ItemDetailsModelImpl.fromJson;
@@ -201,7 +200,7 @@ abstract class _ItemDetailsModel implements ItemDetailsModel {
   @override
   ProductDetailsModel? get product;
   @override
-  List<ProductDetailsModel>? get related;
+  List<ProductModels>? get related;
 
   /// Create a copy of ItemDetailsModel
   /// with the given fields replaced by the non-null parameter values.

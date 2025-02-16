@@ -314,21 +314,45 @@ class ProductDetailsScreen extends ConsumerWidget {
                           height: 220,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: 5,
+                            itemCount:
+                                data.productDetails?.related?.length ?? 0,
                             itemBuilder: (context, index) => Padding(
                               padding: EdgeInsets.only(
                                   left: defaultPadding,
-                                  right: index == 4 ? defaultPadding : 0),
+                                  right: index ==
+                                          (data.productDetails?.related
+                                                      ?.length ??
+                                                  0) -
+                                              1
+                                      ? defaultPadding
+                                      : 0),
                               child: ProductCard(
-                                image: productDemoImg2,
-                                title: "Sleeveless Tiered Dobby Swing Dress",
-                                brandName: "LIPSY LONDON",
-                                price: 24.65,
-                                priceAfetDiscount:
-                                    index.isEven ? 20.99.toString() : null,
-                                dicountpercent: index.isEven ? 25 : null,
+                                image: data.productDetails?.related?[index]
+                                        .thumbnail ??
+                                    "",
+                                title:
+                                    data.productDetails?.related?[index].name ??
+                                        "",
+                                brandName: data.productDetails?.related?[index]
+                                        .shortDescription ??
+                                    "",
+                                price: data.productDetails?.related?[index]
+                                        .price?.beforeDiscount ??
+                                    0,
+                                priceBeforeDiscount: data
+                                        .productDetails
+                                        ?.related?[index]
+                                        .price
+                                        ?.beforeDiscount ??
+                                    0,
+                                priceAfetDiscount: data.productDetails
+                                    ?.related?[index].price?.afterDiscount
+                                    .toString(),
+                                dicountpercent: null,
                                 press: () {},
-                                hasDiscount: false,
+                                hasDiscount: data.productDetails
+                                        ?.related?[index].price?.hasDiscount ??
+                                    false,
                               ),
                             ),
                           ),

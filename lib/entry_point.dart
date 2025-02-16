@@ -6,7 +6,6 @@ import 'package:shop/constants.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
 import 'package:shop/features/discover/presentaion/views/discover_screen.dart';
 import 'package:shop/features/home/presentaion/views/home_screen.dart';
-import 'package:shop/screens/bookmark/views/bookmark_screen.dart';
 import 'package:shop/features/profile/profile_screen.dart';
 
 class EntryPoint extends StatefulWidget {
@@ -20,7 +19,7 @@ class _EntryPointState extends State<EntryPoint> {
   final List _pages = const [
     HomeScreen(),
     DiscoverScreen(),
-    BookmarkScreen(),
+
     // EmptyCartScreen(), // if Cart is empty
     MyCartScreen(),
     ProfileScreen(),
@@ -29,7 +28,7 @@ class _EntryPointState extends State<EntryPoint> {
 
   @override
   Widget build(BuildContext context) {
-    SvgPicture svgIcon(String src, {Color? color}) {
+    SvgPicture  svgIcon(String src, {Color? color}) {
       return SvgPicture.asset(
         src,
         height: 24,
@@ -92,7 +91,7 @@ class _EntryPointState extends State<EntryPoint> {
         },
         child: _pages[_currentIndex],
       ),
-      bottomNavigationBar: Container( 
+      bottomNavigationBar: Container(
         padding: const EdgeInsets.only(top: defaultPadding / 2),
         color: Theme.of(context).brightness == Brightness.light
             ? Colors.white
@@ -119,19 +118,13 @@ class _EntryPointState extends State<EntryPoint> {
               icon: svgIcon("assets/icons/Stores.svg"),
               activeIcon:
                   svgIcon("assets/icons/Stores.svg", color: primaryColor),
-              label: "Shop",
+              label: "Home",
             ),
             BottomNavigationBarItem(
               icon: svgIcon("assets/icons/Category.svg"),
               activeIcon:
                   svgIcon("assets/icons/Category.svg", color: primaryColor),
-              label: "Discover",
-            ),
-            BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Bookmark.svg"),
-              activeIcon:
-                  svgIcon("assets/icons/Bookmark.svg", color: primaryColor),
-              label: "Bookmark",
+              label: "Shop",
             ),
             BottomNavigationBarItem(
               icon: svgIcon("assets/icons/Bag.svg"),

@@ -16,4 +16,5 @@ class Routes {
   static const String addressScreen = '/address_screen';
   static const String createNewAddressScreen = '/create_new_address_screen';
   static const String updateAddressScreen = '/update_address_screen';
+  static const String shippingMethodsScreen = '/shipping_methods_screen';
 }

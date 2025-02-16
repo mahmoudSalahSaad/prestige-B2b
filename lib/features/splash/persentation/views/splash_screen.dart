@@ -12,7 +12,6 @@ import 'package:shop/features/auth/data/model/user_model.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_products_controller.dart';
-import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -28,7 +27,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
       await ref.watch(countriesControllerProvider.notifier).getCountries();
-      ref.watch(slidersControllerProvider);
+
       ref.watch(getProductsControllerProvider);
       AppPrefs appPrefs = getIt();
 

@@ -9,7 +9,7 @@ part 'item_details_model.g.dart';
 class ItemDetailsModel with _$ItemDetailsModel {
   factory ItemDetailsModel(
       {final ProductDetailsModel? product,
-      final List<ProductDetailsModel>? related}) = _ItemDetailsModel;
+      final List<ProductModels>? related}) = _ItemDetailsModel;
 
   factory ItemDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$ItemDetailsModelFromJson(json);

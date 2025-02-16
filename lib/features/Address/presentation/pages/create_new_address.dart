@@ -23,6 +23,9 @@ class _CreateNewAddressScreenState
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final lineOneController = TextEditingController();
+  final stateController = TextEditingController();
+  final postalCodeController = TextEditingController();
+  final lineTwoController = TextEditingController();
   final countryIDController = TextEditingController();
   final cityIDController = TextEditingController();
   bool isBillingAddress = false;
@@ -43,26 +46,42 @@ class _CreateNewAddressScreenState
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Image.asset("assets/Illustration/Illustration-4.png"),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    CustomTextFieldWidget(
-                      controller: nameController,
-                      hintText: "Name",
-                      validate: (str) {
-                        if (str != null) {
-                          if (str.isNotEmpty) {
-                            return null;
-                          } else {
-                            return "required";
-                          }
-                        } else {
-                          return "required";
-                        }
-                      },
-                      prefixIcon: "assets/icons/dot.svg",
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 240,
+                          child: Column(
+                            children: [
+                              CustomTextFieldWidget(
+                                controller: nameController,
+                                hintText: "Name",
+                                validate: (str) {
+                                  if (str != null) {
+                                    if (str.isNotEmpty) {
+                                      return null;
+                                    } else {
+                                      return "required";
+                                    }
+                                  } else {
+                                    return "required";
+                                  }
+                                },
+                                prefixIcon: "assets/icons/dot.svg",
+                              ),
+                            ],
+                          ),
+                        ),
+                        Image.asset(
+                          "assets/Illustration/Illustration-4.png",
+                          height: 100,
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -81,12 +100,12 @@ class _CreateNewAddressScreenState
                           return "required";
                         }
                       },
-                      maxLines: 6,
+                      maxLines: 1,
                       prefixWidget: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Icon(
@@ -96,9 +115,92 @@ class _CreateNewAddressScreenState
                                   .color
                                   ?.withOpacity(0.3),
                             ),
-                            const SizedBox(
-                              height: 120,
-                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: lineTwoController,
+                      hintText: "Line 2(Optional)",
+                      maxLines: 1,
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: postalCodeController,
+                      hintText: "Postal Code",
+                      validate: (str) {
+                        if (str != null) {
+                          if (str.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "required";
+                          }
+                        } else {
+                          return "required";
+                        }
+                      },
+                      prefixIcon: "assets/icons/dot.svg",
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: stateController,
+                      hintText: "State(Optional)",
+                      prefixIcon: "assets/icons/dot.svg",
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
                           ],
                         ),
                       ),
@@ -365,6 +467,10 @@ class _CreateNewAddressScreenState
                                                 .id
                                                 .toString(),
                                             line: lineOneController.text,
+                                            line2: lineTwoController.text,
+                                            state: stateController.text,
+                                            postalCode:
+                                                postalCodeController.text,
                                             isBillingAddress: isBillingAddress,
                                             isShippingAddress:
                                                 isShippingAddress));

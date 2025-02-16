@@ -25,6 +25,7 @@ class EndPoints {
   static String getCities(int countryId) => "/countries/$countryId/cities";
   static String getAddresses = "/addresses";
   static String addAddress = "/addresses/store";
+  static String shippingMethods = "/shippings";
   static String updateAddress(String id) => "/addresses/$id/update";
   static String deleteAddress(String id) => "/addresses/$id/delete";
 }

@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AddressState {
   List<AddressModel> get addresses => throw _privateConstructorUsedError;
   AddressModel? get defaultAddress => throw _privateConstructorUsedError;
+  AddressModel? get billingAddress => throw _privateConstructorUsedError;
+  AddressModel? get shippingAddress => throw _privateConstructorUsedError;
 
   /// Create a copy of AddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,9 +34,15 @@ abstract class $AddressStateCopyWith<$Res> {
           AddressState value, $Res Function(AddressState) then) =
       _$AddressStateCopyWithImpl<$Res, AddressState>;
   @useResult
-  $Res call({List<AddressModel> addresses, AddressModel? defaultAddress});
+  $Res call(
+      {List<AddressModel> addresses,
+      AddressModel? defaultAddress,
+      AddressModel? billingAddress,
+      AddressModel? shippingAddress});
 
   $AddressModelCopyWith<$Res>? get defaultAddress;
+  $AddressModelCopyWith<$Res>? get billingAddress;
+  $AddressModelCopyWith<$Res>? get shippingAddress;
 }
 
 /// @nodoc
@@ -54,6 +62,8 @@ class _$AddressStateCopyWithImpl<$Res, $Val extends AddressState>
   $Res call({
     Object? addresses = null,
     Object? defaultAddress = freezed,
+    Object? billingAddress = freezed,
+    Object? shippingAddress = freezed,
   }) {
     return _then(_value.copyWith(
       addresses: null == addresses
@@ -63,6 +73,14 @@ class _$AddressStateCopyWithImpl<$Res, $Val extends AddressState>
       defaultAddress: freezed == defaultAddress
           ? _value.defaultAddress
           : defaultAddress // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
+      billingAddress: freezed == billingAddress
+          ? _value.billingAddress
+          : billingAddress // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
+      shippingAddress: freezed == shippingAddress
+          ? _value.shippingAddress
+          : shippingAddress // ignore: cast_nullable_to_non_nullable
               as AddressModel?,
     ) as $Val);
   }
@@ -80,6 +98,34 @@ class _$AddressStateCopyWithImpl<$Res, $Val extends AddressState>
       return _then(_value.copyWith(defaultAddress: value) as $Val);
     });
   }
+
+  /// Create a copy of AddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressModelCopyWith<$Res>? get billingAddress {
+    if (_value.billingAddress == null) {
+      return null;
+    }
+
+    return $AddressModelCopyWith<$Res>(_value.billingAddress!, (value) {
+      return _then(_value.copyWith(billingAddress: value) as $Val);
+    });
+  }
+
+  /// Create a copy of AddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressModelCopyWith<$Res>? get shippingAddress {
+    if (_value.shippingAddress == null) {
+      return null;
+    }
+
+    return $AddressModelCopyWith<$Res>(_value.shippingAddress!, (value) {
+      return _then(_value.copyWith(shippingAddress: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -90,10 +136,18 @@ abstract class _$$AddressStateImplCopyWith<$Res>
       __$$AddressStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AddressModel> addresses, AddressModel? defaultAddress});
+  $Res call(
+      {List<AddressModel> addresses,
+      AddressModel? defaultAddress,
+      AddressModel? billingAddress,
+      AddressModel? shippingAddress});
 
   @override
   $AddressModelCopyWith<$Res>? get defaultAddress;
+  @override
+  $AddressModelCopyWith<$Res>? get billingAddress;
+  @override
+  $AddressModelCopyWith<$Res>? get shippingAddress;
 }
 
 /// @nodoc
@@ -111,6 +165,8 @@ class __$$AddressStateImplCopyWithImpl<$Res>
   $Res call({
     Object? addresses = null,
     Object? defaultAddress = freezed,
+    Object? billingAddress = freezed,
+    Object? shippingAddress = freezed,
   }) {
     return _then(_$AddressStateImpl(
       addresses: null == addresses
@@ -121,6 +177,14 @@ class __$$AddressStateImplCopyWithImpl<$Res>
           ? _value.defaultAddress
           : defaultAddress // ignore: cast_nullable_to_non_nullable
               as AddressModel?,
+      billingAddress: freezed == billingAddress
+          ? _value.billingAddress
+          : billingAddress // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
+      shippingAddress: freezed == shippingAddress
+          ? _value.shippingAddress
+          : shippingAddress // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
     ));
   }
 }
@@ -129,7 +193,10 @@ class __$$AddressStateImplCopyWithImpl<$Res>
 
 class _$AddressStateImpl implements _AddressState {
   _$AddressStateImpl(
-      {final List<AddressModel> addresses = const [], this.defaultAddress})
+      {final List<AddressModel> addresses = const [],
+      this.defaultAddress,
+      this.billingAddress,
+      this.shippingAddress})
       : _addresses = addresses;
 
   final List<AddressModel> _addresses;
@@ -143,10 +210,14 @@ class _$AddressStateImpl implements _AddressState {
 
   @override
   final AddressModel? defaultAddress;
+  @override
+  final AddressModel? billingAddress;
+  @override
+  final AddressModel? shippingAddress;
 
   @override
   String toString() {
-    return 'AddressState(addresses: $addresses, defaultAddress: $defaultAddress)';
+    return 'AddressState(addresses: $addresses, defaultAddress: $defaultAddress, billingAddress: $billingAddress, shippingAddress: $shippingAddress)';
   }
 
   @override
@@ -157,12 +228,20 @@ class _$AddressStateImpl implements _AddressState {
             const DeepCollectionEquality()
                 .equals(other._addresses, _addresses) &&
             (identical(other.defaultAddress, defaultAddress) ||
-                other.defaultAddress == defaultAddress));
+                other.defaultAddress == defaultAddress) &&
+            (identical(other.billingAddress, billingAddress) ||
+                other.billingAddress == billingAddress) &&
+            (identical(other.shippingAddress, shippingAddress) ||
+                other.shippingAddress == shippingAddress));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_addresses), defaultAddress);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_addresses),
+      defaultAddress,
+      billingAddress,
+      shippingAddress);
 
   /// Create a copy of AddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -176,12 +255,18 @@ class _$AddressStateImpl implements _AddressState {
 abstract class _AddressState implements AddressState {
   factory _AddressState(
       {final List<AddressModel> addresses,
-      final AddressModel? defaultAddress}) = _$AddressStateImpl;
+      final AddressModel? defaultAddress,
+      final AddressModel? billingAddress,
+      final AddressModel? shippingAddress}) = _$AddressStateImpl;
 
   @override
   List<AddressModel> get addresses;
   @override
   AddressModel? get defaultAddress;
+  @override
+  AddressModel? get billingAddress;
+  @override
+  AddressModel? get shippingAddress;
 
   /// Create a copy of AddressState
   /// with the given fields replaced by the non-null parameter values.

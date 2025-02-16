@@ -16,7 +16,6 @@ class UpdateAddressScreen extends ConsumerStatefulWidget {
     super.key,
     required this.addressModel,
   });
-
   final AddressModel addressModel;
 
   @override
@@ -28,6 +27,9 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final lineOneController = TextEditingController();
+  final stateController = TextEditingController();
+  final postalCodeController = TextEditingController();
+  final lineTwoController = TextEditingController();
   final countryIDController = TextEditingController();
   final cityIDController = TextEditingController();
   bool isBillingAddress = false;
@@ -35,20 +37,24 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    nameController.text = widget.addressModel.name!;
-    lineOneController.text = widget.addressModel.line1!;
-    countryIDController.text = widget.addressModel.country!.name.toString();
-    cityIDController.text = widget.addressModel.city!.name.toString();
-    isBillingAddress = widget.addressModel.isBillingAddress!;
-    isShippingAddress = widget.addressModel.isShippingAddress!;
+    nameController.text = widget.addressModel.name ?? "";
+    lineOneController.text = widget.addressModel.line1 ?? "";
+    stateController.text = widget.addressModel.state ?? "";
+    postalCodeController.text = widget.addressModel.postalCode ?? "";
+    lineTwoController.text = widget.addressModel.line2 ?? "";
+    countryIDController.text = widget.addressModel.country?.name ?? "";
+    cityIDController.text = widget.addressModel.city?.name ?? "";
+    isBillingAddress = widget.addressModel.isBillingAddress ?? false;
+    isShippingAddress = widget.addressModel.isShippingAddress ?? false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create New Address"),
+        title: const Text("Update Address"),
         centerTitle: true,
         forceMaterialTransparency: true,
       ),
@@ -60,26 +66,42 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Image.asset("assets/Illustration/Illustration-4.png"),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    CustomTextFieldWidget(
-                      controller: nameController,
-                      hintText: "Name",
-                      validate: (str) {
-                        if (str != null) {
-                          if (str.isNotEmpty) {
-                            return null;
-                          } else {
-                            return "required";
-                          }
-                        } else {
-                          return "required";
-                        }
-                      },
-                      prefixIcon: "assets/icons/dot.svg",
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 240,
+                          child: Column(
+                            children: [
+                              CustomTextFieldWidget(
+                                controller: nameController,
+                                hintText: "Name",
+                                validate: (str) {
+                                  if (str != null) {
+                                    if (str.isNotEmpty) {
+                                      return null;
+                                    } else {
+                                      return "required";
+                                    }
+                                  } else {
+                                    return "required";
+                                  }
+                                },
+                                prefixIcon: "assets/icons/dot.svg",
+                              ),
+                            ],
+                          ),
+                        ),
+                        Image.asset(
+                          "assets/Illustration/Illustration-4.png",
+                          height: 100,
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -98,12 +120,12 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                           return "required";
                         }
                       },
-                      maxLines: 6,
+                      maxLines: 1,
                       prefixWidget: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Icon(
@@ -113,9 +135,92 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                   .color
                                   ?.withOpacity(0.3),
                             ),
-                            const SizedBox(
-                              height: 120,
-                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: lineTwoController,
+                      hintText: "Line 2(Optional)",
+                      maxLines: 1,
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: postalCodeController,
+                      hintText: "Postal Code",
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      validate: (str) {
+                        if (str != null) {
+                          if (str.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "required";
+                          }
+                        } else {
+                          return "required";
+                        }
+                      },
+                      prefixIcon: "assets/icons/dot.svg",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: stateController,
+                      hintText: "State(Optional)",
+                      prefixIcon: "assets/icons/dot.svg",
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  ?.withOpacity(0.3),
+                            ),
                           ],
                         ),
                       ),
@@ -367,6 +472,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                     .read(addAddressControllerProvider.notifier)
                                     .updateAddress(
                                         parameters: AddressEntity(
+                                            id: widget.addressModel.id,
                                             name: nameController.text,
                                             cityId: ref
                                                 .read(citiesControllerProvider)
@@ -382,6 +488,10 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                                 .id
                                                 .toString(),
                                             line: lineOneController.text,
+                                            line2: lineTwoController.text,
+                                            state: stateController.text,
+                                            postalCode:
+                                                postalCodeController.text,
                                             isBillingAddress: isBillingAddress,
                                             isShippingAddress:
                                                 isShippingAddress));
@@ -406,9 +516,9 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                               )
                             : Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: deviceWidth * 0.22),
+                                    horizontal: deviceWidth * 0.26),
                                 child: Text(
-                                  "Create new address",
+                                  "Update Address",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
