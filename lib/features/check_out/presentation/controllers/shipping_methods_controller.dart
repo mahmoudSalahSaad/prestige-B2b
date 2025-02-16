@@ -9,7 +9,7 @@ part 'shipping_methods_controller.freezed.dart';
 part 'shipping_methods_controller.g.dart';
 part 'shipping_methods_state.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ShippingMethodsController extends _$ShippingMethodsController {
   @override
   Future<ShippingMethodsState> build() async {
@@ -27,5 +27,9 @@ class ShippingMethodsController extends _$ShippingMethodsController {
     result.fold(
         (l) => state = AsyncError(l.errorMessage ?? "", StackTrace.current),
         (r) => state = AsyncData(ShippingMethodsState(shippingMethods: r)));
+  }
+
+  selectShippingMethods({required ShippingMethodModel parameters}) {
+    state = AsyncData(ShippingMethodsState(selectedShippingMethod: parameters));
   }
 }

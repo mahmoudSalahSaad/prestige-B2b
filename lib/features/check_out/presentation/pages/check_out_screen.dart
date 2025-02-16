@@ -6,11 +6,13 @@ import 'package:shop/core/components/product/secondary_product_card.dart';
 import 'package:shop/core/extensions/num_extensions.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
+import 'package:shop/core/utils/alerts.dart';
 import 'package:shop/features/Address/data/models/address_model.dart';
 import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
 import 'package:shop/features/check_out/presentation/controllers/checkout_controller.dart';
+import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CheckOutScreen extends ConsumerWidget {
@@ -97,11 +99,11 @@ class CheckOutScreen extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          SvgPicture.asset("assets/icons/Cash.svg"),
+                          SvgPicture.asset("assets/icons/Mylocation.svg"),
                           const SizedBox(
                             width: 10,
                           ),
-                          const Text("Payment Methods")
+                          const Text("Shipping Methods")
                         ],
                       ),
                       Icon(
@@ -235,7 +237,16 @@ class CheckOutScreen extends ConsumerWidget {
               ),
               ConfirmButton(
                 onConfirm: () {
-                  ref.read(checkoutControllerProvider.notifier).placeOrder();
+                  if (ref
+                          .read(shippingMethodsControllerProvider)
+                          .requireValue
+                          .selectedShippingMethod ==
+                      null) {
+                    Alerts.showSnackBar("Please select shipping method",
+                        alertsType: AlertsType.error);
+                  } else {
+                    ref.read(checkoutControllerProvider.notifier).placeOrder();
+                  }
                 },
               )
             ],

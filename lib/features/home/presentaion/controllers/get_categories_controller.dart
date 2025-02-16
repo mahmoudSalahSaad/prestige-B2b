@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/core/base/base_usecase.dart';
+import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
 
 import '../../../discover/data/models/category_model.dart';
@@ -51,5 +52,13 @@ class GetCategoriesController extends _$GetCategoriesController {
       /// If the response is successful, updates the state to [AsyncData] with the categories
       state = AsyncData(GetCategoriesState(categories: r));
     });
+  }
+
+  selectCategory(CategoryModel category) {
+    state = AsyncData(GetCategoriesState(selectedCategory: category));
+    ref
+        .read(productsByCategoriesControllerProvider(category.slug ?? "")
+            .notifier)
+        .getProducts(category.slug ?? "");
   }
 }

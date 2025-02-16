@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetCategoriesState {
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
 
   /// Create a copy of GetCategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,9 @@ abstract class $GetCategoriesStateCopyWith<$Res> {
           GetCategoriesState value, $Res Function(GetCategoriesState) then) =
       _$GetCategoriesStateCopyWithImpl<$Res, GetCategoriesState>;
   @useResult
-  $Res call({List<CategoryModel> categories});
+  $Res call({List<CategoryModel> categories, CategoryModel? selectedCategory});
+
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -50,13 +53,32 @@ class _$GetCategoriesStateCopyWithImpl<$Res, $Val extends GetCategoriesState>
   @override
   $Res call({
     Object? categories = null,
+    Object? selectedCategory = freezed,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of GetCategoriesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get selectedCategory {
+    if (_value.selectedCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.selectedCategory!, (value) {
+      return _then(_value.copyWith(selectedCategory: value) as $Val);
+    });
   }
 }
 
@@ -68,7 +90,10 @@ abstract class _$$GetCategoriesStateImplCopyWith<$Res>
       __$$GetCategoriesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CategoryModel> categories});
+  $Res call({List<CategoryModel> categories, CategoryModel? selectedCategory});
+
+  @override
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -85,12 +110,17 @@ class __$$GetCategoriesStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
+    Object? selectedCategory = freezed,
   }) {
     return _then(_$GetCategoriesStateImpl(
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -98,7 +128,8 @@ class __$$GetCategoriesStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetCategoriesStateImpl implements _GetCategoriesState {
-  _$GetCategoriesStateImpl({final List<CategoryModel> categories = const []})
+  _$GetCategoriesStateImpl(
+      {final List<CategoryModel> categories = const [], this.selectedCategory})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -111,8 +142,11 @@ class _$GetCategoriesStateImpl implements _GetCategoriesState {
   }
 
   @override
+  final CategoryModel? selectedCategory;
+
+  @override
   String toString() {
-    return 'GetCategoriesState(categories: $categories)';
+    return 'GetCategoriesState(categories: $categories, selectedCategory: $selectedCategory)';
   }
 
   @override
@@ -121,12 +155,14 @@ class _$GetCategoriesStateImpl implements _GetCategoriesState {
         (other.runtimeType == runtimeType &&
             other is _$GetCategoriesStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            (identical(other.selectedCategory, selectedCategory) ||
+                other.selectedCategory == selectedCategory));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_categories), selectedCategory);
 
   /// Create a copy of GetCategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -139,11 +175,14 @@ class _$GetCategoriesStateImpl implements _GetCategoriesState {
 }
 
 abstract class _GetCategoriesState implements GetCategoriesState {
-  factory _GetCategoriesState({final List<CategoryModel> categories}) =
-      _$GetCategoriesStateImpl;
+  factory _GetCategoriesState(
+      {final List<CategoryModel> categories,
+      final CategoryModel? selectedCategory}) = _$GetCategoriesStateImpl;
 
   @override
   List<CategoryModel> get categories;
+  @override
+  CategoryModel? get selectedCategory;
 
   /// Create a copy of GetCategoriesState
   /// with the given fields replaced by the non-null parameter values.

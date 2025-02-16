@@ -9,6 +9,7 @@ import 'package:shop/features/Address/presentation/controllers/address_controlle
 import 'package:shop/features/check_out/data/models/order_model.dart';
 import 'package:shop/features/check_out/data/models/shipping_method_model.dart';
 import 'package:shop/features/check_out/domain/repo/checkout_repo.dart';
+import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
 
 class CheckoutRepoImpl extends CheckoutRepo {
   final NetworkClient networkClient;
@@ -31,7 +32,9 @@ class CheckoutRepoImpl extends CheckoutRepo {
             .read(addressControllerProvider)
             .requireValue
             .defaultAddress
-            ?.line1
+            ?.line1,
+        "shipping_method":
+            "${ref.read(shippingMethodsControllerProvider).requireValue.selectedShippingMethod?.name}-${ref.read(shippingMethodsControllerProvider).requireValue.selectedShippingMethod?.carrier}"
       },
       url: EndPoints.checkout,
       type: type,
@@ -45,7 +48,7 @@ class CheckoutRepoImpl extends CheckoutRepo {
   @override
   Future<Either<ErrorModel, List<ShippingMethodModel>>> getShippingMethods(
       {required NoParameters parameters}) async {
-    NetworkCallType type = NetworkCallType.post;
+    NetworkCallType type = NetworkCallType.get;
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
       data: {},
