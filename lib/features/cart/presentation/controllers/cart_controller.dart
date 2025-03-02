@@ -11,7 +11,7 @@ part 'cart_controller.freezed.dart';
 part 'cart_controller.g.dart';
 part 'cart_state.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CartController extends _$CartController {
   @override
   Future<CartState> build() async {

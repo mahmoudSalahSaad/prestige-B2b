@@ -28,4 +28,6 @@ class EndPoints {
   static String shippingMethods = "/shippings";
   static String updateAddress(String id) => "/addresses/$id/update";
   static String deleteAddress(String id) => "/addresses/$id/delete";
+
+  static String getHomeStaticPage = "/pages/home-app";
 }

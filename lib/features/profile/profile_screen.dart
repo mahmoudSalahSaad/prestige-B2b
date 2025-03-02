@@ -62,16 +62,16 @@ class ProfileScreen extends ConsumerWidget {
               NavigationService.push(Routes.myOrdersScreen);
             },
           ),
-          ProfileMenuListTile(
-            text: "Returns",
-            svgSrc: "assets/icons/Return.svg",
-            press: () {},
-          ),
-          ProfileMenuListTile(
-            text: "Wishlist",
-            svgSrc: "assets/icons/Wishlist.svg",
-            press: () {},
-          ),
+          // ProfileMenuListTile(
+          //   text: "Returns",
+          //   svgSrc: "assets/icons/Return.svg",
+          //   press: () {},
+          // ),
+          // ProfileMenuListTile(
+          //   text: "Wishlist",
+          //   svgSrc: "assets/icons/Wishlist.svg",
+          //   press: () {},
+          // ),
           ProfileMenuListTile(
             text: "Addresses",
             svgSrc: "assets/icons/Address.svg",
@@ -80,20 +80,20 @@ class ProfileScreen extends ConsumerWidget {
               NavigationService.push(Routes.addressScreen);
             },
           ),
-          ProfileMenuListTile(
-            text: "Payment",
-            svgSrc: "assets/icons/card.svg",
-            press: () {
-              // Navigator.pushNamed(context, emptyPaymentScreenRoute);
-            },
-          ),
-          ProfileMenuListTile(
-            text: "Wallet",
-            svgSrc: "assets/icons/Wallet.svg",
-            press: () {
-              // Navigator.pushNamed(context, walletScreenRoute);
-            },
-          ),
+          // ProfileMenuListTile(
+          //   text: "Payment",
+          //   svgSrc: "assets/icons/card.svg",
+          //   press: () {
+          //     // Navigator.pushNamed(context, emptyPaymentScreenRoute);
+          //   },
+          // ),
+          // ProfileMenuListTile(
+          //   text: "Wallet",
+          //   svgSrc: "assets/icons/Wallet.svg",
+          //   press: () {
+          //     // Navigator.pushNamed(context, walletScreenRoute);
+          //   },
+          // ),
           const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -111,13 +111,13 @@ class ProfileScreen extends ConsumerWidget {
               // Navigator.pushNamed(context, enableNotificationScreenRoute);
             },
           ),
-          ProfileMenuListTile(
-            text: "Preferences",
-            svgSrc: "assets/icons/Preferences.svg",
-            press: () {
-              // Navigator.pushNamed(context, preferencesScreenRoute);
-            },
-          ),
+          // ProfileMenuListTile(
+          //   text: "Preferences",
+          //   svgSrc: "assets/icons/Preferences.svg",
+          //   press: () {
+          //     // Navigator.pushNamed(context, preferencesScreenRoute);
+          //   },
+          // ),
           const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -134,12 +134,7 @@ class ProfileScreen extends ConsumerWidget {
               // Navigator.pushNamed(context, selectLanguageScreenRoute);
             },
           ),
-          ProfileMenuListTile(
-            text: "Location",
-            svgSrc: "assets/icons/Location.svg",
-            press: () {},
-          ),
-          const SizedBox(height: defaultPadding),
+
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 2),
@@ -148,17 +143,13 @@ class ProfileScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
+
           ProfileMenuListTile(
-            text: "Get Help",
-            svgSrc: "assets/icons/Help.svg",
-            press: () {
-              // Navigator.pushNamed(context, getHelpScreenRoute);
-            },
-          ),
-          ProfileMenuListTile(
-            text: "FAQ",
+            text: "Privacy Policy",
             svgSrc: "assets/icons/FAQ.svg",
-            press: () {},
+            press: () {
+              NavigationService.push(Routes.privacyPolicyScreen);
+            },
             isShowDivider: false,
           ),
           const SizedBox(height: defaultPadding),

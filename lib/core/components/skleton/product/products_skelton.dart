@@ -11,10 +11,12 @@ class ProductsSkelton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: 240,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(16),
+        itemCount: 10,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.only(
             left: defaultPadding,
@@ -26,4 +28,3 @@ class ProductsSkelton extends StatelessWidget {
     );
   }
 }
-

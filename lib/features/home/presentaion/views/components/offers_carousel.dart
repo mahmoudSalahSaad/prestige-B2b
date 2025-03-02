@@ -7,6 +7,7 @@ import 'package:shop/core/components/Banner/M/banner_m_style_3.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_4.dart';
 import 'package:shop/core/components/dot_indicators.dart';
 import 'package:shop/core/components/skleton/banner/banner_m_skelton.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
 
 class OffersCarousel extends ConsumerStatefulWidget {
@@ -76,7 +77,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(slidersControllerProvider).when(
+    return ref.watch(cartControllerProvider).when(
         data: (data) => AspectRatio(
               aspectRatio: 1.87,
               child: Stack(
@@ -84,16 +85,16 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
                 children: [
                   PageView.builder(
                     controller: _pageController,
-                    itemCount: data.sliders.length,
+                    itemCount: offers.length,
                     onPageChanged: (int index) {
                       setState(() {
                         _selectedIndex = index;
                       });
                     },
                     itemBuilder: (context, index) => BannerMStyle1(
-                      text: data.sliders[index].title ?? "",
+                      text: offers[index].title ?? "",
                       press: () {},
-                      image: data.sliders[index].images?.first ?? "",
+                      image: offers[index].images?.first ?? "",
                     ),
                   ),
                   FittedBox(
@@ -103,7 +104,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
                         height: 16,
                         child: Row(
                           children: List.generate(
-                            data.sliders.length,
+                            offers.length,
                             (index) {
                               return Padding(
                                 padding: const EdgeInsets.only(

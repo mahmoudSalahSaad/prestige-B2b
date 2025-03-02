@@ -16,6 +16,9 @@ _$ItemDetailsModelImpl _$$ItemDetailsModelImplFromJson(
       related: (json['related'] as List<dynamic>?)
           ?.map((e) => ProductModels.fromJson(e as Map<String, dynamic>))
           .toList(),
+      promotions: (json['promotions'] as List<dynamic>?)
+          ?.map((e) => PormotionModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ItemDetailsModelImplToJson(
@@ -23,6 +26,7 @@ Map<String, dynamic> _$$ItemDetailsModelImplToJson(
     <String, dynamic>{
       'product': instance.product,
       'related': instance.related,
+      'promotions': instance.promotions,
     };
 
 _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
@@ -49,7 +53,7 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
               ?.map((e) => VariationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      quantity: (json['item_quantity'] as num?)?.toInt() ?? 0,
+      quantity: (json['item_quantity'] as num?)?.toInt() ?? 1,
       isActive: (json['is_active'] as num?)?.toInt(),
       isFeatured: (json['is_featured'] as num?)?.toInt(),
       thumbnailUrl: json['thumbnail_url'] as String?,

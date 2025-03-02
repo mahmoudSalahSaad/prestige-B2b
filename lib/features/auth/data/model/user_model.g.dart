@@ -37,7 +37,6 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       budgetStartDate: json['budget_start_date'] as String?,
       number: json['number'] as String?,
       fullAddress: json['full_address'] as String?,
-      group: json['group'] as String?,
       city: json['city'] == null
           ? null
           : CityModel.fromJson(json['city'] as Map<String, dynamic>),
@@ -61,7 +60,6 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'budget_start_date': instance.budgetStartDate,
       'number': instance.number,
       'full_address': instance.fullAddress,
-      'group': instance.group,
       'city': instance.city,
       'country': instance.country,
     };

@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
-import 'package:shop/core/base/base_usecase.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/utils/alerts.dart';
 import 'package:shop/features/check_out/data/models/order_model.dart';
+import 'package:shop/features/check_out/domain/entities/checkout_entity.dart';
 import 'package:shop/features/check_out/domain/usecases/checkout_use_case.dart';
 
 part 'checkout_controller.freezed.dart';
@@ -20,12 +20,12 @@ class CheckoutController extends _$CheckoutController {
     return state.requireValue;
   }
 
-  Future<void> placeOrder() async {
+  Future<void> placeOrder({required CheckoutEntity parameters}) async {
     CheckoutUseCase checkoutUseCase = getIt();
     Future.delayed(Duration.zero, () async {
       state = const AsyncLoading();
     });
-    final result = await checkoutUseCase.call(const NoParameters());
+    final result = await checkoutUseCase.call(parameters);
 
     result.fold(
         (l) => state = AsyncError(l.errorMessage ?? "", StackTrace.current),
@@ -35,5 +35,9 @@ class CheckoutController extends _$CheckoutController {
           alertsType: AlertsType.success);
       NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
     });
+  }
+
+  selectDate({required DateTime date}) {
+    state = AsyncData(state.requireValue.copyWith(dateTime: date));
   }
 }

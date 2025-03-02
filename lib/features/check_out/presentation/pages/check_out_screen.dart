@@ -11,9 +11,11 @@ import 'package:shop/features/Address/data/models/address_model.dart';
 import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
+import 'package:shop/features/check_out/domain/entities/checkout_entity.dart';
 import 'package:shop/features/check_out/presentation/controllers/checkout_controller.dart';
 import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:week_day_picker/week_day_picker.dart';
 
 class CheckOutScreen extends ConsumerWidget {
   const CheckOutScreen({super.key});
@@ -110,6 +112,60 @@ class CheckOutScreen extends ConsumerWidget {
                         Icons.arrow_forward_ios_rounded,
                         size: 16,
                         color: Theme.of(context).hintColor,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Divider(
+                color: Theme.of(context).hintColor.withOpacity(0.5),
+              ),
+              InkWell(
+                onTap: () async {
+                  var weekDayPicker = WeekDayPicker(
+                    context: context,
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2040, 10, 19),
+                    colorHeader: primaryMaterialColor,
+                    colorSelected: primaryColor,
+                  );
+                  DateTime? selectedDate = await weekDayPicker.show();
+
+                  if (selectedDate != null) {
+                    ref
+                        .read(checkoutControllerProvider.notifier)
+                        .selectDate(date: selectedDate);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset("assets/icons/Address.svg"),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text("Delivery Date")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          if (ref
+                                  .watch(checkoutControllerProvider)
+                                  .requireValue
+                                  .dateTime !=
+                              null)
+                            Text(
+                                "${ref.watch(checkoutControllerProvider).requireValue.dateTime?.day}/${ref.watch(checkoutControllerProvider).requireValue.dateTime?.month}/${ref.watch(checkoutControllerProvider).requireValue.dateTime?.year}"),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 16,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ],
                       )
                     ],
                   ),
@@ -245,7 +301,43 @@ class CheckOutScreen extends ConsumerWidget {
                     Alerts.showSnackBar("Please select shipping method",
                         alertsType: AlertsType.error);
                   } else {
-                    ref.read(checkoutControllerProvider.notifier).placeOrder();
+                    if (ref
+                            .watch(checkoutControllerProvider)
+                            .requireValue
+                            .dateTime ==
+                        null) {
+                      Alerts.showSnackBar("Please select delivery date",
+                          alertsType: AlertsType.error);
+                    } else {
+                      ref.read(checkoutControllerProvider.notifier).placeOrder(
+                            parameters: CheckoutEntity(
+                              shippingCarrirer: ref
+                                  .read(shippingMethodsControllerProvider)
+                                  .requireValue
+                                  .selectedShippingMethod!
+                                  .name,
+                              shippingAmount: ref
+                                  .read(shippingMethodsControllerProvider)
+                                  .requireValue
+                                  .selectedShippingMethod!
+                                  .cost,
+                              deliveryDate:
+                                  "${ref.read(checkoutControllerProvider).requireValue.dateTime?.year}-0${ref.read(checkoutControllerProvider).requireValue.dateTime?.month}-0${ref.read(checkoutControllerProvider).requireValue.dateTime?.day}",
+                              shippingAddress: ref
+                                  .read(addressControllerProvider)
+                                  .requireValue
+                                  .shippingAddress
+                                  ?.line1
+                                  .toString(),
+                              billingAddress: ref
+                                  .read(addressControllerProvider)
+                                  .requireValue
+                                  .shippingAddress
+                                  ?.line1
+                                  .toString(),
+                            ),
+                          );
+                    }
                   }
                 },
               )

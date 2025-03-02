@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sliders_controllers.dart';
+part of 'pormotion_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$slidersControllerHash() => r'c932bf8a9ce7cd9126114d01ed8a4e77095ec1a0';
+String _$pormotionControllerHash() =>
+    r'a665e2d6f3a4e08c3e32ab3f57deafec1c0e4c88';
 
-/// See also [SlidersController].
-@ProviderFor(SlidersController)
-final slidersControllerProvider =
-    AsyncNotifierProvider<SlidersController, SlidersState>.internal(
-  SlidersController.new,
-  name: r'slidersControllerProvider',
+/// See also [PormotionController].
+@ProviderFor(PormotionController)
+final pormotionControllerProvider = AutoDisposeAsyncNotifierProvider<
+    PormotionController, PormotionState>.internal(
+  PormotionController.new,
+  name: r'pormotionControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$slidersControllerHash,
+      : _$pormotionControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SlidersController = AsyncNotifier<SlidersState>;
+typedef _$PormotionController = AutoDisposeAsyncNotifier<PormotionState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

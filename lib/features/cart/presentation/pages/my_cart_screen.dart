@@ -8,12 +8,25 @@ import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
+import 'package:shop/features/product/data/models/pormotion_model.dart';
+import 'package:shop/features/product/presentation/controllers/pormotion_controller.dart';
 
-class MyCartScreen extends ConsumerWidget {
+class MyCartScreen extends ConsumerStatefulWidget {
   const MyCartScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyCartScreenState();
+}
+
+class _MyCartScreenState extends ConsumerState<MyCartScreen> {
+  @override
+  initState() {
+    ref.read(cartControllerProvider.notifier).getMyCart();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: ref.watch(cartControllerProvider).when(
             data: (data) => SingleChildScrollView(
@@ -33,51 +46,48 @@ class MyCartScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 300.h,
+                          height: 260.h,
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: data.cartModel?.items?.length ?? 0,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.only(bottom: 10.h),
-                                child: SecondaryProductCard(
+                                  padding: EdgeInsets.only(bottom: 10.h),
+                                  child: SecondaryProductCard(
                                     itemId:
                                         data.cartModel?.items?[index].id ?? 0,
-                                    total: (data.cartModel?.items?[index]
-                                                .product?.price?.hasDiscount ??
-                                            false)
-                                        ? (data.cartModel!.items![index].quantity! *
-                                            (data
-                                                    .cartModel
-                                                    ?.items?[index]
-                                                    .product
-                                                    ?.price
-                                                    ?.afterDiscount ??
-                                                0))
-                                        : (data.cartModel!.items![index].quantity! *
-                                            (data
-                                                    .cartModel
-                                                    ?.items?[index]
-                                                    .product
-                                                    ?.price
-                                                    ?.beforeDiscount ??
-                                                0)),
-                                    quantity:
-                                        data.cartModel?.items?[index].quantity ?? 0,
-                                    image: '${data.cartModel?.items?[index].product?.thumbnail}',
-                                    brandName: data.cartModel?.items?[index].product?.slug ?? "",
-                                    title: "${data.cartModel?.items?[index].product?.name}",
-                                    price: (data.cartModel?.items?[index].product?.price?.hasDiscount ?? false) ? (data.cartModel?.items?[index].product?.price?.afterDiscount ?? 0) : (data.cartModel?.items?[index].product?.price?.beforeDiscount ?? 0)),
-                              );
+                                    total: (data.cartModel!.items![index]
+                                            .quantity! *
+                                        (data.cartModel?.items?[index].price ??
+                                            0)),
+                                    quantity: data.cartModel?.items?[index]
+                                            .quantity ??
+                                        0,
+                                    image:
+                                        '${data.cartModel?.items?[index].product?.thumbnail}',
+                                    brandName: data.cartModel?.items?[index]
+                                            .product?.slug ??
+                                        "",
+                                    title:
+                                        "${data.cartModel?.items?[index].product?.name}",
+                                    priceAfetDiscount:
+                                        (data.cartModel?.items?[index].price ??
+                                            0),
+                                    price: (data.cartModel?.items?[index]
+                                            .regularPrice ??
+                                        0),
+                                    hasDiscount: data.cartModel?.items?[index]
+                                        .product?.price?.hasDiscount,
+                                  ));
                             },
                           ),
                         ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          "Have coupon?",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const CouponWidget(),
+                        // SizedBox(height: 16.h),
+                        // Text(
+                        //   "Have coupon?",
+                        //   style: Theme.of(context).textTheme.titleMedium,
+                        // ),
+                        // const CouponWidget(),
                         SizedBox(height: 16.h),
                         PaymentSummaryWidget(
                           total: data.cartModel?.total ?? 0,
@@ -107,7 +117,32 @@ class MyCartScreen extends ConsumerWidget {
                                   ?.copyWith(color: Colors.white),
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 16.h),
+                        ref.watch(pormotionControllerProvider).when(
+                              data: (data) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if ((data.pormotions?.length ?? 0) > 0)
+                                      Text("Pormotions",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium),
+                                    Column(
+                                      children: List.generate(
+                                          data.pormotions?.length ?? 0,
+                                          (index) => PormotionCardWidget(
+                                              pormotionModel:
+                                                  data.pormotions![index])),
+                                    ),
+                                  ],
+                                );
+                              },
+                              error: (error, stackTrace) => Text("$error"),
+                              loading: () => const Center(
+                                  child: CircularProgressIndicator()),
+                            )
                       ],
                     ),
             ),
@@ -274,6 +309,61 @@ class PaymentInfoRow extends StatelessWidget {
               ),
         ),
       ],
+    );
+  }
+}
+
+class PormotionCardWidget extends StatelessWidget {
+  final PormotionModel pormotionModel;
+
+  const PormotionCardWidget({super.key, required this.pormotionModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: deviceWidth,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                pormotionModel.name ?? '',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              if (pormotionModel.description != null)
+                const SizedBox(height: 8.0),
+              if (pormotionModel.description != null)
+                Text(
+                  pormotionModel.description ?? '',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              if (pormotionModel.minAmount != null)
+                Text(
+                  "Min amount: ${pormotionModel.minAmount ?? ''}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              if (pormotionModel.minItems != null)
+                Text(
+                  "Min items: ${pormotionModel.minItems ?? ''}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              const SizedBox(height: 8.0),
+              pormotionModel.type == "percentage_discount"
+                  ? Text(
+                      'Discount: ${pormotionModel.discount}%',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    )
+                  : Text(
+                      'Discount: ${pormotionModel.discount} JOD',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -295,6 +295,8 @@ mixin _$CartProducts {
   ProductModels? get product => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
+  @JsonKey(name: "regular_price")
+  double? get regularPrice => throw _privateConstructorUsedError;
   double? get total => throw _privateConstructorUsedError;
   @JsonKey(name: "variation_id")
   int? get variationId => throw _privateConstructorUsedError;
@@ -320,6 +322,7 @@ abstract class $CartProductsCopyWith<$Res> {
       ProductModels? product,
       int? quantity,
       double? price,
+      @JsonKey(name: "regular_price") double? regularPrice,
       double? total,
       @JsonKey(name: "variation_id") int? variationId});
 
@@ -345,6 +348,7 @@ class _$CartProductsCopyWithImpl<$Res, $Val extends CartProducts>
     Object? product = freezed,
     Object? quantity = freezed,
     Object? price = freezed,
+    Object? regularPrice = freezed,
     Object? total = freezed,
     Object? variationId = freezed,
   }) {
@@ -364,6 +368,10 @@ class _$CartProductsCopyWithImpl<$Res, $Val extends CartProducts>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      regularPrice: freezed == regularPrice
+          ? _value.regularPrice
+          : regularPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       total: freezed == total
           ? _value.total
@@ -404,6 +412,7 @@ abstract class _$$CartProductsImplCopyWith<$Res>
       ProductModels? product,
       int? quantity,
       double? price,
+      @JsonKey(name: "regular_price") double? regularPrice,
       double? total,
       @JsonKey(name: "variation_id") int? variationId});
 
@@ -428,6 +437,7 @@ class __$$CartProductsImplCopyWithImpl<$Res>
     Object? product = freezed,
     Object? quantity = freezed,
     Object? price = freezed,
+    Object? regularPrice = freezed,
     Object? total = freezed,
     Object? variationId = freezed,
   }) {
@@ -447,6 +457,10 @@ class __$$CartProductsImplCopyWithImpl<$Res>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      regularPrice: freezed == regularPrice
+          ? _value.regularPrice
+          : regularPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       total: freezed == total
           ? _value.total
@@ -468,6 +482,7 @@ class _$CartProductsImpl implements _CartProducts {
       this.product,
       this.quantity,
       this.price,
+      @JsonKey(name: "regular_price") this.regularPrice,
       this.total,
       @JsonKey(name: "variation_id") this.variationId});
 
@@ -483,6 +498,9 @@ class _$CartProductsImpl implements _CartProducts {
   @override
   final double? price;
   @override
+  @JsonKey(name: "regular_price")
+  final double? regularPrice;
+  @override
   final double? total;
   @override
   @JsonKey(name: "variation_id")
@@ -490,7 +508,7 @@ class _$CartProductsImpl implements _CartProducts {
 
   @override
   String toString() {
-    return 'CartProducts(id: $id, product: $product, quantity: $quantity, price: $price, total: $total, variationId: $variationId)';
+    return 'CartProducts(id: $id, product: $product, quantity: $quantity, price: $price, regularPrice: $regularPrice, total: $total, variationId: $variationId)';
   }
 
   @override
@@ -503,6 +521,8 @@ class _$CartProductsImpl implements _CartProducts {
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.regularPrice, regularPrice) ||
+                other.regularPrice == regularPrice) &&
             (identical(other.total, total) || other.total == total) &&
             (identical(other.variationId, variationId) ||
                 other.variationId == variationId));
@@ -510,8 +530,8 @@ class _$CartProductsImpl implements _CartProducts {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, product, quantity, price, total, variationId);
+  int get hashCode => Object.hash(runtimeType, id, product, quantity, price,
+      regularPrice, total, variationId);
 
   /// Create a copy of CartProducts
   /// with the given fields replaced by the non-null parameter values.
@@ -535,6 +555,7 @@ abstract class _CartProducts implements CartProducts {
           final ProductModels? product,
           final int? quantity,
           final double? price,
+          @JsonKey(name: "regular_price") final double? regularPrice,
           final double? total,
           @JsonKey(name: "variation_id") final int? variationId}) =
       _$CartProductsImpl;
@@ -550,6 +571,9 @@ abstract class _CartProducts implements CartProducts {
   int? get quantity;
   @override
   double? get price;
+  @override
+  @JsonKey(name: "regular_price")
+  double? get regularPrice;
   @override
   double? get total;
   @override

@@ -19,6 +19,7 @@ class SecondaryProductCard extends ConsumerWidget {
     this.dicountpercent,
     this.press,
     this.style,
+    this.hasDiscount = false,
     required this.total,
     required this.quantity,
   });
@@ -33,6 +34,7 @@ class SecondaryProductCard extends ConsumerWidget {
   final double total;
   final int quantity;
   final int itemId;
+  final bool? hasDiscount;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,28 +57,6 @@ class SecondaryProductCard extends ConsumerWidget {
             child: Stack(
               children: [
                 NetworkImageWithLoader(image, radius: defaultBorderRadious),
-                if (dicountpercent != null)
-                  Positioned(
-                    right: defaultPadding / 2,
-                    top: defaultPadding / 2,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: defaultPadding / 2),
-                      height: 16,
-                      decoration: const BoxDecoration(
-                        color: errorColor,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(defaultBorderRadious)),
-                      ),
-                      child: Text(
-                        "$dicountpercent% off",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  )
               ],
             ),
           ),
@@ -113,97 +93,120 @@ class SecondaryProductCard extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: ref
-                                    .watch(removeItemToCartControllerProvider(
-                                        itemId))
-                                    .isLoading
-                                ? () {}
-                                : () => ref
-                                    .read(removeItemToCartControllerProvider(
-                                            itemId)
-                                        .notifier)
-                                    .removeItemFromCart(
-                                        parameters: CartEntity(
-                                            quantity: 0, productID: itemId)),
-                            child: Container(
-                              height: 24,
-                              width: 24,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: primaryMaterialColor.shade100,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: ref
-                                        .watch(
-                                            removeItemToCartControllerProvider(
-                                                itemId))
-                                        .isLoading
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.black87,
-                                        strokeWidth: 2,
-                                      )
-                                    : const Icon(Icons.remove, size: 16),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: defaultPadding / 3),
-                          Text("$quantity",
-                              style: const TextStyle(fontSize: 12)),
-                          const SizedBox(width: defaultPadding / 3),
-                          InkWell(
-                            onTap: ref
-                                    .watch(
-                                        addItemToCartControllerProvider(itemId))
-                                    .isLoading
-                                ? () {}
-                                : () => ref
-                                    .read(
-                                        addItemToCartControllerProvider(itemId)
-                                            .notifier)
-                                    .addItemToCart(
-                                        parameters: CartEntity(
-                                            quantity: 0, productID: itemId)),
-                            child: Container(
-                              height: 24,
-                              width: 24,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: primaryMaterialColor.shade100,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: ref
-                                        .watch(addItemToCartControllerProvider(
-                                            itemId))
-                                        .isLoading
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.black87,
-                                        strokeWidth: 2,
-                                      )
-                                    : const Icon(Icons.add, size: 16),
+                      if (priceAfetDiscount != 0)
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: ref
+                                      .watch(removeItemToCartControllerProvider(
+                                          itemId))
+                                      .isLoading
+                                  ? () {}
+                                  : () => ref
+                                      .read(removeItemToCartControllerProvider(
+                                              itemId)
+                                          .notifier)
+                                      .removeItemFromCart(
+                                          parameters: CartEntity(
+                                              quantity: 0, productID: itemId)),
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: primaryMaterialColor.shade100,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: ref
+                                          .watch(
+                                              removeItemToCartControllerProvider(
+                                                  itemId))
+                                          .isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.black87,
+                                          strokeWidth: 2,
+                                        )
+                                      : const Icon(Icons.remove, size: 16),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
+                            const SizedBox(width: defaultPadding / 3),
+                            Text("$quantity",
+                                style: const TextStyle(fontSize: 12)),
+                            const SizedBox(width: defaultPadding / 3),
+                            InkWell(
+                              onTap: ref
+                                      .watch(addItemToCartControllerProvider(
+                                          itemId))
+                                      .isLoading
+                                  ? () {}
+                                  : () => ref
+                                      .read(addItemToCartControllerProvider(
+                                              itemId)
+                                          .notifier)
+                                      .addItemToCart(
+                                          parameters: CartEntity(
+                                              quantity: 0, productID: itemId)),
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: primaryMaterialColor.shade100,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: ref
+                                          .watch(
+                                              addItemToCartControllerProvider(
+                                                  itemId))
+                                          .isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.black87,
+                                          strokeWidth: 2,
+                                        )
+                                      : const Icon(Icons.add, size: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                     ],
                   ),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "$price X $quantity",
-                        style: const TextStyle(
-                          color: Color(0xFF31B0D8),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
-                      ),
+                      (priceAfetDiscount ?? 0) > price
+                          ? Row(
+                              children: [
+                                Text(
+                                  "$priceAfetDiscount",
+                                  style: const TextStyle(
+                                    color: Color(0xFF31B0D8),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  "x $quantity",
+                                  style: const TextStyle(
+                                    color: Color(0xFF31B0D8),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              "$price X $quantity",
+                              style: const TextStyle(
+                                color: Color(0xFF31B0D8),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
+                            ),
                       const SizedBox(width: defaultPadding / 4),
                       Text(
                         "Total: $total JOD",

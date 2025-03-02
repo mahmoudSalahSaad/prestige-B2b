@@ -30,6 +30,7 @@ class ShippingMethodsController extends _$ShippingMethodsController {
   }
 
   selectShippingMethods({required ShippingMethodModel parameters}) {
-    state = AsyncData(ShippingMethodsState(selectedShippingMethod: parameters));
+    state = AsyncData(
+        state.requireValue.copyWith(selectedShippingMethod: parameters));
   }
 }

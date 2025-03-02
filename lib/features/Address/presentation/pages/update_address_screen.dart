@@ -48,6 +48,15 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
     cityIDController.text = widget.addressModel.city?.name ?? "";
     isBillingAddress = widget.addressModel.isBillingAddress ?? false;
     isShippingAddress = widget.addressModel.isShippingAddress ?? false;
+
+    Future.delayed(Duration.zero, () {
+      ref
+          .read(countriesControllerProvider.notifier)
+          .selectCountry(widget.addressModel.country!);
+      ref
+          .read(citiesControllerProvider.notifier)
+          .selectCity(widget.addressModel.city!);
+    });
   }
 
   @override
@@ -187,17 +196,6 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                           ],
                         ),
                       ),
-                      validate: (str) {
-                        if (str != null) {
-                          if (str.isNotEmpty) {
-                            return null;
-                          } else {
-                            return "required";
-                          }
-                        } else {
-                          return "required";
-                        }
-                      },
                       prefixIcon: "assets/icons/dot.svg",
                     ),
                     const SizedBox(

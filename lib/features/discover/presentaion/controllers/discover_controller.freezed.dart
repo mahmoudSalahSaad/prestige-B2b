@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DiscoverState {
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
+  CategoryModel? get selectedSubCategory => throw _privateConstructorUsedError;
   ItemsModel? get items => throw _privateConstructorUsedError;
 
   /// Create a copy of DiscoverState
@@ -32,8 +34,14 @@ abstract class $DiscoverStateCopyWith<$Res> {
           DiscoverState value, $Res Function(DiscoverState) then) =
       _$DiscoverStateCopyWithImpl<$Res, DiscoverState>;
   @useResult
-  $Res call({List<CategoryModel> categories, ItemsModel? items});
+  $Res call(
+      {List<CategoryModel> categories,
+      CategoryModel? selectedCategory,
+      CategoryModel? selectedSubCategory,
+      ItemsModel? items});
 
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
+  $CategoryModelCopyWith<$Res>? get selectedSubCategory;
   $ItemsModelCopyWith<$Res>? get items;
 }
 
@@ -53,6 +61,8 @@ class _$DiscoverStateCopyWithImpl<$Res, $Val extends DiscoverState>
   @override
   $Res call({
     Object? categories = null,
+    Object? selectedCategory = freezed,
+    Object? selectedSubCategory = freezed,
     Object? items = freezed,
   }) {
     return _then(_value.copyWith(
@@ -60,11 +70,47 @@ class _$DiscoverStateCopyWithImpl<$Res, $Val extends DiscoverState>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      selectedSubCategory: freezed == selectedSubCategory
+          ? _value.selectedSubCategory
+          : selectedSubCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as ItemsModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of DiscoverState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get selectedCategory {
+    if (_value.selectedCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.selectedCategory!, (value) {
+      return _then(_value.copyWith(selectedCategory: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DiscoverState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get selectedSubCategory {
+    if (_value.selectedSubCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.selectedSubCategory!, (value) {
+      return _then(_value.copyWith(selectedSubCategory: value) as $Val);
+    });
   }
 
   /// Create a copy of DiscoverState
@@ -90,8 +136,16 @@ abstract class _$$DiscoverStateImplCopyWith<$Res>
       __$$DiscoverStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CategoryModel> categories, ItemsModel? items});
+  $Res call(
+      {List<CategoryModel> categories,
+      CategoryModel? selectedCategory,
+      CategoryModel? selectedSubCategory,
+      ItemsModel? items});
 
+  @override
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
+  @override
+  $CategoryModelCopyWith<$Res>? get selectedSubCategory;
   @override
   $ItemsModelCopyWith<$Res>? get items;
 }
@@ -110,6 +164,8 @@ class __$$DiscoverStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
+    Object? selectedCategory = freezed,
+    Object? selectedSubCategory = freezed,
     Object? items = freezed,
   }) {
     return _then(_$DiscoverStateImpl(
@@ -117,6 +173,14 @@ class __$$DiscoverStateImplCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      selectedSubCategory: freezed == selectedSubCategory
+          ? _value.selectedSubCategory
+          : selectedSubCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -129,7 +193,10 @@ class __$$DiscoverStateImplCopyWithImpl<$Res>
 
 class _$DiscoverStateImpl implements _DiscoverState {
   _$DiscoverStateImpl(
-      {final List<CategoryModel> categories = const [], this.items})
+      {final List<CategoryModel> categories = const [],
+      this.selectedCategory,
+      this.selectedSubCategory,
+      this.items})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -142,11 +209,15 @@ class _$DiscoverStateImpl implements _DiscoverState {
   }
 
   @override
+  final CategoryModel? selectedCategory;
+  @override
+  final CategoryModel? selectedSubCategory;
+  @override
   final ItemsModel? items;
 
   @override
   String toString() {
-    return 'DiscoverState(categories: $categories, items: $items)';
+    return 'DiscoverState(categories: $categories, selectedCategory: $selectedCategory, selectedSubCategory: $selectedSubCategory, items: $items)';
   }
 
   @override
@@ -156,12 +227,20 @@ class _$DiscoverStateImpl implements _DiscoverState {
             other is _$DiscoverStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            (identical(other.selectedCategory, selectedCategory) ||
+                other.selectedCategory == selectedCategory) &&
+            (identical(other.selectedSubCategory, selectedSubCategory) ||
+                other.selectedSubCategory == selectedSubCategory) &&
             (identical(other.items, items) || other.items == items));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories), items);
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      selectedCategory,
+      selectedSubCategory,
+      items);
 
   /// Create a copy of DiscoverState
   /// with the given fields replaced by the non-null parameter values.
@@ -175,10 +254,16 @@ class _$DiscoverStateImpl implements _DiscoverState {
 abstract class _DiscoverState implements DiscoverState {
   factory _DiscoverState(
       {final List<CategoryModel> categories,
+      final CategoryModel? selectedCategory,
+      final CategoryModel? selectedSubCategory,
       final ItemsModel? items}) = _$DiscoverStateImpl;
 
   @override
   List<CategoryModel> get categories;
+  @override
+  CategoryModel? get selectedCategory;
+  @override
+  CategoryModel? get selectedSubCategory;
   @override
   ItemsModel? get items;
 

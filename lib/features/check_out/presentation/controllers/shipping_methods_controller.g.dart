@@ -7,7 +7,7 @@ part of 'shipping_methods_controller.dart';
 // **************************************************************************
 
 String _$shippingMethodsControllerHash() =>
-    r'22301686af3ae3002542353c64bc9413793f9c80';
+    r'c8ea8729faf9cf254d654f9a2dad5bf2e7e2752a';
 
 /// See also [ShippingMethodsController].
 @ProviderFor(ShippingMethodsController)

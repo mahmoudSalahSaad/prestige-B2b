@@ -37,6 +37,7 @@ class ProductCard extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(8)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AspectRatio(
             aspectRatio: 1.15,
@@ -71,13 +72,11 @@ class ProductCard extends StatelessWidget {
                         .copyWith(fontSize: 12),
                   ),
                   const Spacer(),
-                  priceAfetDiscount != null
+                  hasDiscount
                       ? Row(
                           children: [
                             Text(
-                              hasDiscount
-                                  ? "$priceAfetDiscount"
-                                  : "$priceBeforeDiscount",
+                              "$priceAfetDiscount",
                               style: const TextStyle(
                                 color: Color(0xFF31B0D8),
                                 fontWeight: FontWeight.w500,
@@ -85,7 +84,7 @@ class ProductCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: defaultPadding / 4),
-                            if (price == "0")
+                            if (hasDiscount)
                               Text(
                                 price.toString(),
                                 style: TextStyle(
@@ -93,14 +92,14 @@ class ProductCard extends StatelessWidget {
                                       .textTheme
                                       .bodyMedium!
                                       .color,
-                                  fontSize: 12,
+                                  fontSize: 9,
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
                           ],
                         )
                       : Text(
-                          "\$$price",
+                          "$price",
                           style: const TextStyle(
                             color: Color(0xFF31B0D8),
                             fontWeight: FontWeight.w500,

@@ -240,7 +240,6 @@ mixin _$User {
   String? get number => throw _privateConstructorUsedError;
   @JsonKey(name: "full_address")
   String? get fullAddress => throw _privateConstructorUsedError;
-  String? get group => throw _privateConstructorUsedError;
   CityModel? get city => throw _privateConstructorUsedError;
   CityModel? get country => throw _privateConstructorUsedError;
 
@@ -272,7 +271,6 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "budget_start_date") String? budgetStartDate,
       String? number,
       @JsonKey(name: "full_address") String? fullAddress,
-      String? group,
       CityModel? city,
       CityModel? country});
 
@@ -308,7 +306,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? budgetStartDate = freezed,
     Object? number = freezed,
     Object? fullAddress = freezed,
-    Object? group = freezed,
     Object? city = freezed,
     Object? country = freezed,
   }) {
@@ -364,10 +361,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       fullAddress: freezed == fullAddress
           ? _value.fullAddress
           : fullAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
               as String?,
       city: freezed == city
           ? _value.city
@@ -430,7 +423,6 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "budget_start_date") String? budgetStartDate,
       String? number,
       @JsonKey(name: "full_address") String? fullAddress,
-      String? group,
       CityModel? city,
       CityModel? country});
 
@@ -465,7 +457,6 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? budgetStartDate = freezed,
     Object? number = freezed,
     Object? fullAddress = freezed,
-    Object? group = freezed,
     Object? city = freezed,
     Object? country = freezed,
   }) {
@@ -522,10 +513,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.fullAddress
           : fullAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as String?,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -555,7 +542,6 @@ class _$UserImpl implements _User {
       @JsonKey(name: "budget_start_date") this.budgetStartDate,
       this.number,
       @JsonKey(name: "full_address") this.fullAddress,
-      this.group,
       this.city,
       this.country});
 
@@ -593,15 +579,13 @@ class _$UserImpl implements _User {
   @JsonKey(name: "full_address")
   final String? fullAddress;
   @override
-  final String? group;
-  @override
   final CityModel? city;
   @override
   final CityModel? country;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, role: $role, phone: $phone, address: $address, postalCode: $postalCode, photo: $photo, budget: $budget, isActive: $isActive, budgetStartDate: $budgetStartDate, number: $number, fullAddress: $fullAddress, group: $group, city: $city, country: $country)';
+    return 'User(id: $id, name: $name, email: $email, role: $role, phone: $phone, address: $address, postalCode: $postalCode, photo: $photo, budget: $budget, isActive: $isActive, budgetStartDate: $budgetStartDate, number: $number, fullAddress: $fullAddress, city: $city, country: $country)';
   }
 
   @override
@@ -626,7 +610,6 @@ class _$UserImpl implements _User {
             (identical(other.number, number) || other.number == number) &&
             (identical(other.fullAddress, fullAddress) ||
                 other.fullAddress == fullAddress) &&
-            (identical(other.group, group) || other.group == group) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country));
   }
@@ -648,7 +631,6 @@ class _$UserImpl implements _User {
       budgetStartDate,
       number,
       fullAddress,
-      group,
       city,
       country);
 
@@ -683,7 +665,6 @@ abstract class _User implements User {
       @JsonKey(name: "budget_start_date") final String? budgetStartDate,
       final String? number,
       @JsonKey(name: "full_address") final String? fullAddress,
-      final String? group,
       final CityModel? city,
       final CityModel? country}) = _$UserImpl;
 
@@ -719,8 +700,6 @@ abstract class _User implements User {
   @override
   @JsonKey(name: "full_address")
   String? get fullAddress;
-  @override
-  String? get group;
   @override
   CityModel? get city;
   @override

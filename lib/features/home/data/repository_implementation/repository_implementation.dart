@@ -5,8 +5,9 @@ import 'package:shop/core/services/network/end_points.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
+import 'package:shop/features/home/data/models/home_model.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
-import 'package:shop/features/home/data/models/sliders_model.dart';
+// import 'package:shop/features/home/data/models/sliders_model.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 
 class RepositoryImplementation implements Repository {
@@ -83,36 +84,34 @@ class RepositoryImplementation implements Repository {
 
   @override
 
-  /// Gets the list of sliders
+  /// Gets the static data for the home page
   ///
-  /// This function is used to fetch the list of sliders from the server.
+  /// This function is used to fetch the static data for the home page from the server.
   /// It uses the [NetworkClient] to make a GET request to the server.
-  /// The response is then parsed and converted to a list of [SlidersModel] objects.
+  /// The response is then parsed and converted to a [HomeModel] object.
   /// If the request fails, it returns a [Left] containing an [ErrorModel] object.
-  /// If the request is successful, it returns a [Right] containing the list of sliders.
+  /// If the request is successful, it returns a [Right] containing the [HomeModel] object.
   @override
-  Future<Either<ErrorModel, List<SlidersModel>>> getSliders(
+  Future<Either<ErrorModel, HomeModel>> getHomeStaticPage(
       {required NoParameters parameters}) async {
-    NetworkCallType type = NetworkCallType.get;
+    const NetworkCallType callType = NetworkCallType.post;
 
-    Either<ErrorModel, BaseResponse> result = await networkClient(
-      url: EndPoints.sliders,
-      type: type,
+    final Either<ErrorModel, BaseResponse> response = await networkClient(
+      url: EndPoints.getHomeStaticPage,
+      type: callType,
       data: {},
     );
-    return result.fold((l) => Left(l), (r) {
-      List<SlidersModel> sliders = [];
-      try {
-        // Iterate over the list of sliders and convert each one to a SlidersModel object
-        for (Map<String, dynamic> item in r.data) {
-          sliders.add(SlidersModel.fromJson(item));
+
+    return response.fold(
+      (error) => Left(error),
+      (baseResponse) {
+        try {
+          final HomeModel homeData = HomeModel.fromJson(baseResponse.data);
+          return Right(homeData);
+        } catch (e) {
+          return Left(ErrorModel(errorMessage: e.toString()));
         }
-        // Return a Right containing the list of sliders
-        return Right(sliders);
-      } catch (e) {
-        // If there is an error, return a Left containing an ErrorModel object
-        return Left(ErrorModel(errorMessage: e.toString()));
-      }
-    });
+      },
+    );
   }
 }

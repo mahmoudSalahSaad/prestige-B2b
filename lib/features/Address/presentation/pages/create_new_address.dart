@@ -150,17 +150,6 @@ class _CreateNewAddressScreenState
                     CustomTextFieldWidget(
                       controller: postalCodeController,
                       hintText: "Postal Code",
-                      validate: (str) {
-                        if (str != null) {
-                          if (str.isNotEmpty) {
-                            return null;
-                          } else {
-                            return "required";
-                          }
-                        } else {
-                          return "required";
-                        }
-                      },
                       prefixIcon: "assets/icons/dot.svg",
                       prefixWidget: Padding(
                         padding: const EdgeInsets.all(8.0),

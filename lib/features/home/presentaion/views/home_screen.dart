@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/core/components/Banner/S/banner_s_style_1.dart';
 import 'package:shop/core/components/Banner/S/banner_s_style_5.dart';
+import 'package:shop/features/home/presentaion/views/components/offers_carousel.dart';
 
 import 'components/best_sellers.dart';
 import 'components/flash_sale.dart';
@@ -39,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
+            SliverToBoxAdapter(child: OffersCarousel()),
+            SliverToBoxAdapter(child: BestSellers()),
             SliverToBoxAdapter(child: OffersCarouselAndCategories()),
             SliverToBoxAdapter(child: PopularProducts()),
           ],

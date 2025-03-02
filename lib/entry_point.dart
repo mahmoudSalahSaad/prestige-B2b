@@ -1,21 +1,24 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/features/cart/data/models/cart_model.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
 import 'package:shop/features/discover/presentaion/views/discover_screen.dart';
 import 'package:shop/features/home/presentaion/views/home_screen.dart';
 import 'package:shop/features/profile/profile_screen.dart';
 
-class EntryPoint extends StatefulWidget {
+class EntryPoint extends ConsumerStatefulWidget {
   const EntryPoint({super.key});
 
   @override
-  State<EntryPoint> createState() => _EntryPointState();
+  ConsumerState<EntryPoint> createState() => _EntryPointState();
 }
 
-class _EntryPointState extends State<EntryPoint> {
+class _EntryPointState extends ConsumerState<EntryPoint> {
   final List _pages = const [
     HomeScreen(),
     DiscoverScreen(),
@@ -28,7 +31,7 @@ class _EntryPointState extends State<EntryPoint> {
 
   @override
   Widget build(BuildContext context) {
-    SvgPicture  svgIcon(String src, {Color? color}) {
+    SvgPicture svgIcon(String src, {Color? color}) {
       return SvgPicture.asset(
         src,
         height: 24,
@@ -127,8 +130,42 @@ class _EntryPointState extends State<EntryPoint> {
               label: "Shop",
             ),
             BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Bag.svg"),
-              activeIcon: svgIcon("assets/icons/Bag.svg", color: primaryColor),
+              icon: Stack(
+                alignment: Alignment.center,
+                children: [
+                  svgIcon("assets/icons/Bag.svg"),
+                  if (((ref
+                                      .watch(cartControllerProvider)
+                                      .requireValue
+                                      .cartModel ??
+                                  CartModel())
+                              .items ??
+                          [])
+                      .isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.only(bottom: 10, right: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                ],
+              ),
+              activeIcon: Stack(
+                alignment: Alignment.center,
+                children: [
+                  svgIcon("assets/icons/Bag.svg", color: primaryColor),
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    margin: const EdgeInsets.only(bottom: 10, right: 16),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  )
+                ],
+              ),
               label: "Cart",
             ),
             BottomNavigationBarItem(

@@ -55,7 +55,7 @@ class GetCategoriesController extends _$GetCategoriesController {
   }
 
   selectCategory(CategoryModel category) {
-    state = AsyncData(GetCategoriesState(selectedCategory: category));
+    state = AsyncData(state.requireValue.copyWith(selectedCategory: category));
     ref
         .read(productsByCategoriesControllerProvider(category.slug ?? "")
             .notifier)

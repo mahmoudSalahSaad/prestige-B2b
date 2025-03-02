@@ -5,11 +5,10 @@ import 'package:shop/core/base/base_usecase.dart';
 import 'package:shop/core/services/network/end_points.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
-import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/check_out/data/models/order_model.dart';
 import 'package:shop/features/check_out/data/models/shipping_method_model.dart';
+import 'package:shop/features/check_out/domain/entities/checkout_entity.dart';
 import 'package:shop/features/check_out/domain/repo/checkout_repo.dart';
-import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
 
 class CheckoutRepoImpl extends CheckoutRepo {
   final NetworkClient networkClient;
@@ -17,24 +16,17 @@ class CheckoutRepoImpl extends CheckoutRepo {
   CheckoutRepoImpl({required this.networkClient});
   @override
   Future<Either<ErrorModel, OrderModel>> placeOrder(
-      {required NoParameters parameters}) async {
+      {required CheckoutEntity parameters}) async {
     final ref = ProviderContainer();
     NetworkCallType type = NetworkCallType.post;
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
       data: {
-        "billing_address": ref
-            .read(addressControllerProvider)
-            .requireValue
-            .defaultAddress
-            ?.line1,
-        "shipping_address": ref
-            .read(addressControllerProvider)
-            .requireValue
-            .defaultAddress
-            ?.line1,
-        "shipping_method":
-            "${ref.read(shippingMethodsControllerProvider).requireValue.selectedShippingMethod?.name}-${ref.read(shippingMethodsControllerProvider).requireValue.selectedShippingMethod?.carrier}"
+        "billing_address": parameters.billingAddress,
+        "shipping_address": parameters.shippingAddress,
+        "shipping_carrier": parameters.shippingCarrirer,
+        "shipping_amount": parameters.shippingAmount,
+        "delivery_date": parameters.deliveryDate,
       },
       url: EndPoints.checkout,
       type: type,
@@ -58,10 +50,12 @@ class CheckoutRepoImpl extends CheckoutRepo {
     return result.fold((l) => Left(l), (r) {
       List<ShippingMethodModel> shippingMethods = [];
       try {
-        shippingMethods = List<ShippingMethodModel>.from(
-            r.data.map((x) => ShippingMethodModel.fromJson(x)));
+        for (var item in r.data) {
+          shippingMethods.add(ShippingMethodModel.fromJson(item));
+        }
         return Right(shippingMethods);
       } catch (e) {
+        print("sdkhjsakljd===>${e.toString()}");
         return Left(ErrorModel(errorMessage: e.toString()));
       }
     });

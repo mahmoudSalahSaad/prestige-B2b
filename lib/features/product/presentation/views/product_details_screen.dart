@@ -118,7 +118,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         images: data.productDetails?.product?.images ?? [],
                       ),
                       ProductInfo(
-                        brand: "${data.productDetails?.product?.brand?.name}",
+                        brand: data.productDetails?.product?.brand?.name ?? "",
                         title: "${data.productDetails?.product?.name}",
                         isAvailable: isProductAvailable,
                         description:
@@ -300,13 +300,104 @@ class ProductDetailsScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(defaultPadding),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ((data.productDetails?.promotions?.length ??
+                                      0) >
+                                  0)
+                                Text(
+                                  "Pormotions",
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              SizedBox(
+                                width: deviceWidth,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                      data.productDetails?.promotions?.length ??
+                                          0,
+                                  itemBuilder: (context, index) =>
+                                      Card.outlined(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side:
+                                          const BorderSide(color: primaryColor),
+                                    ),
+                                    elevation: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Buy ${data.productDetails?.promotions?[index].xYOffer?.buyQuantity} And Get ${data.productDetails?.promotions?[index].xYOffer?.getQuantity} ${data.productDetails?.promotions?[index].xYOffer?.getProduct?.name}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                          ),
+                                          if (data
+                                                  .productDetails
+                                                  ?.promotions?[index]
+                                                  .description !=
+                                              null)
+                                            Text(
+                                              "${data.productDetails?.promotions?[index].description}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                          if (data
+                                                  .productDetails
+                                                  ?.promotions?[index]
+                                                  .minAmount !=
+                                              null)
+                                            Text(
+                                              "Min amount: ${data.productDetails?.promotions?[index].minAmount}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                          if (data
+                                                  .productDetails
+                                                  ?.promotions?[index]
+                                                  .minItems !=
+                                              null)
+                                            Text(
+                                              "Min Items: ${data.productDetails?.promotions?[index].minItems}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                       SliverPadding(
                         padding: const EdgeInsets.all(defaultPadding),
                         sliver: SliverToBoxAdapter(
-                          child: Text(
-                            "You may also like",
-                            style: Theme.of(context).textTheme.titleSmall!,
-                          ),
+                          child: (data.productDetails?.related?.length ?? 0) > 0
+                              ? Text(
+                                  "You may also like",
+                                  style:
+                                      Theme.of(context).textTheme.titleSmall!,
+                                )
+                              : const SizedBox(),
                         ),
                       ),
                       SliverToBoxAdapter(

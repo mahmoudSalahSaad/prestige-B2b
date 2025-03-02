@@ -14,6 +14,7 @@ import 'package:shop/features/check_out/presentation/pages/check_out_screen.dart
 import 'package:shop/features/check_out/presentation/pages/shipping_methods_screen.dart';
 import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/features/orders/presentation/pages/my_orders_screen.dart';
+import 'package:shop/features/privacy/presentation/pages/privacy_screen.dart';
 import 'package:shop/features/product/presentation/views/product_details_screen.dart';
 import 'package:shop/features/profile/chnage_password_screen.dart';
 import 'package:shop/features/profile/update_porfile_screen.dart';
@@ -102,6 +103,9 @@ class RouteGenerator {
     }
     if (settings.name == Routes.shippingMethodsScreen) {
       return platformPageRoute(const ShippingMethodsScreen());
+    }
+    if (settings.name == Routes.privacyPolicyScreen) {
+      return platformPageRoute(const PrivacyScreen());
     }
 
     // if (settings.name == Routes.startWorkScreen) {

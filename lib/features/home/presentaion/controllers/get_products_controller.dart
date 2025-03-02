@@ -68,4 +68,8 @@ class GetProductsController extends _$GetProductsController {
       },
     );
   }
+
+  setProducts(List<ProductModels> products) {
+    state = AsyncData(GetProductsState(products: products));
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
-import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
+import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 // For preview
@@ -33,33 +33,31 @@ class Categories extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(getCategoriesControllerProvider).when(
+    return ref.watch(discoverControllerProvider).when(
         data: (data) => SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  ...List.generate(
-                    data.categories.length,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(
-                          left:
-                              index == 0 ? defaultPadding : defaultPadding / 2,
-                          right: index == data.categories.length - 1
-                              ? defaultPadding
-                              : 0),
-                      child: CategoryBtn(
-                        category: data.categories[index].name ?? "",
-                        svgSrc: data.categories[index].thumbnail ?? "",
-                        isActive: index == 0,
-                        press: () {
-                          ref
-                              .read(getCategoriesControllerProvider.notifier)
-                              .selectCategory(data.categories[index]);
-                        },
-                      ),
+                children: List.generate(
+                  data.categories.length,
+                  (index) => Padding(
+                    padding: EdgeInsets.only(
+                        left: index == 0 ? defaultPadding : defaultPadding / 2,
+                        right: index == data.categories.length - 1
+                            ? defaultPadding
+                            : 0),
+                    child: CategoryBtn(
+                      category: data.categories[index].name ?? "",
+                      svgSrc: data.categories[index].thumbnail ?? "",
+                      isActive: data.categories[index].id ==
+                          data.selectedCategory?.id,
+                      press: () {
+                        ref
+                            .read(discoverControllerProvider.notifier)
+                            .selectCategory(data.categories[index]);
+                      },
                     ),
                   ),
-                ],
+                ),
               ),
             ),
         error: (error, stackTrace) => Text(error.toString()),

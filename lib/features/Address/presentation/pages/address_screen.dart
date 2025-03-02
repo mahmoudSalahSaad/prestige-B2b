@@ -7,7 +7,6 @@ import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 import 'package:shop/features/check_out/presentation/pages/check_out_screen.dart';
-import 'package:shop/screens/search/views/components/search_form.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddressScreen extends ConsumerWidget {
@@ -25,27 +24,17 @@ class AddressScreen extends ConsumerWidget {
         shadowColor: Colors.white,
         primary: true,
         forceMaterialTransparency: true,
-        bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(54),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SearchForm(),
-            )),
+        // bottom: const PreferredSize(
+        //     preferredSize: Size.fromHeight(54),
+        //     child: Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //       child: SearchForm(),
+        //     )),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
-            Divider(
-              height: 1,
-              color: Theme.of(context).hintColor.withOpacity(0.5),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
             InkWell(
               onTap: () {
                 NavigationService.push(Routes.createNewAddressScreen);

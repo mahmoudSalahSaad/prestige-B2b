@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
 
 import 'categories.dart';
 
@@ -33,6 +34,71 @@ class OffersCarouselAndCategories extends ConsumerWidget {
         // While loading use 👇
         // const CategoriesSkelton(),
         const Categories(),
+
+        if ((ref
+                    .watch(discoverControllerProvider)
+                    .requireValue
+                    .selectedCategory !=
+                null) &&
+            (ref
+                        .watch(discoverControllerProvider)
+                        .requireValue
+                        .selectedCategory
+                        ?.children ??
+                    [])
+                .isNotEmpty)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                  ref
+                      .watch(discoverControllerProvider)
+                      .requireValue
+                      .selectedCategory!
+                      .children!
+                      .length, (subs) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: CategoryBtn(
+                    category: ref
+                            .watch(discoverControllerProvider)
+                            .requireValue
+                            .selectedCategory!
+                            .children![subs]
+                            .name ??
+                        "",
+                    svgSrc: ref
+                            .watch(discoverControllerProvider)
+                            .requireValue
+                            .selectedCategory!
+                            .children![subs]
+                            .thumbnail ??
+                        "",
+                    isActive: ref
+                            .watch(discoverControllerProvider)
+                            .requireValue
+                            .selectedCategory!
+                            .children![subs]
+                            .id ==
+                        ref
+                            .watch(discoverControllerProvider)
+                            .requireValue
+                            .selectedSubCategory
+                            ?.id,
+                    press: () {
+                      ref
+                          .read(discoverControllerProvider.notifier)
+                          .selectSubCategory(ref
+                              .watch(discoverControllerProvider)
+                              .requireValue
+                              .selectedCategory!
+                              .children![subs]);
+                    },
+                  ),
+                );
+              }),
+            ),
+          )
       ],
     );
   }

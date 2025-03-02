@@ -37,12 +37,12 @@ import 'package:shop/features/home/data/repository_implementation/repository_imp
 import 'package:shop/features/home/domain/repository/repository.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
-import 'package:shop/features/home/domain/use_cases/get_sliders_use_case.dart';
 import 'package:shop/features/orders/data/repo/my_orders_repo_impl.dart';
 import 'package:shop/features/orders/domain/repo/my_orders_repo.dart';
 import 'package:shop/features/orders/domain/usecases/my_orders_use_case.dart';
 import 'package:shop/features/product/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/product/domain/repository/repository.dart';
+import 'package:shop/features/product/domain/use_cases/get_pormotions_use_case.dart';
 import 'package:shop/features/product/domain/use_cases/get_product_details_use_case.dart';
 import 'package:shop/features/settings/data/repo/settings_repo_impl.dart';
 import 'package:shop/features/settings/domain/repo/settings_repo.dart';
@@ -60,7 +60,7 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => GetProductsUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(() => GetCategoriesUseCase(homeRepo: getIt()));
-  getIt.registerLazySingleton(() => GetSlidersUseCase(homeRepo: getIt()));
+
   getIt.registerLazySingleton(
       () => GetProductDetailsUseCase(productRepository: getIt()));
   getIt.registerLazySingleton(
@@ -91,6 +91,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetAddressUseCase(addressRepo: getIt()));
   getIt.registerLazySingleton(
       () => GetShippingMethodsUseCase(checkoutRepo: getIt()));
+  getIt.registerLazySingleton(() => GetPormotionsUseCase(getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(

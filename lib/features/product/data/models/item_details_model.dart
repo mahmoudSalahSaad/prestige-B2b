@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
+import 'package:shop/features/product/data/models/pormotion_model.dart';
 
 part 'item_details_model.freezed.dart';
 part 'item_details_model.g.dart';
@@ -9,7 +10,7 @@ part 'item_details_model.g.dart';
 class ItemDetailsModel with _$ItemDetailsModel {
   factory ItemDetailsModel(
       {final ProductDetailsModel? product,
-      final List<ProductModels>? related}) = _ItemDetailsModel;
+      final List<ProductModels>? related , final List<PormotionModel>? promotions}) = _ItemDetailsModel;
 
   factory ItemDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$ItemDetailsModelFromJson(json);
@@ -32,7 +33,7 @@ class ProductDetailsModel with _$ProductDetailsModel {
     final List<String>? images,
     @JsonKey(name: "is_variable") final bool? isVariable,
     @Default([]) final List<VariationModel> variations,
-    @Default(0) @JsonKey(name: "item_quantity") final int? quantity,
+    @Default(1) @JsonKey(name: "item_quantity") final int? quantity,
     @JsonKey(name: "is_active") final int? isActive,
     @JsonKey(name: "is_featured") final int? isFeatured,
     @JsonKey(name: "thumbnail_url") final String? thumbnailUrl,

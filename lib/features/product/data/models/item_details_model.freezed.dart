@@ -22,6 +22,7 @@ ItemDetailsModel _$ItemDetailsModelFromJson(Map<String, dynamic> json) {
 mixin _$ItemDetailsModel {
   ProductDetailsModel? get product => throw _privateConstructorUsedError;
   List<ProductModels>? get related => throw _privateConstructorUsedError;
+  List<PormotionModel>? get promotions => throw _privateConstructorUsedError;
 
   /// Serializes this ItemDetailsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,10 @@ abstract class $ItemDetailsModelCopyWith<$Res> {
           ItemDetailsModel value, $Res Function(ItemDetailsModel) then) =
       _$ItemDetailsModelCopyWithImpl<$Res, ItemDetailsModel>;
   @useResult
-  $Res call({ProductDetailsModel? product, List<ProductModels>? related});
+  $Res call(
+      {ProductDetailsModel? product,
+      List<ProductModels>? related,
+      List<PormotionModel>? promotions});
 
   $ProductDetailsModelCopyWith<$Res>? get product;
 }
@@ -61,6 +65,7 @@ class _$ItemDetailsModelCopyWithImpl<$Res, $Val extends ItemDetailsModel>
   $Res call({
     Object? product = freezed,
     Object? related = freezed,
+    Object? promotions = freezed,
   }) {
     return _then(_value.copyWith(
       product: freezed == product
@@ -71,6 +76,10 @@ class _$ItemDetailsModelCopyWithImpl<$Res, $Val extends ItemDetailsModel>
           ? _value.related
           : related // ignore: cast_nullable_to_non_nullable
               as List<ProductModels>?,
+      promotions: freezed == promotions
+          ? _value.promotions
+          : promotions // ignore: cast_nullable_to_non_nullable
+              as List<PormotionModel>?,
     ) as $Val);
   }
 
@@ -97,7 +106,10 @@ abstract class _$$ItemDetailsModelImplCopyWith<$Res>
       __$$ItemDetailsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ProductDetailsModel? product, List<ProductModels>? related});
+  $Res call(
+      {ProductDetailsModel? product,
+      List<ProductModels>? related,
+      List<PormotionModel>? promotions});
 
   @override
   $ProductDetailsModelCopyWith<$Res>? get product;
@@ -118,6 +130,7 @@ class __$$ItemDetailsModelImplCopyWithImpl<$Res>
   $Res call({
     Object? product = freezed,
     Object? related = freezed,
+    Object? promotions = freezed,
   }) {
     return _then(_$ItemDetailsModelImpl(
       product: freezed == product
@@ -128,6 +141,10 @@ class __$$ItemDetailsModelImplCopyWithImpl<$Res>
           ? _value._related
           : related // ignore: cast_nullable_to_non_nullable
               as List<ProductModels>?,
+      promotions: freezed == promotions
+          ? _value._promotions
+          : promotions // ignore: cast_nullable_to_non_nullable
+              as List<PormotionModel>?,
     ));
   }
 }
@@ -135,8 +152,12 @@ class __$$ItemDetailsModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ItemDetailsModelImpl implements _ItemDetailsModel {
-  _$ItemDetailsModelImpl({this.product, final List<ProductModels>? related})
-      : _related = related;
+  _$ItemDetailsModelImpl(
+      {this.product,
+      final List<ProductModels>? related,
+      final List<PormotionModel>? promotions})
+      : _related = related,
+        _promotions = promotions;
 
   factory _$ItemDetailsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemDetailsModelImplFromJson(json);
@@ -153,9 +174,19 @@ class _$ItemDetailsModelImpl implements _ItemDetailsModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<PormotionModel>? _promotions;
+  @override
+  List<PormotionModel>? get promotions {
+    final value = _promotions;
+    if (value == null) return null;
+    if (_promotions is EqualUnmodifiableListView) return _promotions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'ItemDetailsModel(product: $product, related: $related)';
+    return 'ItemDetailsModel(product: $product, related: $related, promotions: $promotions)';
   }
 
   @override
@@ -164,13 +195,18 @@ class _$ItemDetailsModelImpl implements _ItemDetailsModel {
         (other.runtimeType == runtimeType &&
             other is _$ItemDetailsModelImpl &&
             (identical(other.product, product) || other.product == product) &&
-            const DeepCollectionEquality().equals(other._related, _related));
+            const DeepCollectionEquality().equals(other._related, _related) &&
+            const DeepCollectionEquality()
+                .equals(other._promotions, _promotions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, product, const DeepCollectionEquality().hash(_related));
+      runtimeType,
+      product,
+      const DeepCollectionEquality().hash(_related),
+      const DeepCollectionEquality().hash(_promotions));
 
   /// Create a copy of ItemDetailsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -192,7 +228,8 @@ class _$ItemDetailsModelImpl implements _ItemDetailsModel {
 abstract class _ItemDetailsModel implements ItemDetailsModel {
   factory _ItemDetailsModel(
       {final ProductDetailsModel? product,
-      final List<ProductModels>? related}) = _$ItemDetailsModelImpl;
+      final List<ProductModels>? related,
+      final List<PormotionModel>? promotions}) = _$ItemDetailsModelImpl;
 
   factory _ItemDetailsModel.fromJson(Map<String, dynamic> json) =
       _$ItemDetailsModelImpl.fromJson;
@@ -201,6 +238,8 @@ abstract class _ItemDetailsModel implements ItemDetailsModel {
   ProductDetailsModel? get product;
   @override
   List<ProductModels>? get related;
+  @override
+  List<PormotionModel>? get promotions;
 
   /// Create a copy of ItemDetailsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -669,7 +708,7 @@ class _$ProductDetailsModelImpl implements _ProductDetailsModel {
       final List<String>? images,
       @JsonKey(name: "is_variable") this.isVariable,
       final List<VariationModel> variations = const [],
-      @JsonKey(name: "item_quantity") this.quantity = 0,
+      @JsonKey(name: "item_quantity") this.quantity = 1,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "is_featured") this.isFeatured,
       @JsonKey(name: "thumbnail_url") this.thumbnailUrl,

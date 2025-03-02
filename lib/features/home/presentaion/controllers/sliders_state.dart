@@ -1,8 +1,8 @@
-part of 'sliders_controllers.dart';
+// part of 'sliders_controllers.dart';
 
-@freezed
-abstract class SlidersState with _$SlidersState {
-  factory SlidersState({
-    @Default([]) final List<SlidersModel> sliders,
-  }) = _SlidersState;
-}
+// @freezed
+// abstract class SlidersState with _$SlidersState {
+//   factory SlidersState({
+//     @Default([]) final List<SlidersModel> sliders,
+//   }) = _SlidersState;
+// }

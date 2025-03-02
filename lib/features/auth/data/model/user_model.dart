@@ -31,7 +31,7 @@ class User with _$User {
       @JsonKey(name: "budget_start_date") final String? budgetStartDate,
       final String? number,
       @JsonKey(name: "full_address") final String? fullAddress,
-      final String? group,
+    
       final CityModel? city,
       final CityModel? country}) = _User;
 

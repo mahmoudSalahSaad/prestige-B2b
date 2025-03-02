@@ -12,7 +12,7 @@ class ShippingMethodsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment Methods"),
+        title: const Text("Shipping Methods"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -62,7 +62,7 @@ class ShippingMethodsScreen extends ConsumerWidget {
   }
 }
 
-class ShippingMethodCardWidget extends StatelessWidget {
+class ShippingMethodCardWidget extends ConsumerWidget {
   const ShippingMethodCardWidget({
     super.key,
     required this.shippingMethodModel,
@@ -70,40 +70,55 @@ class ShippingMethodCardWidget extends StatelessWidget {
   final ShippingMethodModel shippingMethodModel;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.grey,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return InkWell(
+      onTap: () {
+        ref
+            .read(shippingMethodsControllerProvider.notifier)
+            .selectShippingMethods(parameters: shippingMethodModel);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: ref
+                        .watch(shippingMethodsControllerProvider)
+                        .requireValue
+                        .selectedShippingMethod ==
+                    shippingMethodModel
+                ? primaryColor
+                : Colors.grey,
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${shippingMethodModel.name} - ${shippingMethodModel.carrier}",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(color: primaryColor),
-              ),
-              Text("${shippingMethodModel.cost} JOD")
-            ],
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Text(
-            "${shippingMethodModel.description}",
-            style: Theme.of(context).textTheme.bodySmall,
-          )
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${shippingMethodModel.name}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(color: primaryColor),
+                ),
+                Text("${shippingMethodModel.cost} JOD")
+              ],
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            shippingMethodModel.description == null
+                ? const SizedBox()
+                : Text(
+                    "${shippingMethodModel.description}",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )
+          ],
+        ),
       ),
     );
   }

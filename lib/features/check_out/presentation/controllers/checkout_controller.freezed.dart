@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CheckoutState {
   OrderModel? get orderModel => throw _privateConstructorUsedError;
+  DateTime? get dateTime => throw _privateConstructorUsedError;
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $CheckoutStateCopyWith<$Res> {
           CheckoutState value, $Res Function(CheckoutState) then) =
       _$CheckoutStateCopyWithImpl<$Res, CheckoutState>;
   @useResult
-  $Res call({OrderModel? orderModel});
+  $Res call({OrderModel? orderModel, DateTime? dateTime});
 
   $OrderModelCopyWith<$Res>? get orderModel;
 }
@@ -52,12 +53,17 @@ class _$CheckoutStateCopyWithImpl<$Res, $Val extends CheckoutState>
   @override
   $Res call({
     Object? orderModel = freezed,
+    Object? dateTime = freezed,
   }) {
     return _then(_value.copyWith(
       orderModel: freezed == orderModel
           ? _value.orderModel
           : orderModel // ignore: cast_nullable_to_non_nullable
               as OrderModel?,
+      dateTime: freezed == dateTime
+          ? _value.dateTime
+          : dateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 
@@ -84,7 +90,7 @@ abstract class _$$CheckoutStateImplCopyWith<$Res>
       __$$CheckoutStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({OrderModel? orderModel});
+  $Res call({OrderModel? orderModel, DateTime? dateTime});
 
   @override
   $OrderModelCopyWith<$Res>? get orderModel;
@@ -104,12 +110,17 @@ class __$$CheckoutStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? orderModel = freezed,
+    Object? dateTime = freezed,
   }) {
     return _then(_$CheckoutStateImpl(
       orderModel: freezed == orderModel
           ? _value.orderModel
           : orderModel // ignore: cast_nullable_to_non_nullable
               as OrderModel?,
+      dateTime: freezed == dateTime
+          ? _value.dateTime
+          : dateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -117,14 +128,16 @@ class __$$CheckoutStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CheckoutStateImpl implements _CheckoutState {
-  _$CheckoutStateImpl({this.orderModel});
+  _$CheckoutStateImpl({this.orderModel, this.dateTime});
 
   @override
   final OrderModel? orderModel;
+  @override
+  final DateTime? dateTime;
 
   @override
   String toString() {
-    return 'CheckoutState(orderModel: $orderModel)';
+    return 'CheckoutState(orderModel: $orderModel, dateTime: $dateTime)';
   }
 
   @override
@@ -133,11 +146,13 @@ class _$CheckoutStateImpl implements _CheckoutState {
         (other.runtimeType == runtimeType &&
             other is _$CheckoutStateImpl &&
             (identical(other.orderModel, orderModel) ||
-                other.orderModel == orderModel));
+                other.orderModel == orderModel) &&
+            (identical(other.dateTime, dateTime) ||
+                other.dateTime == dateTime));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, orderModel);
+  int get hashCode => Object.hash(runtimeType, orderModel, dateTime);
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.
@@ -149,10 +164,14 @@ class _$CheckoutStateImpl implements _CheckoutState {
 }
 
 abstract class _CheckoutState implements CheckoutState {
-  factory _CheckoutState({final OrderModel? orderModel}) = _$CheckoutStateImpl;
+  factory _CheckoutState(
+      {final OrderModel? orderModel,
+      final DateTime? dateTime}) = _$CheckoutStateImpl;
 
   @override
   OrderModel? get orderModel;
+  @override
+  DateTime? get dateTime;
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.

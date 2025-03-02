@@ -10,7 +10,8 @@ import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/core/services/local/storage_keys.dart';
 import 'package:shop/features/auth/data/model/user_model.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
-import 'package:shop/features/home/presentaion/controllers/get_categories_controller.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
+import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_products_controller.dart';
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
 
@@ -32,13 +33,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       AppPrefs appPrefs = getIt();
 
       String? user = await appPrefs.getSecuredData(PrefKeys.user);
-      print("user $user");
 
       if (user != null && user.isNotEmpty) {
-        ref.watch(getCategoriesControllerProvider);
-
+        ref.watch(discoverControllerProvider);
+        ref.watch(cartControllerProvider);
         User userModel = User.fromJson(json.decode(user));
-        print("UserModel $userModel");
+
         Future.delayed(Duration.zero, () {
           ref
               .read(loginControllerProvider.notifier)

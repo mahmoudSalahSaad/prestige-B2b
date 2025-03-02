@@ -89,8 +89,7 @@ class OrderItemWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                              "Order #${orderModel?.id ?? 0}: ${orderModel?.items?[index].name}"),
+                          Text("${orderModel?.items?[index].name}"),
                           Text(
                               "${orderModel?.items?[index].price} JOD x ${orderModel?.items?[index].quantity}")
                         ],
@@ -100,7 +99,9 @@ class OrderItemWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("${orderModel?.billingAddress}")],
+            children: [
+              SizedBox(width: 320, child: Text("${orderModel?.billingAddress}"))
+            ],
           ),
         ],
       ),
