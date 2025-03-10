@@ -7,8 +7,8 @@ import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
 import 'package:shop/models/product_model.dart';
 
-class BestSellers extends ConsumerWidget {
-  const BestSellers({
+class FeaturedProducts extends ConsumerWidget {
+  const FeaturedProducts({
     super.key,
     this.deals,
     this.title,
@@ -58,6 +58,7 @@ class BestSellers extends ConsumerWidget {
                       press: () {
                         // Navigator.pushNamed(context, productDetailsScreenRoute,
                         // arguments: index.isEven);
+
                         NavigationService.push(Routes.productDetails,
                             arguments: {"slug": deals?[index].slug});
                       },

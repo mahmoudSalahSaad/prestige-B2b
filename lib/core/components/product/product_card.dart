@@ -29,8 +29,8 @@ class ProductCard extends StatelessWidget {
     return OutlinedButton(
       onPressed: () => press(),
       style: OutlinedButton.styleFrom(
-          minimumSize: const Size(140, 220),
-          maximumSize: const Size(140, 220),
+          minimumSize: const Size(140, 230),
+          maximumSize: const Size(140, 240),
           side: BorderSide(color: Theme.of(context).hintColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadious),
@@ -56,6 +56,8 @@ class ProductCard extends StatelessWidget {
                 children: [
                   Text(
                     brandName.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!

@@ -54,12 +54,16 @@ _$ImageModelImpl _$$ImageModelImplFromJson(Map<String, dynamic> json) =>
     _$ImageModelImpl(
       path: json['path'] as String?,
       link: json['link'] as String?,
+      linkType: json['link_type'] as String?,
+      linkSlug: json['link_slug'] as String?,
     );
 
 Map<String, dynamic> _$$ImageModelImplToJson(_$ImageModelImpl instance) =>
     <String, dynamic>{
       'path': instance.path,
       'link': instance.link,
+      'link_type': instance.linkType,
+      'link_slug': instance.linkSlug,
     };
 
 _$SliderModelImpl _$$SliderModelImplFromJson(Map<String, dynamic> json) =>

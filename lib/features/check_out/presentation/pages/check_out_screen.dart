@@ -11,9 +11,11 @@ import 'package:shop/features/Address/data/models/address_model.dart';
 import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
+import 'package:shop/features/check_out/data/models/shipping_method_model.dart';
 import 'package:shop/features/check_out/domain/entities/checkout_entity.dart';
 import 'package:shop/features/check_out/presentation/controllers/checkout_controller.dart';
 import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
+import 'package:shop/features/check_out/presentation/pages/shipping_methods_screen.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:week_day_picker/week_day_picker.dart';
 
@@ -90,31 +92,48 @@ class CheckOutScreen extends ConsumerWidget {
               Divider(
                 color: Theme.of(context).hintColor.withOpacity(0.5),
               ),
-              InkWell(
-                onTap: () {
-                  NavigationService.push(Routes.shippingMethodsScreen);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset("assets/icons/Mylocation.svg"),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text("Shipping Methods")
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 16,
-                        color: Theme.of(context).hintColor,
-                      )
-                    ],
-                  ),
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Choose a shipping method",
+                        style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: defaultPadding),
+                    ref.watch(shippingMethodsControllerProvider).when(
+                        data: (data) {
+                          return Column(
+                            children: data.shippingMethods.isEmpty
+                                ? [
+                                    Image.asset(
+                                        "assets/Illustration/EmptyState_lightTheme.png"),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text(
+                                        "No shipping methods available!!")
+                                  ]
+                                : List.generate(
+                                    data.shippingMethods.length,
+                                    (index) => ShippingMethodCardWidget(
+                                        shippingMethodModel:
+                                            data.shippingMethods[index])),
+                          );
+                        },
+                        error: (error, stackTrace) => Text(error.toString()),
+                        loading: () => Skeletonizer(
+                                child: Column(
+                              children: List.generate(
+                                  2,
+                                  (index) => ShippingMethodCardWidget(
+                                          shippingMethodModel:
+                                              ShippingMethodModel(
+                                        carrier: "Loading",
+                                        name: "ssdasd",
+                                        cost: 100,
+                                        description: "sdadsddssad",
+                                      ))),
+                            ))),
+                  ],
                 ),
               ),
               Divider(
@@ -232,59 +251,54 @@ class CheckOutScreen extends ConsumerWidget {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: SecondaryProductCard(
-                        itemId:
-                            ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].id ??
-                                0,
-                        total: (ref
-                                    .read(cartControllerProvider)
-                                    .requireValue
-                                    .cartModel
-                                    ?.items?[index]
-                                    .product
-                                    ?.price
-                                    ?.hasDiscount ??
-                                false)
-                            ? (ref
-                                    .watch(cartControllerProvider)
-                                    .requireValue
-                                    .cartModel!
-                                    .items![index]
-                                    .quantity! *
-                                (ref
-                                        .read(cartControllerProvider)
-                                        .requireValue
-                                        .cartModel
-                                        ?.items?[index]
-                                        .product
-                                        ?.price
-                                        ?.afterDiscount ??
-                                    0))
-                            : (ref
-                                    .watch(cartControllerProvider)
-                                    .requireValue
-                                    .cartModel!
-                                    .items![index]
-                                    .quantity! *
-                                (ref
-                                        .read(cartControllerProvider)
-                                        .requireValue
-                                        .cartModel
-                                        ?.items?[index]
-                                        .product
-                                        ?.price
-                                        ?.beforeDiscount ??
-                                    0)),
-                        quantity: ref
-                                .watch(cartControllerProvider)
-                                .requireValue
-                                .cartModel
-                                ?.items?[index]
-                                .quantity ??
-                            0,
-                        image: '${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.thumbnail}',
-                        brandName: ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.slug ?? "",
-                        title: "${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.name}",
-                        price: (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.hasDiscount ?? false) ? (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.afterDiscount ?? 0) : (ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.price?.beforeDiscount ?? 0)),
+                      itemId: ref
+                              .read(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .id ??
+                          0,
+                      total: ref
+                              .watch(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .total ??
+                          0,
+                      quantity: ref
+                              .watch(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .quantity ??
+                          0,
+                      priceAfetDiscount: ref
+                              .watch(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .price ??
+                          0,
+                      image:
+                          '${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.thumbnail}',
+                      brandName: ref
+                              .read(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .product
+                              ?.slug ??
+                          "",
+                      title:
+                          "${ref.read(cartControllerProvider).requireValue.cartModel?.items?[index].product?.name}",
+                      price: ref
+                              .watch(cartControllerProvider)
+                              .requireValue
+                              .cartModel
+                              ?.items?[index]
+                              .regularPrice ??
+                          0,
+                    ),
                   );
                 },
               ),

@@ -51,36 +51,13 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         leading: const SizedBox(),
+        scrolledUnderElevation: 0,
+        elevation: 0,
         leadingWidth: 0,
         centerTitle: false,
         title:
             Text("PRESTIGE", style: Theme.of(context).textTheme.headlineSmall),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, searchScreenRoute);
-            },
-            icon: SvgPicture.asset(
-              "assets/icons/Search.svg",
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).textTheme.bodyLarge!.color!,
-                  BlendMode.srcIn),
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, notificationsScreenRoute);
-            },
-            icon: SvgPicture.asset(
-              "assets/icons/Notification.svg",
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).textTheme.bodyLarge!.color!,
-                  BlendMode.srcIn),
-            ),
-          ),
-        ],
+        actions: const [],
       ),
       // body: _pages[_currentIndex],
       body: PageTransitionSwitcher(

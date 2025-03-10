@@ -36,6 +36,7 @@ import 'package:shop/features/discover/domain/use_cases/get_products_by_categori
 import 'package:shop/features/home/data/repository_implementation/repository_implementation.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
+import 'package:shop/features/home/domain/use_cases/get_home_static_page_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
 import 'package:shop/features/orders/data/repo/my_orders_repo_impl.dart';
 import 'package:shop/features/orders/domain/repo/my_orders_repo.dart';
@@ -60,6 +61,7 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => GetProductsUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(() => GetCategoriesUseCase(homeRepo: getIt()));
+  getIt.registerLazySingleton(() => GetHomeStaticPageUseCase(homeRepo: getIt()));
 
   getIt.registerLazySingleton(
       () => GetProductDetailsUseCase(productRepository: getIt()));

@@ -530,6 +530,10 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) {
 mixin _$ImageModel {
   String? get path => throw _privateConstructorUsedError;
   String? get link => throw _privateConstructorUsedError;
+  @JsonKey(name: "link_type")
+  String? get linkType => throw _privateConstructorUsedError;
+  @JsonKey(name: "link_slug")
+  String? get linkSlug => throw _privateConstructorUsedError;
 
   /// Serializes this ImageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -547,7 +551,11 @@ abstract class $ImageModelCopyWith<$Res> {
           ImageModel value, $Res Function(ImageModel) then) =
       _$ImageModelCopyWithImpl<$Res, ImageModel>;
   @useResult
-  $Res call({String? path, String? link});
+  $Res call(
+      {String? path,
+      String? link,
+      @JsonKey(name: "link_type") String? linkType,
+      @JsonKey(name: "link_slug") String? linkSlug});
 }
 
 /// @nodoc
@@ -567,6 +575,8 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
   $Res call({
     Object? path = freezed,
     Object? link = freezed,
+    Object? linkType = freezed,
+    Object? linkSlug = freezed,
   }) {
     return _then(_value.copyWith(
       path: freezed == path
@@ -576,6 +586,14 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
       link: freezed == link
           ? _value.link
           : link // ignore: cast_nullable_to_non_nullable
+              as String?,
+      linkType: freezed == linkType
+          ? _value.linkType
+          : linkType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      linkSlug: freezed == linkSlug
+          ? _value.linkSlug
+          : linkSlug // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -589,7 +607,11 @@ abstract class _$$ImageModelImplCopyWith<$Res>
       __$$ImageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? path, String? link});
+  $Res call(
+      {String? path,
+      String? link,
+      @JsonKey(name: "link_type") String? linkType,
+      @JsonKey(name: "link_slug") String? linkSlug});
 }
 
 /// @nodoc
@@ -607,6 +629,8 @@ class __$$ImageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? path = freezed,
     Object? link = freezed,
+    Object? linkType = freezed,
+    Object? linkSlug = freezed,
   }) {
     return _then(_$ImageModelImpl(
       path: freezed == path
@@ -617,6 +641,14 @@ class __$$ImageModelImplCopyWithImpl<$Res>
           ? _value.link
           : link // ignore: cast_nullable_to_non_nullable
               as String?,
+      linkType: freezed == linkType
+          ? _value.linkType
+          : linkType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      linkSlug: freezed == linkSlug
+          ? _value.linkSlug
+          : linkSlug // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -624,7 +656,11 @@ class __$$ImageModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ImageModelImpl implements _ImageModel {
-  _$ImageModelImpl({this.path, this.link});
+  _$ImageModelImpl(
+      {this.path,
+      this.link,
+      @JsonKey(name: "link_type") this.linkType,
+      @JsonKey(name: "link_slug") this.linkSlug});
 
   factory _$ImageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ImageModelImplFromJson(json);
@@ -633,10 +669,16 @@ class _$ImageModelImpl implements _ImageModel {
   final String? path;
   @override
   final String? link;
+  @override
+  @JsonKey(name: "link_type")
+  final String? linkType;
+  @override
+  @JsonKey(name: "link_slug")
+  final String? linkSlug;
 
   @override
   String toString() {
-    return 'ImageModel(path: $path, link: $link)';
+    return 'ImageModel(path: $path, link: $link, linkType: $linkType, linkSlug: $linkSlug)';
   }
 
   @override
@@ -645,12 +687,16 @@ class _$ImageModelImpl implements _ImageModel {
         (other.runtimeType == runtimeType &&
             other is _$ImageModelImpl &&
             (identical(other.path, path) || other.path == path) &&
-            (identical(other.link, link) || other.link == link));
+            (identical(other.link, link) || other.link == link) &&
+            (identical(other.linkType, linkType) ||
+                other.linkType == linkType) &&
+            (identical(other.linkSlug, linkSlug) ||
+                other.linkSlug == linkSlug));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, path, link);
+  int get hashCode => Object.hash(runtimeType, path, link, linkType, linkSlug);
 
   /// Create a copy of ImageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -669,8 +715,11 @@ class _$ImageModelImpl implements _ImageModel {
 }
 
 abstract class _ImageModel implements ImageModel {
-  factory _ImageModel({final String? path, final String? link}) =
-      _$ImageModelImpl;
+  factory _ImageModel(
+      {final String? path,
+      final String? link,
+      @JsonKey(name: "link_type") final String? linkType,
+      @JsonKey(name: "link_slug") final String? linkSlug}) = _$ImageModelImpl;
 
   factory _ImageModel.fromJson(Map<String, dynamic> json) =
       _$ImageModelImpl.fromJson;
@@ -679,6 +728,12 @@ abstract class _ImageModel implements ImageModel {
   String? get path;
   @override
   String? get link;
+  @override
+  @JsonKey(name: "link_type")
+  String? get linkType;
+  @override
+  @JsonKey(name: "link_slug")
+  String? get linkSlug;
 
   /// Create a copy of ImageModel
   /// with the given fields replaced by the non-null parameter values.

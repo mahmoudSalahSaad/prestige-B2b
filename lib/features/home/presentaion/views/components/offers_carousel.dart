@@ -6,14 +6,17 @@ import 'package:shop/core/components/Banner/M/banner_m_style_2.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_3.dart';
 import 'package:shop/core/components/Banner/M/banner_m_style_4.dart';
 import 'package:shop/core/components/dot_indicators.dart';
-import 'package:shop/core/components/skleton/banner/banner_m_skelton.dart';
-import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
-import 'package:shop/features/home/presentaion/controllers/sliders_controllers.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
+import 'package:shop/features/home/data/models/home_model.dart';
 
 class OffersCarousel extends ConsumerStatefulWidget {
   const OffersCarousel({
     super.key,
+    this.slider,
   });
+
+  final SliderModel? slider;
 
   @override
   ConsumerState<OffersCarousel> createState() => _OffersCarouselState();
@@ -32,7 +35,6 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
     BannerMStyle2(
       title: "Black \nfriday",
       subtitle: "Collection",
-      discountParcent: 50,
       press: () {},
     ),
     BannerMStyle3(
@@ -77,67 +79,84 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(cartControllerProvider).when(
-        data: (data) => AspectRatio(
-              aspectRatio: 1.87,
-              child: Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: offers.length,
-                    onPageChanged: (int index) {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
-                    itemBuilder: (context, index) => BannerMStyle1(
-                      text: offers[index].title ?? "",
-                      press: () {},
-                      image: offers[index].images?.first ?? "",
-                    ),
-                  ),
-                  FittedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.all(defaultPadding),
-                      child: SizedBox(
-                        height: 16,
-                        child: Row(
-                          children: List.generate(
-                            offers.length,
-                            (index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    left: defaultPadding / 4),
-                                child: DotIndicator(
-                                  isActive: index == _selectedIndex,
-                                  activeColor: Colors.white70,
-                                  inActiveColor: Colors.white54,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+    return AspectRatio(
+      aspectRatio: 1.87,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: widget.slider?.images?.length,
+            onPageChanged: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                print("sadsasd");
+
+                if (widget.slider?.images?[index].linkType == "product") {
+                  NavigationService.push(Routes.productDetails, arguments: {
+                    "slug": widget.slider?.images?[index].linkSlug
+                  });
+                } else if (widget.slider?.images?[index].linkType ==
+                    "category") {
+                  NavigationService.push(Routes.productsByCategory, arguments: {
+                    "category_name": widget.slider?.images?[index].linkSlug
+                  });
+                }
+              },
+              child: BannerMStyle2(
+                press: () {
+                  print("sadsasd");
+                  print(
+                      "saddsadlnsakmads===>${widget.slider?.images?[index].linkType}");
+                  if (widget.slider?.images?[index].linkType == "product") {
+                    NavigationService.push(Routes.productDetails, arguments: {
+                      "slug": widget.slider?.images?[index].linkSlug
+                    });
+                  } else if (widget.slider?.images?[index].linkType ==
+                      "category") {
+                    NavigationService.push(Routes.productsByCategory,
+                        arguments: {
+                          "category_name":
+                              widget.slider?.images?[index].linkSlug,
+                          "title": widget.slider?.images?[index].linkSlug
+                        });
+                  }
+                },
+                image: widget.slider?.images?[index].path,
+                title: '',
               ),
             ),
-        error: (err, stackTrance) => Text("Error==>$err"),
-        loading:
-            () => /* AspectRatio(
-              aspectRatio: 1.87,
-              child: Skeletonizer(
-                enabled: true,
-                containersColor: const Color(0xffe5e5e5),
-                child: BannerMStyle3(
-                  title: "Black \nfriday",
-                  discountParcent: 50,
-                  press: () {},
+          ),
+          FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: SizedBox(
+                height: 16,
+                child: Row(
+                  children: List.generate(
+                    widget.slider?.images?.length ?? 0,
+                    (index) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.only(left: defaultPadding / 4),
+                        child: DotIndicator(
+                          isActive: index == _selectedIndex,
+                          activeColor: Colors.white70,
+                          inActiveColor: Colors.white54,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ) */
-                const BannerMSkelton());
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

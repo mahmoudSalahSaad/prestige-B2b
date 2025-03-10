@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../banner_discount_tag.dart';
-import 'banner_m.dart';
 
 import '../../../../constants.dart';
+import 'banner_m.dart';
 
 class BannerMStyle2 extends StatelessWidget {
   const BannerMStyle2({
@@ -12,12 +10,11 @@ class BannerMStyle2 extends StatelessWidget {
     required this.title,
     required this.press,
     this.subtitle,
-    required this.discountParcent,
   });
   final String? image;
   final String title;
   final String? subtitle;
-  final int discountParcent;
+
   final VoidCallback press;
 
   @override
@@ -61,27 +58,23 @@ class BannerMStyle2 extends StatelessWidget {
               ),
               const SizedBox(width: defaultPadding),
               SizedBox(
-                height: 48,
-                width: 48,
+                width: 130,
                 child: ElevatedButton(
                   onPressed: press,
                   style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.white.withOpacity(0.6),
                   ),
-                  child: SvgPicture.asset(
-                    "assets/icons/Arrow - Right.svg",
-                    colorFilter:
-                        const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                  child: Text(
+                    "Shop Now",
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
               ),
             ],
           ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: BannerDiscountTag(percentage: discountParcent),
         ),
       ],
     );

@@ -55,7 +55,6 @@ class CheckoutRepoImpl extends CheckoutRepo {
         }
         return Right(shippingMethods);
       } catch (e) {
-        print("sdkhjsakljd===>${e.toString()}");
         return Left(ErrorModel(errorMessage: e.toString()));
       }
     });
