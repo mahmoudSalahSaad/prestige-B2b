@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/core/base/base_response.dart';
 import 'package:shop/core/base/base_usecase.dart';
 import 'package:shop/core/services/network/end_points.dart';
@@ -17,7 +16,6 @@ class CheckoutRepoImpl extends CheckoutRepo {
   @override
   Future<Either<ErrorModel, OrderModel>> placeOrder(
       {required CheckoutEntity parameters}) async {
-    final ref = ProviderContainer();
     NetworkCallType type = NetworkCallType.post;
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
