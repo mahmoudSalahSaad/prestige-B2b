@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/core/resources/resources.dart';
 import 'package:shop/features/check_out/data/models/order_model.dart';
 import 'package:shop/features/orders/presentation/controllers/my_orders_controller.dart';
-import 'package:shop/screens/search/views/components/search_form.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class MyOrdersScreen extends ConsumerWidget {
@@ -21,7 +20,6 @@ class MyOrdersScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SearchForm(),
             const SizedBox(height: 16),
             Expanded(
               child: SingleChildScrollView(

@@ -22,6 +22,9 @@ class SignUpForm extends ConsumerWidget {
     required this.counteryController,
     required this.cityController,
     required this.addressController,
+    required this.vatController,
+    required this.companyController,
+    required this.branchController,
   });
 
   final GlobalKey<FormState> formKey;
@@ -34,6 +37,9 @@ class SignUpForm extends ConsumerWidget {
   final TextEditingController counteryController;
   final TextEditingController cityController;
   final TextEditingController addressController;
+  final TextEditingController vatController;
+  final TextEditingController companyController;
+  final TextEditingController branchController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,6 +47,38 @@ class SignUpForm extends ConsumerWidget {
       key: formKey,
       child: Column(
         children: [
+          CustomTextFieldWidget(
+            controller: companyController,
+            hintText: "Company Name",
+            validate: (str) {
+              if (str != null) {
+                if (str.isNotEmpty) {
+                  return null;
+                } else {
+                  return "required";
+                }
+              } else {
+                return "required";
+              }
+            },
+          ),
+          const SizedBox(height: defaultPadding),
+          CustomTextFieldWidget(
+            controller: branchController,
+            hintText: "Group (Wholesale, Merchant, Retails, Van Sales ...)",
+            validate: (str) {
+              if (str != null) {
+                if (str.isNotEmpty) {
+                  return null;
+                } else {
+                  return "required";
+                }
+              } else {
+                return "required";
+              }
+            },
+          ),
+          const SizedBox(height: defaultPadding),
           CustomTextFieldWidget(
             controller: nameController,
             validate: (str) {
@@ -94,6 +132,11 @@ class SignUpForm extends ConsumerWidget {
             onChanged: (str) {
               confirmPasswordController.text = str;
             },
+          ),
+          const SizedBox(height: defaultPadding),
+          CustomTextFieldWidget(
+            controller: vatController,
+            hintText: "VAT Number",
           ),
           const SizedBox(height: defaultPadding),
           CustomTextFieldWidget(
@@ -291,8 +334,6 @@ class SignUpForm extends ConsumerWidget {
             },
             prefixIcon: "assets/icons/Mylocation.svg",
           ),
-         
-         
           const SizedBox(height: defaultPadding),
           CustomTextFieldWidget(
             controller: addressController,

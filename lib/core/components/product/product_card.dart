@@ -29,8 +29,8 @@ class ProductCard extends StatelessWidget {
     return OutlinedButton(
       onPressed: () => press(),
       style: OutlinedButton.styleFrom(
-          minimumSize: const Size(140, 230),
-          maximumSize: const Size(140, 240),
+          minimumSize: const Size(140, 250),
+          maximumSize: const Size(140, 250),
           side: BorderSide(color: Theme.of(context).hintColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadious),
@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall!
-                        .copyWith(fontSize: 12),
+                        .copyWith(fontSize: 12, height: 1.1),
                   ),
                   const Spacer(),
                   hasDiscount

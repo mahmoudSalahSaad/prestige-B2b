@@ -4,6 +4,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/core/components/Banner/S/banner_s_style_1.dart';
 import 'package:shop/core/components/skleton/banner/banner_m_skelton.dart';
 import 'package:shop/core/components/skleton/product/products_skelton.dart';
+import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/features/home/presentaion/controllers/home_controller.dart';
 import 'package:shop/features/home/presentaion/views/components/categories.dart';
 import 'package:shop/features/home/presentaion/views/components/featured_products.dart';
@@ -72,15 +73,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
                         children: List.generate(
                           data1.homeModel?.sections?.image4col?.images
                                   ?.length ??
                               0,
                           (index) => Container(
                             height: 150,
-                            width: 200,
+                            width: deviceWidth,
                             margin: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -106,47 +107,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Brands",
-                              style: Theme.of(context).textTheme.titleSmall),
-                          const SizedBox(height: defaultPadding / 2),
-                          SizedBox(
-                            height: 120,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount:
-                                  data1.homeModel?.sections?.brands?.length,
-                              itemBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.only(
-                                  left: defaultPadding,
-                                  right: index ==
-                                          (data1.homeModel?.sections?.brands
-                                                      ?.length ??
-                                                  0) -
-                                              1
-                                      ? defaultPadding
-                                      : 0,
-                                ),
-                                child: Image.network(
-                                  data1.homeModel?.sections?.brands?[index]
-                                          .logo ??
-                                      "",
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
                       ),
                     ),
                   ),

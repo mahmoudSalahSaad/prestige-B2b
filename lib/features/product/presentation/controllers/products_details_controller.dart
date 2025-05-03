@@ -70,6 +70,8 @@ class ProductsDetailsController extends _$ProductsDetailsController {
     state = AsyncData(
       ProductsDetailsState(
         variationID: variation.id,
+        priceId: variation.productPriceId,
+        unitId: variation.unitId,
         productDetails: state.requireValue.productDetails!.copyWith(
           product: state.requireValue.productDetails!.product!.copyWith(
               price: PriceModel(

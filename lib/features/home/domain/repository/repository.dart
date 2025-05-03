@@ -4,6 +4,7 @@ import 'package:shop/data/datasource/remote/exception/error_widget.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
 import 'package:shop/features/home/data/models/home_model.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
+import 'package:shop/features/home/data/models/promotions_model.dart';
 
 abstract class Repository {
   // Future<Either<ErrorModel, List<SlidersModel>>> getSliders(
@@ -14,5 +15,10 @@ abstract class Repository {
       {required NoParameters parameters});
 
   Future<Either<ErrorModel, HomeModel>> getHomeStaticPage(
+      {required NoParameters parameters});
+
+
+
+  Future<Either<ErrorModel, PromotionsModel>> getPromotionStaticPage(
       {required NoParameters parameters});
 }

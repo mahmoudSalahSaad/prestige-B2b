@@ -17,7 +17,7 @@ class BestSellers extends ConsumerWidget {
   final String? title;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return deals!.isEmpty
+    return (deals ?? []).isEmpty
         ? const SizedBox()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +59,7 @@ class BestSellers extends ConsumerWidget {
                         // Navigator.pushNamed(context, productDetailsScreenRoute,
                         // arguments: index.isEven);
                         NavigationService.push(Routes.productDetails,
-                            arguments: {"slug": deals?[index].slug});
+                            arguments: {"productSlug": deals?[index].slug});
                       },
                     ),
                   ),

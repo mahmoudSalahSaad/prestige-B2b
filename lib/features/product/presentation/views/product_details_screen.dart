@@ -7,6 +7,8 @@ import 'package:shop/core/components/cart_button.dart';
 import 'package:shop/core/components/custom_modal_bottom_sheet.dart';
 import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/resources/values_manager.dart';
+import 'package:shop/core/routing/navigation_services.dart';
+import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/utils/alerts.dart';
 import 'package:shop/features/cart/domain/entities/cart_entity.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
@@ -46,8 +48,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                             ? () {}
                             : () async {
                                 print("variationID====>${data.variationID}");
-                                print(
-                                    "variationID====>${data.productDetails!.product!.variations.isNotEmpty}");
+
                                 if (data.productDetails!.product!.variations
                                     .isNotEmpty) {
                                   if (data.variationID != null) {
@@ -60,7 +61,9 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             productID: data.productDetails
                                                     ?.product?.id ??
                                                 0,
-                                            variationID: data.variationID))
+                                            variationID: data.variationID,
+                                            priceID: data.priceId,
+                                            unitID: data.unitId))
                                         .then((value) {
                                       Alerts.showSnackBar(
                                           "Product added to cart",
@@ -99,26 +102,17 @@ class ProductDetailsScreen extends ConsumerWidget {
                 body: SafeArea(
                   child: CustomScrollView(
                     slivers: [
-                      SliverAppBar(
+                      const SliverAppBar(
                         backgroundColor: Colors.white,
                         floating: true,
                         pinned: true,
-                        actions: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset("assets/icons/Bookmark.svg",
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .color),
-                          ),
-                        ],
+                        actions: [],
                       ),
                       ProductImages(
                         images: data.productDetails?.product?.images ?? [],
                       ),
                       ProductInfo(
-                        brand: data.productDetails?.product?.brand?.name ?? "",
+                        brand: "",
                         title: "${data.productDetails?.product?.name}",
                         isAvailable: isProductAvailable,
                         description:
@@ -417,33 +411,52 @@ class ProductDetailsScreen extends ConsumerWidget {
                                               1
                                       ? defaultPadding
                                       : 0),
-                              child: ProductCard(
-                                image: data.productDetails?.related?[index]
-                                        .thumbnail ??
-                                    "",
-                                title:
-                                    data.productDetails?.related?[index].name ??
-                                        "",
-                                brandName: data.productDetails?.related?[index]
-                                        .shortDescription ??
-                                    "",
-                                price: data.productDetails?.related?[index]
-                                        .price?.beforeDiscount ??
-                                    0,
-                                priceBeforeDiscount: data
-                                        .productDetails
-                                        ?.related?[index]
-                                        .price
-                                        ?.beforeDiscount ??
-                                    0,
-                                priceAfetDiscount: data.productDetails
-                                    ?.related?[index].price?.afterDiscount
-                                    .toString(),
-                                dicountpercent: null,
-                                press: () {},
-                                hasDiscount: data.productDetails
-                                        ?.related?[index].price?.hasDiscount ??
-                                    false,
+                              child: InkWell(
+                                onTap: () {
+                                  NavigationService.push(Routes.productDetails,
+                                      arguments: {
+                                        "productSlug": data.productDetails
+                                            ?.related?[index].slug
+                                      });
+                                },
+                                child: ProductCard(
+                                  image: data.productDetails?.related?[index]
+                                          .thumbnail ??
+                                      "",
+                                  title: data.productDetails?.related?[index]
+                                          .name ??
+                                      "",
+                                  brandName: data.productDetails
+                                          ?.related?[index].shortDescription ??
+                                      "",
+                                  price: data.productDetails?.related?[index]
+                                          .price?.beforeDiscount ??
+                                      0,
+                                  priceBeforeDiscount: data
+                                          .productDetails
+                                          ?.related?[index]
+                                          .price
+                                          ?.beforeDiscount ??
+                                      0,
+                                  priceAfetDiscount: data.productDetails
+                                      ?.related?[index].price?.afterDiscount
+                                      .toString(),
+                                  dicountpercent: null,
+                                  press: () {
+                                    NavigationService.push(
+                                        Routes.productDetails,
+                                        arguments: {
+                                          "productSlug": data.productDetails
+                                              ?.related?[index].slug
+                                        });
+                                  },
+                                  hasDiscount: data
+                                          .productDetails
+                                          ?.related?[index]
+                                          .price
+                                          ?.hasDiscount ??
+                                      false,
+                                ),
                               ),
                             ),
                           ),

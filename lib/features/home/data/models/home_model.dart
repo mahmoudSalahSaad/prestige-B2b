@@ -37,6 +37,8 @@ class ImageModel with _$ImageModel {
     final String? link,
     @JsonKey(name: "link_type") final String? linkType,
     @JsonKey(name: "link_slug") final String? linkSlug,
+    final int? width , 
+
   }) = _ImageModel;
 
   factory ImageModel.fromJson(Map<String, dynamic> json) =>

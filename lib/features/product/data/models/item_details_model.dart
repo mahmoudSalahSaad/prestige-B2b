@@ -10,7 +10,8 @@ part 'item_details_model.g.dart';
 class ItemDetailsModel with _$ItemDetailsModel {
   factory ItemDetailsModel(
       {final ProductDetailsModel? product,
-      final List<ProductModels>? related , final List<PormotionModel>? promotions}) = _ItemDetailsModel;
+      final List<ProductModels>? related,
+      final List<PormotionModel>? promotions}) = _ItemDetailsModel;
 
   factory ItemDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$ItemDetailsModelFromJson(json);
@@ -28,7 +29,6 @@ class ProductDetailsModel with _$ProductDetailsModel {
     @JsonKey(name: "display_price_value") final PriceModel? price,
     final String? barcode,
     final String? sku,
-    final String? options,
     final String? unit,
     final List<String>? images,
     @JsonKey(name: "is_variable") final bool? isVariable,
@@ -40,7 +40,7 @@ class ProductDetailsModel with _$ProductDetailsModel {
     @JsonKey(name: "tax_amount") final int? taxAmount,
     @JsonKey(name: "tax_id") final TaxId? taxId,
     final CategoryModel? categoryModel,
-    final Brand? brand,
+    //final Brand? brand,
   }) = _ProductDetailsModel;
 
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -79,6 +79,8 @@ class VariationModel with _$VariationModel {
     final double? price,
     final String? options,
     @JsonKey(name: "discount_price") final double? discountPrice,
+    @JsonKey(name: "product_price_id") final int? productPriceId,
+    @JsonKey(name: "unit_id") final int? unitId,
   }) = _VariationModel;
 
   factory VariationModel.fromJson(Map<String, dynamic> json) =>

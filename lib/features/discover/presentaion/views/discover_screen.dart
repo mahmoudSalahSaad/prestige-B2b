@@ -5,7 +5,6 @@ import 'package:shop/features/discover/presentaion/controllers/discover_controll
 import 'package:shop/features/discover/presentaion/views/components/expansion_category.dart';
 import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/models/category_model.dart';
-import 'package:shop/screens/search/views/components/search_form.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DiscoverScreen extends ConsumerWidget {
@@ -18,10 +17,7 @@ class DiscoverScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(defaultPadding),
-              child: SearchForm(),
-            ),
+       
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: defaultPadding, vertical: defaultPadding / 2),

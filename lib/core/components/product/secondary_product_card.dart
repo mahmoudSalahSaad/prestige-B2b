@@ -74,22 +74,29 @@ class SecondaryProductCard extends ConsumerWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            brandName.toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(fontSize: 10),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              brandName.toUpperCase(),
+                              maxLines: 1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 10),
+                            ),
                           ),
                           const SizedBox(height: defaultPadding / 2),
-                          Text(
-                            title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(fontSize: 12),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(fontSize: 12),
+                            ),
                           ),
                         ],
                       ),

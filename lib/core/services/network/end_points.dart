@@ -14,6 +14,7 @@ class EndPoints {
       '/categories/$category/products';
 
   static String addToCart = "/add-to-cart";
+  static String addPromotionToCart = "/add-promotion-to-cart";
   static String addItemToCart(String id) => "/cart/$id/increase";
   static String removeItemToCart(String id) => "/cart/$id/decrease";
   static String myCart = "/my-cart";
@@ -30,4 +31,5 @@ class EndPoints {
   static String deleteAddress(String id) => "/addresses/$id/delete";
 
   static String getHomeStaticPage = "/pages/home-app";
+  static String getPromotionsStaticPage = "/pages/promotions";
 }

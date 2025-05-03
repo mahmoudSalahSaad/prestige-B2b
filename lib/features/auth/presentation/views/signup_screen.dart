@@ -33,6 +33,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final TextEditingController counteryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController vatController = TextEditingController();
+  final TextEditingController companyController = TextEditingController();
+  final TextEditingController branchController = TextEditingController();
+
   File? file;
   bool pickerValidation = false;
 
@@ -109,16 +113,20 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     ),
                     const SizedBox(height: defaultPadding),
                     SignUpForm(
-                        formKey: _formKey,
-                        emailController: emailController,
-                        nameController: nameController,
-                        phoneController: phoneController,
-                        passwordController: passwordController,
-                        confirmPasswordController: confirmPasswordController,
-                        postalCodeController: postalCodeController,
-                        cityController: cityController,
-                        counteryController: counteryController,
-                        addressController: addressController),
+                      formKey: _formKey,
+                      emailController: emailController,
+                      nameController: nameController,
+                      phoneController: phoneController,
+                      passwordController: passwordController,
+                      confirmPasswordController: confirmPasswordController,
+                      postalCodeController: postalCodeController,
+                      cityController: cityController,
+                      counteryController: counteryController,
+                      addressController: addressController,
+                      vatController: vatController,
+                      companyController: companyController,
+                      branchController: branchController,
+                    ),
                     const SizedBox(height: defaultPadding),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -155,6 +163,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                                     .requireValue
                                                     .selectedCountry!
                                                     .id,
+                                                vatNumber: vatController.text,
+                                                companyName:
+                                                    companyController.text,
+                                                groupName:
+                                                    branchController.text,
                                                 postalCode:
                                                     postalCodeController.text));
                                   } else {}

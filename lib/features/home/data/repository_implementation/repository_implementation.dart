@@ -7,6 +7,7 @@ import 'package:shop/data/datasource/remote/exception/error_widget.dart';
 import 'package:shop/features/discover/data/models/category_model.dart';
 import 'package:shop/features/home/data/models/home_model.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
+import 'package:shop/features/home/data/models/promotions_model.dart';
 // import 'package:shop/features/home/data/models/sliders_model.dart';
 import 'package:shop/features/home/domain/repository/repository.dart';
 
@@ -63,7 +64,7 @@ class RepositoryImplementation implements Repository {
       {required NoParameters parameters}) async {
     NetworkCallType type = NetworkCallType.get;
 
-    Either<ErrorModel, BaseResponse> result = await networkClient(
+    Either<ErrorModel, BaseResponse> result = await networkClient.call(
       url: EndPoints.productList,
       type: type,
       data: {},
@@ -96,7 +97,7 @@ class RepositoryImplementation implements Repository {
       {required NoParameters parameters}) async {
     const NetworkCallType callType = NetworkCallType.post;
 
-    final Either<ErrorModel, BaseResponse> response = await networkClient(
+    final Either<ErrorModel, BaseResponse> response = await networkClient.call(
       url: EndPoints.getHomeStaticPage,
       type: callType,
       data: {},
@@ -109,6 +110,35 @@ class RepositoryImplementation implements Repository {
           final HomeModel homeData = HomeModel.fromJson(baseResponse.data);
           return Right(homeData);
         } catch (e) {
+          return Left(ErrorModel(errorMessage: e.toString()));
+        }
+      },
+    );
+  }
+
+  @override
+  Future<Either<ErrorModel, PromotionsModel>> getPromotionStaticPage(
+      {required NoParameters parameters}) async {
+    const NetworkCallType callType = NetworkCallType.post;
+
+    final Either<ErrorModel, BaseResponse> response = await networkClient(
+      url: EndPoints.getPromotionsStaticPage,
+      type: callType,
+      data: {},
+    );
+
+    print("homeData: $response");
+
+    return response.fold(
+      (error) => Left(error),
+      (baseResponse) {
+        try {
+          final PromotionsModel homeData =
+              PromotionsModel.fromJson(baseResponse.data);
+          print("homeData: $homeData");
+          return Right(homeData);
+        } catch (e) {
+          print("object: $e");
           return Left(ErrorModel(errorMessage: e.toString()));
         }
       },

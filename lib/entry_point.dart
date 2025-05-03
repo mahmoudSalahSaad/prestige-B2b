@@ -9,6 +9,7 @@ import 'package:shop/features/cart/presentation/controllers/cart_controller.dart
 import 'package:shop/features/cart/presentation/pages/my_cart_screen.dart';
 import 'package:shop/features/discover/presentaion/views/discover_screen.dart';
 import 'package:shop/features/home/presentaion/views/home_screen.dart';
+import 'package:shop/features/home/presentaion/views/pormotions_screen.dart';
 import 'package:shop/features/profile/profile_screen.dart';
 
 class EntryPoint extends ConsumerStatefulWidget {
@@ -25,6 +26,8 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
 
     // EmptyCartScreen(), // if Cart is empty
     MyCartScreen(),
+    PormotionsScreen(),
+
     ProfileScreen(),
   ];
   int _currentIndex = 0;
@@ -144,6 +147,12 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                 ],
               ),
               label: "Cart",
+            ),
+            BottomNavigationBarItem(
+              icon: svgIcon("assets/icons/Discount.svg"),
+              activeIcon:
+                  svgIcon("assets/icons/Discount.svg", color: primaryColor),
+              label: "Pormotions",
             ),
             BottomNavigationBarItem(
               icon: svgIcon("assets/icons/Profile.svg"),

@@ -44,7 +44,6 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
               json['display_price_value'] as Map<String, dynamic>),
       barcode: json['barcode'] as String?,
       sku: json['sku'] as String?,
-      options: json['options'] as String?,
       unit: json['unit'] as String?,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -65,9 +64,6 @@ _$ProductDetailsModelImpl _$$ProductDetailsModelImplFromJson(
           ? null
           : CategoryModel.fromJson(
               json['categoryModel'] as Map<String, dynamic>),
-      brand: json['brand'] == null
-          ? null
-          : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductDetailsModelImplToJson(
@@ -82,7 +78,6 @@ Map<String, dynamic> _$$ProductDetailsModelImplToJson(
       'display_price_value': instance.price,
       'barcode': instance.barcode,
       'sku': instance.sku,
-      'options': instance.options,
       'unit': instance.unit,
       'images': instance.images,
       'is_variable': instance.isVariable,
@@ -94,7 +89,6 @@ Map<String, dynamic> _$$ProductDetailsModelImplToJson(
       'tax_amount': instance.taxAmount,
       'tax_id': instance.taxId,
       'categoryModel': instance.categoryModel,
-      'brand': instance.brand,
     };
 
 _$BrandImpl _$$BrandImplFromJson(Map<String, dynamic> json) => _$BrandImpl(
@@ -133,6 +127,8 @@ _$VariationModelImpl _$$VariationModelImplFromJson(Map<String, dynamic> json) =>
       price: (json['price'] as num?)?.toDouble(),
       options: json['options'] as String?,
       discountPrice: (json['discount_price'] as num?)?.toDouble(),
+      productPriceId: (json['product_price_id'] as num?)?.toInt(),
+      unitId: (json['unit_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$VariationModelImplToJson(
@@ -144,4 +140,6 @@ Map<String, dynamic> _$$VariationModelImplToJson(
       'price': instance.price,
       'options': instance.options,
       'discount_price': instance.discountPrice,
+      'product_price_id': instance.productPriceId,
+      'unit_id': instance.unitId,
     };

@@ -22,6 +22,7 @@ import 'package:shop/features/auth/doman/use_cases/update_profile_use_case.dart'
 import 'package:shop/features/cart/data/repo/cart_repository_implementation.dart';
 import 'package:shop/features/cart/domain/repo/cart_repository.dart';
 import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dart';
+import 'package:shop/features/cart/domain/usecases/add_promotion_to_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/add_to_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/get_my_cart_use_case.dart';
 import 'package:shop/features/cart/domain/usecases/remove_item_tocart_use_case.dart';
@@ -38,6 +39,7 @@ import 'package:shop/features/home/domain/repository/repository.dart';
 import 'package:shop/features/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_home_static_page_use_case.dart';
 import 'package:shop/features/home/domain/use_cases/get_products_use_case.dart';
+import 'package:shop/features/home/domain/use_cases/get_promotions_use_case.dart';
 import 'package:shop/features/orders/data/repo/my_orders_repo_impl.dart';
 import 'package:shop/features/orders/domain/repo/my_orders_repo.dart';
 import 'package:shop/features/orders/domain/usecases/my_orders_use_case.dart';
@@ -61,7 +63,8 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => GetProductsUseCase(homeRepo: getIt()));
   getIt.registerLazySingleton(() => GetCategoriesUseCase(homeRepo: getIt()));
-  getIt.registerLazySingleton(() => GetHomeStaticPageUseCase(homeRepo: getIt()));
+  getIt
+      .registerLazySingleton(() => GetHomeStaticPageUseCase(homeRepo: getIt()));
 
   getIt.registerLazySingleton(
       () => GetProductDetailsUseCase(productRepository: getIt()));
@@ -94,10 +97,14 @@ Future<void> init() async {
   getIt.registerLazySingleton(
       () => GetShippingMethodsUseCase(checkoutRepo: getIt()));
   getIt.registerLazySingleton(() => GetPormotionsUseCase(getIt()));
+  getIt.registerLazySingleton(
+      () => GetPromotionsStaticPageUseCase(homeRepo: getIt()));
+  getIt.registerLazySingleton(
+      () => AddPromotionToCartUseCase(cartRepository: getIt()));
 
   /// Core
   getIt.registerLazySingleton(() => DioClient(
-      "https://dev.prestigeb2b.net/api/v1", getIt(),
+      "https://prestigeb2b.net/api/v1", getIt(),
       loggingInterceptor: getIt(), cacheConsumer: getIt()));
 
   /// External

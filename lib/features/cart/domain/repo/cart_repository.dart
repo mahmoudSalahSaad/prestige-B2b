@@ -13,4 +13,8 @@ abstract class CartRepository {
 
   Future<Either<ErrorModel, CartModel>> addItemToCart(CartEntity parameters);
   Future<Either<ErrorModel, CartModel>> removeItemToCart(CartEntity parameters);
+
+
+  Future<Either<ErrorModel, CartModel>> addPromotionToCart(
+      {required CartEntity parameters});
 }

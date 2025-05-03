@@ -60,7 +60,7 @@ class FeaturedProducts extends ConsumerWidget {
                         // arguments: index.isEven);
 
                         NavigationService.push(Routes.productDetails,
-                            arguments: {"slug": deals?[index].slug});
+                            arguments: {"productSlug": deals?[index].slug});
                       },
                     ),
                   ),

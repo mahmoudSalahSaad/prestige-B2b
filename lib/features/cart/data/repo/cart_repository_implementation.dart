@@ -21,6 +21,9 @@ class CartRepositoryImplementation extends CartRepository {
         await networkClient.call(data: {
       'product_id': parameters.productID,
       'quantity': parameters.quantity,
+      "variant_id": parameters.variationID,
+      "product_price_id": parameters.priceID,
+      "unit_id": parameters.unitID,
     }, url: EndPoints.addToCart, type: networkCallType);
 
     return response.fold((l) {
@@ -73,6 +76,24 @@ class CartRepositoryImplementation extends CartRepository {
         data: {},
         url: EndPoints.removeItemToCart(parameters.productID.toString()),
         type: networkCallType);
+
+    return response.fold((l) {
+      return Left(l);
+    }, (r) {
+      return Right(CartModel.fromJson(r.data));
+    });
+  }
+
+  @override
+  Future<Either<ErrorModel, CartModel>> addPromotionToCart(
+      {required CartEntity parameters}) async {
+    NetworkCallType networkCallType = NetworkCallType.post;
+
+    final Either<ErrorModel, BaseResponse> response =
+        await networkClient.call(data: {
+      'promotion_id': parameters.productID,
+      'quantity': parameters.quantity,
+    }, url: EndPoints.addPromotionToCart, type: networkCallType);
 
     return response.fold((l) {
       return Left(l);

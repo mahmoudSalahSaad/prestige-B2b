@@ -331,10 +331,11 @@ class CheckOutScreen extends ConsumerWidget {
                                   .selectedShippingMethod!
                                   .name,
                               shippingAmount: ref
-                                  .read(shippingMethodsControllerProvider)
-                                  .requireValue
-                                  .selectedShippingMethod!
-                                  .cost,
+                                      .read(shippingMethodsControllerProvider)
+                                      .requireValue
+                                      .selectedShippingMethod!
+                                      .cost ??
+                                  0,
                               deliveryDate:
                                   "${ref.read(checkoutControllerProvider).requireValue.dateTime?.year}-0${ref.read(checkoutControllerProvider).requireValue.dateTime?.month}-0${ref.read(checkoutControllerProvider).requireValue.dateTime?.day}",
                               shippingAddress: ref
