@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/constants.dart';
-import 'package:shop/core/components/list_tile/divider_list_tile.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/services/local/cache_consumer.dart';
@@ -94,46 +93,46 @@ class ProfileScreen extends ConsumerWidget {
           //     // Navigator.pushNamed(context, walletScreenRoute);
           //   },
           // ),
-          const SizedBox(height: defaultPadding),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 2),
-            child: Text(
-              "Personalization",
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          DividerListTileWithTrilingText(
-            svgSrc: "assets/icons/Notification.svg",
-            title: "Notification",
-            trilingText: "Off",
-            press: () {
-              // Navigator.pushNamed(context, enableNotificationScreenRoute);
-            },
-          ),
-          // ProfileMenuListTile(
-          //   text: "Preferences",
-          //   svgSrc: "assets/icons/Preferences.svg",
+          // const SizedBox(height: defaultPadding),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //       horizontal: defaultPadding, vertical: defaultPadding / 2),
+          //   child: Text(
+          //     "Personalization",
+          //     style: Theme.of(context).textTheme.titleSmall,
+          //   ),
+          // ),
+          // DividerListTileWithTrilingText(
+          //   svgSrc: "assets/icons/Notification.svg",
+          //   title: "Notification",
+          //   trilingText: "Off",
           //   press: () {
-          //     // Navigator.pushNamed(context, preferencesScreenRoute);
+          //     // Navigator.pushNamed(context, enableNotificationScreenRoute);
           //   },
           // ),
-          const SizedBox(height: defaultPadding),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 2),
-            child: Text(
-              "Settings",
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          ProfileMenuListTile(
-            text: "Language",
-            svgSrc: "assets/icons/Language.svg",
-            press: () {
-              // Navigator.pushNamed(context, selectLanguageScreenRoute);
-            },
-          ),
+          // // ProfileMenuListTile(
+          // //   text: "Preferences",
+          // //   svgSrc: "assets/icons/Preferences.svg",
+          // //   press: () {
+          // //     // Navigator.pushNamed(context, preferencesScreenRoute);
+          // //   },
+          // // ),
+          // const SizedBox(height: defaultPadding),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //       horizontal: defaultPadding, vertical: defaultPadding / 2),
+          //   child: Text(
+          //     "Settings",
+          //     style: Theme.of(context).textTheme.titleSmall,
+          //   ),
+          // ),
+          // ProfileMenuListTile(
+          //   text: "Language",
+          //   svgSrc: "assets/icons/Language.svg",
+          //   press: () {
+          //     // Navigator.pushNamed(context, selectLanguageScreenRoute);
+          //   },
+          // ),
 
           Padding(
             padding: const EdgeInsets.symmetric(

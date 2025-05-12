@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/resources/values_manager.dart';
@@ -31,32 +30,7 @@ class ProductByCategoryScreen extends ConsumerWidget {
           "PRESTIGE",
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, searchScreenRoute);
-            },
-            icon: SvgPicture.asset(
-              "assets/icons/Search.svg",
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).textTheme.bodyLarge!.color!,
-                  BlendMode.srcIn),
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, notificationsScreenRoute);
-            },
-            icon: SvgPicture.asset(
-              "assets/icons/Notification.svg",
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).textTheme.bodyLarge!.color!,
-                  BlendMode.srcIn),
-            ),
-          ),
-        ],
+        actions: const [],
       ),
       body: CustomScrollView(
         slivers: [

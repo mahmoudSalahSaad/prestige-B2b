@@ -20,6 +20,7 @@ class ProductModels with _$ProductModels {
     final String? thumbnail,
     final String? slug,
     final PriceModel? price,
+    final String? unit,
   }) = _ProductModels;
 
   factory ProductModels.fromJson(Map<String, dynamic> json) =>

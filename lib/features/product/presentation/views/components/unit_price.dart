@@ -25,13 +25,13 @@ class UnitPrice extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: priceAfterDiscount == null
-                ? "\$${price.toStringAsFixed(2)}  "
-                : "\$${priceAfterDiscount!.toStringAsFixed(2)}  ",
+                ? "${price.toStringAsFixed(2)} JOD"
+                : "${priceAfterDiscount!.toStringAsFixed(2)} JOD",
             style: Theme.of(context).textTheme.titleLarge,
             children: [
               if (price != 0)
                 TextSpan(
-                  text: "\$${price.toStringAsFixed(2)}",
+                  text: "${price.toStringAsFixed(2)} JOD",
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Theme.of(context).textTheme.bodyMedium!.color,
                       decoration: TextDecoration.lineThrough),

@@ -184,6 +184,7 @@ mixin _$ProductModels {
   String? get thumbnail => throw _privateConstructorUsedError;
   String? get slug => throw _privateConstructorUsedError;
   PriceModel? get price => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
 
   /// Serializes this ProductModels to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -207,7 +208,8 @@ abstract class $ProductModelsCopyWith<$Res> {
       @JsonValue('short_description') String? shortDescription,
       String? thumbnail,
       String? slug,
-      PriceModel? price});
+      PriceModel? price,
+      String? unit});
 
   $PriceModelCopyWith<$Res>? get price;
 }
@@ -233,6 +235,7 @@ class _$ProductModelsCopyWithImpl<$Res, $Val extends ProductModels>
     Object? thumbnail = freezed,
     Object? slug = freezed,
     Object? price = freezed,
+    Object? unit = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -259,6 +262,10 @@ class _$ProductModelsCopyWithImpl<$Res, $Val extends ProductModels>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as PriceModel?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -291,7 +298,8 @@ abstract class _$$ProductModelsImplCopyWith<$Res>
       @JsonValue('short_description') String? shortDescription,
       String? thumbnail,
       String? slug,
-      PriceModel? price});
+      PriceModel? price,
+      String? unit});
 
   @override
   $PriceModelCopyWith<$Res>? get price;
@@ -316,6 +324,7 @@ class __$$ProductModelsImplCopyWithImpl<$Res>
     Object? thumbnail = freezed,
     Object? slug = freezed,
     Object? price = freezed,
+    Object? unit = freezed,
   }) {
     return _then(_$ProductModelsImpl(
       id: freezed == id
@@ -342,6 +351,10 @@ class __$$ProductModelsImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as PriceModel?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -355,7 +368,8 @@ class _$ProductModelsImpl implements _ProductModels {
       @JsonValue('short_description') this.shortDescription,
       this.thumbnail,
       this.slug,
-      this.price});
+      this.price,
+      this.unit});
 
   factory _$ProductModelsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductModelsImplFromJson(json);
@@ -373,10 +387,12 @@ class _$ProductModelsImpl implements _ProductModels {
   final String? slug;
   @override
   final PriceModel? price;
+  @override
+  final String? unit;
 
   @override
   String toString() {
-    return 'ProductModels(id: $id, name: $name, shortDescription: $shortDescription, thumbnail: $thumbnail, slug: $slug, price: $price)';
+    return 'ProductModels(id: $id, name: $name, shortDescription: $shortDescription, thumbnail: $thumbnail, slug: $slug, price: $price, unit: $unit)';
   }
 
   @override
@@ -391,13 +407,14 @@ class _$ProductModelsImpl implements _ProductModels {
             (identical(other.thumbnail, thumbnail) ||
                 other.thumbnail == thumbnail) &&
             (identical(other.slug, slug) || other.slug == slug) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.unit, unit) || other.unit == unit));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, shortDescription, thumbnail, slug, price);
+      runtimeType, id, name, shortDescription, thumbnail, slug, price, unit);
 
   /// Create a copy of ProductModels
   /// with the given fields replaced by the non-null parameter values.
@@ -422,7 +439,8 @@ abstract class _ProductModels implements ProductModels {
       @JsonValue('short_description') final String? shortDescription,
       final String? thumbnail,
       final String? slug,
-      final PriceModel? price}) = _$ProductModelsImpl;
+      final PriceModel? price,
+      final String? unit}) = _$ProductModelsImpl;
 
   factory _ProductModels.fromJson(Map<String, dynamic> json) =
       _$ProductModelsImpl.fromJson;
@@ -440,6 +458,8 @@ abstract class _ProductModels implements ProductModels {
   String? get slug;
   @override
   PriceModel? get price;
+  @override
+  String? get unit;
 
   /// Create a copy of ProductModels
   /// with the given fields replaced by the non-null parameter values.

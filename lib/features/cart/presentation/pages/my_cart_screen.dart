@@ -51,9 +51,12 @@ class _MyCartScreenState extends ConsumerState<MyCartScreen> {
                             scrollDirection: Axis.vertical,
                             itemCount: data.cartModel?.items?.length ?? 0,
                             itemBuilder: (context, index) {
+                              print(
+                                  "Fofofofofo====>${data.cartModel?.items?[index].unit}");
                               return Padding(
                                   padding: EdgeInsets.only(bottom: 10.h),
                                   child: SecondaryProductCard(
+                                    unit: data.cartModel?.items?[index].unit!,
                                     itemId:
                                         data.cartModel?.items?[index].id ?? 0,
                                     total: (data.cartModel!.items![index]

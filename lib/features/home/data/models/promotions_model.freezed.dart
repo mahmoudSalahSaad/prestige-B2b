@@ -191,6 +191,7 @@ Sections _$SectionsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Sections {
   List<Promotions>? get promotions => throw _privateConstructorUsedError;
+  List<ProductModels>? get deals => throw _privateConstructorUsedError;
 
   /// Serializes this Sections to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -207,7 +208,7 @@ abstract class $SectionsCopyWith<$Res> {
   factory $SectionsCopyWith(Sections value, $Res Function(Sections) then) =
       _$SectionsCopyWithImpl<$Res, Sections>;
   @useResult
-  $Res call({List<Promotions>? promotions});
+  $Res call({List<Promotions>? promotions, List<ProductModels>? deals});
 }
 
 /// @nodoc
@@ -226,12 +227,17 @@ class _$SectionsCopyWithImpl<$Res, $Val extends Sections>
   @override
   $Res call({
     Object? promotions = freezed,
+    Object? deals = freezed,
   }) {
     return _then(_value.copyWith(
       promotions: freezed == promotions
           ? _value.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
               as List<Promotions>?,
+      deals: freezed == deals
+          ? _value.deals
+          : deals // ignore: cast_nullable_to_non_nullable
+              as List<ProductModels>?,
     ) as $Val);
   }
 }
@@ -244,7 +250,7 @@ abstract class _$$SectionsImplCopyWith<$Res>
       __$$SectionsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Promotions>? promotions});
+  $Res call({List<Promotions>? promotions, List<ProductModels>? deals});
 }
 
 /// @nodoc
@@ -261,12 +267,17 @@ class __$$SectionsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? promotions = freezed,
+    Object? deals = freezed,
   }) {
     return _then(_$SectionsImpl(
       promotions: freezed == promotions
           ? _value._promotions
           : promotions // ignore: cast_nullable_to_non_nullable
               as List<Promotions>?,
+      deals: freezed == deals
+          ? _value._deals
+          : deals // ignore: cast_nullable_to_non_nullable
+              as List<ProductModels>?,
     ));
   }
 }
@@ -274,8 +285,10 @@ class __$$SectionsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SectionsImpl implements _Sections {
-  _$SectionsImpl({final List<Promotions>? promotions})
-      : _promotions = promotions;
+  _$SectionsImpl(
+      {final List<Promotions>? promotions, final List<ProductModels>? deals})
+      : _promotions = promotions,
+        _deals = deals;
 
   factory _$SectionsImpl.fromJson(Map<String, dynamic> json) =>
       _$$SectionsImplFromJson(json);
@@ -290,9 +303,19 @@ class _$SectionsImpl implements _Sections {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<ProductModels>? _deals;
+  @override
+  List<ProductModels>? get deals {
+    final value = _deals;
+    if (value == null) return null;
+    if (_deals is EqualUnmodifiableListView) return _deals;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'Sections(promotions: $promotions)';
+    return 'Sections(promotions: $promotions, deals: $deals)';
   }
 
   @override
@@ -301,13 +324,16 @@ class _$SectionsImpl implements _Sections {
         (other.runtimeType == runtimeType &&
             other is _$SectionsImpl &&
             const DeepCollectionEquality()
-                .equals(other._promotions, _promotions));
+                .equals(other._promotions, _promotions) &&
+            const DeepCollectionEquality().equals(other._deals, _deals));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_promotions));
+      runtimeType,
+      const DeepCollectionEquality().hash(_promotions),
+      const DeepCollectionEquality().hash(_deals));
 
   /// Create a copy of Sections
   /// with the given fields replaced by the non-null parameter values.
@@ -326,13 +352,17 @@ class _$SectionsImpl implements _Sections {
 }
 
 abstract class _Sections implements Sections {
-  factory _Sections({final List<Promotions>? promotions}) = _$SectionsImpl;
+  factory _Sections(
+      {final List<Promotions>? promotions,
+      final List<ProductModels>? deals}) = _$SectionsImpl;
 
   factory _Sections.fromJson(Map<String, dynamic> json) =
       _$SectionsImpl.fromJson;
 
   @override
   List<Promotions>? get promotions;
+  @override
+  List<ProductModels>? get deals;
 
   /// Create a copy of Sections
   /// with the given fields replaced by the non-null parameter values.

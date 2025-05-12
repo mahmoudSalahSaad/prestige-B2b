@@ -22,6 +22,7 @@ class SecondaryProductCard extends ConsumerWidget {
     this.hasDiscount = false,
     required this.total,
     required this.quantity,
+    this.unit,
   });
   final String image, brandName, title;
   final double price;
@@ -35,6 +36,7 @@ class SecondaryProductCard extends ConsumerWidget {
   final int quantity;
   final int itemId;
   final bool? hasDiscount;
+  final String? unit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -197,7 +199,7 @@ class SecondaryProductCard extends ConsumerWidget {
                                   ),
                                 ),
                                 Text(
-                                  "x $quantity",
+                                  "x $quantity ${unit ?? ""}",
                                   style: const TextStyle(
                                     color: Color(0xFF31B0D8),
                                     fontWeight: FontWeight.w500,
@@ -207,7 +209,7 @@ class SecondaryProductCard extends ConsumerWidget {
                               ],
                             )
                           : Text(
-                              "$price X $quantity",
+                              "$price X $quantity ${unit ?? ""}",
                               style: const TextStyle(
                                 color: Color(0xFF31B0D8),
                                 fontWeight: FontWeight.w500,
@@ -216,7 +218,7 @@ class SecondaryProductCard extends ConsumerWidget {
                             ),
                       const SizedBox(width: defaultPadding / 4),
                       Text(
-                        "Total: $total JOD",
+                        "Total: ${total.toStringAsFixed(1)} JOD",
                         style: TextStyle(
                           color: Theme.of(context).textTheme.bodyMedium!.color,
                           fontSize: 14,

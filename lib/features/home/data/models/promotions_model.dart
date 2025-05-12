@@ -14,7 +14,7 @@ class PromotionsModel with _$PromotionsModel {
 
 @freezed
 class Sections with _$Sections {
-  factory Sections({final List<Promotions>? promotions}) = _Sections;
+  factory Sections({final List<Promotions>? promotions , final List<ProductModels>? deals,}) = _Sections;
 
   factory Sections.fromJson(Map<String, dynamic> json) =>
       _$SectionsFromJson(json);

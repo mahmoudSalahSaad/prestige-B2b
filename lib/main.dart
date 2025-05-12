@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Shop Demo',
+        title: 'Prestie',
         theme: lightTheme,
         // Dark theme is inclided in the Full template
 

@@ -28,6 +28,7 @@ _$ProductModelsImpl _$$ProductModelsImplFromJson(Map<String, dynamic> json) =>
       price: json['price'] == null
           ? null
           : PriceModel.fromJson(json['price'] as Map<String, dynamic>),
+      unit: json['unit'] as String?,
     );
 
 Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
       'thumbnail': instance.thumbnail,
       'slug': instance.slug,
       'price': instance.price,
+      'unit': instance.unit,
     };
 
 _$PriceModelImpl _$$PriceModelImplFromJson(Map<String, dynamic> json) =>

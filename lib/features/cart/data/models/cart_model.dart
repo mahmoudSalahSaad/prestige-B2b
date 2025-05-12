@@ -23,9 +23,10 @@ class CartModel with _$CartModel {
 class CartProducts with _$CartProducts {
   factory CartProducts(
       {final int? id,
-       final ProductModels? product,
+      final ProductModels? product,
       final int? quantity,
       final double? price,
+      final String? unit,
       @JsonKey(name: "regular_price") final double? regularPrice,
       final double? total,
       @JsonKey(name: "variation_id") final int? variationId}) = _CartProducts;

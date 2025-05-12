@@ -25,11 +25,15 @@ _$SectionsImpl _$$SectionsImplFromJson(Map<String, dynamic> json) =>
       promotions: (json['promotions'] as List<dynamic>?)
           ?.map((e) => Promotions.fromJson(e as Map<String, dynamic>))
           .toList(),
+      deals: (json['deals'] as List<dynamic>?)
+          ?.map((e) => ProductModels.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$SectionsImplToJson(_$SectionsImpl instance) =>
     <String, dynamic>{
       'promotions': instance.promotions,
+      'deals': instance.deals,
     };
 
 _$PromotionsImpl _$$PromotionsImplFromJson(Map<String, dynamic> json) =>

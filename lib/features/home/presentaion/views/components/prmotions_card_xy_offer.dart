@@ -97,7 +97,7 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                   key: _formKey,
                   child: SizedBox(
                       height: 38,
-                      width: 70,
+                      width: 40,
                       child: TextFormField(
                         controller: _textEditingController,
                         textAlign: TextAlign.center,
@@ -110,6 +110,14 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                               EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                         ),
                       ))),
+              const Spacer(),
+              Text(widget.promotions.unit ?? "",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  )),
               const Spacer(),
               GestureDetector(
                 onTap: ref
@@ -132,7 +140,7 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                       },
                 child: Container(
                   height: 38,
-                  width: 80,
+                  width: 38,
                   decoration: BoxDecoration(
                     color: primaryColor,
                     borderRadius: BorderRadius.circular(12),
@@ -144,21 +152,16 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                             .isLoading
                         ? const Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 35),
+                                vertical: 10.0, horizontal: 10),
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ),
                           )
-                        : const Text(
-                            "Buy",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        : const Icon(Icons.shopping_cart_outlined,
+                            color: Colors.white, size: 20),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],

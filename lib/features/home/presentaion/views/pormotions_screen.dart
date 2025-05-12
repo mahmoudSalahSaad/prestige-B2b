@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/features/home/presentaion/controllers/promotions_static_page_controller.dart';
+import 'package:shop/features/home/presentaion/views/components/best_sellers.dart';
 import 'package:shop/features/home/presentaion/views/components/prmotions_card_prec_discount%20copy.dart';
 import 'package:shop/features/home/presentaion/views/components/prmotions_card_prec_discount.dart';
 import 'package:shop/features/home/presentaion/views/components/prmotions_card_xy_offer.dart';
@@ -24,57 +26,76 @@ class PormotionsScreen extends ConsumerStatefulWidget {
 class _PormotionsScreenState extends ConsumerState<PormotionsScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Pormotions",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          ref.watch(promotionsStaticPageControllerProvider(0)).when(
-              data: (data) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                    childAspectRatio: .63,
-                  ),
-                  itemCount: data.promtions!.sections!.promotions!.length,
-                  itemBuilder: (context, index) {
-                    return data.promtions!.sections!.promotions![index].type ==
-                            "buyxgety"
-                        ? PrmotionsCardXYOFFER(
-                            promotions:
-                                data.promtions!.sections!.promotions![index],
-                          )
-                        : data.promtions!.sections!.promotions![index].type ==
-                                "item_discount"
-                            ? PrmotionsCardItemDiscount(
-                                promotions: data
-                                    .promtions!.sections!.promotions![index],
-                              )
-                            : data.promtions!.sections!.promotions![index]
+    return LiquidPullToRefresh(
+      onRefresh: () async {
+        await ref
+            .read(promotionsStaticPageControllerProvider(0).notifier)
+            .getPromotions();
+      },
+      color: primaryColor.withOpacity(0.5),
+      height: 50,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Pormotions",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            ref.watch(promotionsStaticPageControllerProvider(0)).when(
+                  data: (data) {
+                    return Column(
+                      children: [
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            childAspectRatio: .63,
+                          ),
+                          itemCount:
+                              data.promtions!.sections!.promotions!.length,
+                          itemBuilder: (context, index) {
+                            return data.promtions!.sections!.promotions![index]
                                         .type ==
-                                    "percentage_discount"
-                                ? PrmotionsCardPrecDiscount(
+                                    "buyxgety"
+                                ? PrmotionsCardXYOFFER(
                                     promotions: data.promtions!.sections!
                                         .promotions![index],
                                   )
-                                : PrmotionsCardAmountDiscount(
-                                    promotions: data.promtions!.sections!
-                                        .promotions![index],
-                                  );
+                                : data.promtions!.sections!.promotions![index]
+                                            .type ==
+                                        "item_discount"
+                                    ? PrmotionsCardItemDiscount(
+                                        promotions: data.promtions!.sections!
+                                            .promotions![index],
+                                      )
+                                    : data.promtions!.sections!
+                                                .promotions![index].type ==
+                                            "percentage_discount"
+                                        ? PrmotionsCardPrecDiscount(
+                                            promotions: data.promtions!
+                                                .sections!.promotions![index],
+                                          )
+                                        : PrmotionsCardAmountDiscount(
+                                            promotions: data.promtions!
+                                                .sections!.promotions![index],
+                                          );
+                          },
+                        ),
+                        BestSellers(
+                          deals: data.promtions?.sections?.deals,
+                        )
+                      ],
+                    );
                   },
-                );
-              },
-              error: (error, stck) => Text("$error"),
-              loading: () => Skeletonizer(
+                  error: (error, stck) => Text("$error"),
+                  loading: () => Skeletonizer(
                     enabled: true,
                     containersColor: const Color(0xffe5e5e5),
                     child: GridView.builder(
@@ -177,8 +198,10 @@ class _PormotionsScreenState extends ConsumerState<PormotionsScreen> {
                         );
                       },
                     ),
-                  ))
-        ],
+                  ),
+                ),
+          ],
+        ),
       ),
     );
   }
