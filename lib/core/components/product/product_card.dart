@@ -325,6 +325,8 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                                       ),
                                     );
 
+                                    //show snackbar
+
                                 if (mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
