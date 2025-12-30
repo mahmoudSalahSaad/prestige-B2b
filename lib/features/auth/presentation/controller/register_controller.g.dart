@@ -7,7 +7,7 @@ part of 'register_controller.dart';
 // **************************************************************************
 
 String _$registerControllerHash() =>
-    r'3b1ee2029da2bce8c0f0f86aea404044ef674e7b';
+    r'8b9545e2c7b3d6929d5cd51e9304ca30c980febd';
 
 /// See also [RegisterController].
 @ProviderFor(RegisterController)

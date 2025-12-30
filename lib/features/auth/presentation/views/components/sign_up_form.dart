@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shop/core/components/custom_text_field_widget.dart';
 import 'package:shop/core/components/password_text_feild_widget.dart';
-import 'package:shop/core/resources/values_manager.dart';
-import 'package:shop/features/settings/data/models/city_model.dart';
-import 'package:shop/features/settings/presentation/controllers/cities_controller.dart';
-import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
+import 'package:shop/features/settings/presentation/controllers/branches_controller.dart';
+import 'package:shop/generated/l10n.dart';
 
 import '../../../../../constants.dart';
 
-class SignUpForm extends ConsumerWidget {
+class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({
     super.key,
     required this.formKey,
@@ -18,12 +17,6 @@ class SignUpForm extends ConsumerWidget {
     required this.passwordController,
     required this.confirmPasswordController,
     required this.phoneController,
-    required this.postalCodeController,
-    required this.counteryController,
-    required this.cityController,
-    required this.addressController,
-    required this.vatController,
-    required this.companyController,
     required this.branchController,
   });
 
@@ -33,373 +26,391 @@ class SignUpForm extends ConsumerWidget {
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
   final TextEditingController phoneController;
-  final TextEditingController postalCodeController;
-  final TextEditingController counteryController;
-  final TextEditingController cityController;
-  final TextEditingController addressController;
-  final TextEditingController vatController;
-  final TextEditingController companyController;
   final TextEditingController branchController;
 
+  // Define the new color scheme
+  static const Color primaryBlue = Color(0xFF114166);
+  static const Color secondaryGrey = Color(0xFF858789);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          CustomTextFieldWidget(
-            controller: companyController,
-            hintText: "Company Name",
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: branchController,
-            hintText: "Group (Wholesale, Merchant, Retails, Van Sales ...)",
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: nameController,
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: emailController,
-            hintText: "Email address",
-            validate: emaildValidator.call,
-            prefixIcon: "assets/icons/Message.svg",
-          ),
-          const SizedBox(height: defaultPadding),
-          PasswordTextEditingController(
-            controller: passwordController,
-            validate: passwordValidator.call,
-            hintText: "Password",
-            onChanged: (str) {
-              passwordController.text = str;
-            },
-          ),
-          const SizedBox(height: defaultPadding),
-          PasswordTextEditingController(
-            controller: confirmPasswordController,
-            validate: (str) {
-              if (str != null) {
-                print(passwordController.text);
-                if (str.isNotEmpty) {
-                  if (str == passwordController.text) {
-                    return null;
-                  } else {
-                    return "Password doesn't match";
-                  }
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-            hintText: "Confirm Password",
-            onChanged: (str) {
-              confirmPasswordController.text = str;
-            },
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: vatController,
-            hintText: "VAT Number",
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: phoneController,
-            hintText: "Phone Number",
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-            prefixIcon: "assets/icons/Call.svg",
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: postalCodeController,
-            hintText: "Postal Code",
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-            prefixIcon: "assets/icons/Send.svg",
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: counteryController,
-            readOnly: true,
-            hintText: "Select Country",
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-            onTap: () async {
-              await showModalBottomSheet(
-                  context: context,
-                  builder: (_) {
-                    return Container(
-                      width: deviceWidth,
-                      padding: const EdgeInsets.all(16),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: List.generate(
-                              ref
-                                      .watch(countriesControllerProvider)
-                                      .requireValue
-                                      .countries
-                                      ?.length ??
-                                  0,
-                              (index) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: CountryItemCard(
-                                      country: ref
-                                          .read(countriesControllerProvider)
-                                          .requireValue
-                                          .countries![index],
-                                      selectedCountry: ref
-                                              .read(countriesControllerProvider)
-                                              .requireValue
-                                              .selectedCountry ??
-                                          CityModel(id: 0),
-                                      onTap: () {
-                                        ref
-                                            .read(countriesControllerProvider
-                                                .notifier)
-                                            .selectCountry(ref
-                                                .read(
-                                                    countriesControllerProvider)
-                                                .requireValue
-                                                .countries![index]);
-
-                                        counteryController.text = ref
-                                            .read(countriesControllerProvider)
-                                            .requireValue
-                                            .countries![index]
-                                            .name
-                                            .toString();
-
-                                        ref
-                                            .read(citiesControllerProvider
-                                                .notifier)
-                                            .getCities(ref
-                                                .read(
-                                                    countriesControllerProvider)
-                                                .requireValue
-                                                .countries![index]
-                                                .id!);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  )),
-                        ),
-                      ),
-                    );
-                  });
-            },
-            prefixIcon: "assets/icons/Mylocation.svg",
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: cityController,
-            onTap: ref.watch(citiesControllerProvider).isLoading
-                ? () {}
-                : () async {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (_) {
-                          return Container(
-                            width: deviceWidth,
-                            padding: const EdgeInsets.all(16),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: List.generate(
-                                    ref
-                                            .watch(citiesControllerProvider)
-                                            .requireValue
-                                            .cities
-                                            ?.length ??
-                                        0,
-                                    (index) => Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 10),
-                                          child: CountryItemCard(
-                                            country: ref
-                                                .read(citiesControllerProvider)
-                                                .requireValue
-                                                .cities![index],
-                                            selectedCountry: ref
-                                                    .read(
-                                                        citiesControllerProvider)
-                                                    .requireValue
-                                                    .selectedCity ??
-                                                CityModel(id: 0),
-                                            onTap: () {
-                                              ref
-                                                  .read(citiesControllerProvider
-                                                      .notifier)
-                                                  .selectCity(ref
-                                                      .read(
-                                                          citiesControllerProvider)
-                                                      .requireValue
-                                                      .cities![index]);
-
-                                              cityController.text = ref
-                                                  .read(
-                                                      citiesControllerProvider)
-                                                  .requireValue
-                                                  .cities![index]
-                                                  .name
-                                                  .toString();
-
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        )),
-                              ),
-                            ),
-                          );
-                        });
-                  },
-            hintText: "Select City",
-            readOnly: true,
-            suffixIcon: ref.watch(citiesControllerProvider).isLoading
-                ? const SizedBox(
-                    height: 20, width: 20, child: CircularProgressIndicator())
-                : null,
-            validate: (str) {
-              if (str != null) {
-                if (str.isNotEmpty) {
-                  return null;
-                } else {
-                  return "required";
-                }
-              } else {
-                return "required";
-              }
-            },
-            prefixIcon: "assets/icons/Mylocation.svg",
-          ),
-          const SizedBox(height: defaultPadding),
-          CustomTextFieldWidget(
-            controller: addressController,
-            hintText: "Full address",
-            maxLines: 6,
-            prefixWidget: Padding(
-              padding: const EdgeInsets.all(defaultPadding * .75),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: Theme.of(context).iconTheme.color?.withOpacity(0.3),
-                  ),
-                  const SizedBox(
-                    height: 120,
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
 
-class CountryItemCard extends StatelessWidget {
-  const CountryItemCard({
-    super.key,
-    required this.country,
-    this.onTap,
-    required this.selectedCountry,
-  });
+// Global key to access SignUpForm methods from parent
+typedef SignUpFormKey = GlobalKey<_SignUpFormState>;
 
-  final CityModel country;
-  final CityModel selectedCountry;
-  final Function()? onTap;
+class _SignUpFormState extends ConsumerState<SignUpForm> {
+  String? validationError;
+  bool passwordsMatch = false;
+
+  // Get selected branch from controller
+  String? get selectedBranch {
+    final text = widget.branchController.text;
+    final branchesState = ref.watch(branchesControllerProvider);
+    return branchesState.branches.contains(text) ? text : null;
+  }
+
+  // Jordan phone number validation
+  String? validateJordanPhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return '${S.of(context).phone_number} ${S.of(context).required}';
+    }
+
+    // Remove any non-digit characters for validation
+    String cleanValue = value.replaceAll(RegExp(r'[^\d]'), '');
+
+    // Jordan phone numbers should be 9 digits (without country code)
+    if (cleanValue.length != 9) {
+      return S.of(context).jordan_phone_validation;
+    }
+
+    // Check if it starts with 7 (Jordan mobile numbers start with 7)
+    if (!cleanValue.startsWith('7')) {
+      return S.of(context).jordan_phone_start_7;
+    }
+
+    return null;
+  }
+
+  // Check if passwords match
+  void checkPasswordMatch() {
+    setState(() {
+      passwordsMatch = widget.passwordController.text ==
+              widget.confirmPasswordController.text &&
+          widget.passwordController.text.isNotEmpty &&
+          widget.confirmPasswordController.text.isNotEmpty;
+    });
+  }
+
+  // Reset password match state
+  void resetPasswordMatch() {
+    setState(() {
+      passwordsMatch = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: primaryMaterialColor)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              country.name ?? "Egypt",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Radio(
-                value: country.id,
-                groupValue: selectedCountry.id,
-                onChanged: (val) {
-                  onTap;
-                })
-          ],
+    return GestureDetector(
+      onTap: () {
+        // Dismiss keyboard when tapping outside text fields
+        FocusScope.of(context).unfocus();
+      },
+      child: Form(
+        key: widget.formKey,
+        autovalidateMode: AutovalidateMode.disabled,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ..._buildAllFields(context, ref),
+              // Show validation error
+              if (validationError != null) _buildValidationErrorWidget(),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  List<Widget> _buildAllFields(BuildContext context, WidgetRef ref) {
+    final branchesState = ref.watch(branchesControllerProvider);
+
+    return [
+      // Step 1 Fields
+      CustomTextFieldWidget(
+        controller: widget.nameController,
+        hintText: S.of(context).name,
+        validate: (str) {
+          if (str != null) {
+            if (str.isNotEmpty) {
+              return null;
+            } else {
+              return S.of(context).required;
+            }
+          } else {
+            return S.of(context).required;
+          }
+        },
+        prefixIcon: "assets/icons/User.svg",
+      ),
+      const SizedBox(height: defaultPadding),
+      // Phone number field with world flag
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey[200]!),
+        ),
+        child: TextFormField(
+          controller: widget.phoneController,
+          onSaved: (phone) {
+            // Phone number
+          },
+          validator:
+              null, // Disabled auto validation - will validate on submit only
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.phone,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black87,
+          ),
+          decoration: InputDecoration(
+            hintText: S.of(context).phone_number,
+            hintStyle: const TextStyle(
+              color: SignUpForm.secondaryGrey,
+              fontSize: 16,
+            ),
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/flags/world-flag.png',
+                    height: 20,
+                    width: 20,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    '+962',
+                    style: TextStyle(
+                      color: SignUpForm.secondaryGrey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: defaultPadding),
+      PasswordTextEditingController(
+        controller: widget.passwordController,
+        validate: null, // Disabled auto validation
+        hintText: S.of(context).password,
+        onChanged: (value) {
+          // Controller is already bound, just trigger password match check
+          checkPasswordMatch();
+        },
+      ),
+      const SizedBox(height: defaultPadding),
+      PasswordTextEditingController(
+        controller: widget.confirmPasswordController,
+        validate: null, // Disabled auto validation
+        hintText: S.of(context).confirm_password,
+        onChanged: (value) {
+          // Controller is already bound, just trigger password match check
+          checkPasswordMatch();
+        },
+      ),
+      // Password match indicator
+      if (widget.passwordController.text.isNotEmpty &&
+          widget.confirmPasswordController.text.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
+            children: [
+              Icon(
+                passwordsMatch ? Icons.check_circle : Icons.error,
+                color: passwordsMatch ? Colors.green : Colors.red,
+                size: 16,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                passwordsMatch
+                    ? S.of(context).passwords_match
+                    : S.of(context).passwords_no_match,
+                style: TextStyle(
+                  color: passwordsMatch ? Colors.green : Colors.red,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      const SizedBox(height: defaultPadding),
+      // Step 2 Fields
+      CustomTextFieldWidget(
+        controller: widget.emailController,
+        hintText: S.of(context).email_address,
+        validate: null,
+        prefixIcon: "assets/icons/Message.svg",
+        prefixWidget: null,
+      ),
+      const SizedBox(height: defaultPadding),
+      // Group Type Dropdown
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey[200]!),
+        ),
+        child: DropdownButtonFormField<String>(
+          value: selectedBranch,
+          isExpanded: true,
+          decoration: InputDecoration(
+            hintText: S.of(context).group_type,
+            hintStyle: const TextStyle(
+              overflow: TextOverflow.ellipsis,
+              color: SignUpForm.secondaryGrey,
+              fontSize: 16,
+            ),
+            prefixIcon: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
+              child: SvgPicture.asset(
+                "assets/icons/card.svg",
+                height: 24,
+                width: 24,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .color!
+                      .withOpacity(0.3),
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
+          ),
+          items: branchesState.branches.map((String branch) {
+            return DropdownMenuItem<String>(
+              value: branch,
+              child: Text(
+                branch,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            );
+          }).toList(),
+          selectedItemBuilder: (BuildContext context) {
+            return branchesState.branches.map((String branch) {
+              return Text(
+                branch,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              );
+            }).toList();
+          },
+          onChanged: (String? newValue) {
+            widget.branchController.text = newValue ?? '';
+            setState(() {}); // Trigger rebuild to update UI
+          },
+          validator: (value) {
+            // Required field validation
+            if (value == null || value.isEmpty) {
+              return '${S.of(context).group_type} ${S.of(context).required}';
+            }
+            return null;
+          },
+        ),
+      ),
+      // Show loading or error state
+      if (branchesState.isLoading)
+        const Padding(
+          padding: EdgeInsets.only(top: 8.0),
+          child: Row(
+            children: [
+              SizedBox(
+                height: 16,
+                width: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              SizedBox(width: 8),
+              Text('Loading branches...', style: TextStyle(fontSize: 12)),
+            ],
+          ),
+        ),
+      if (branchesState.hasError)
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 16, right: 16),
+          child: Row(
+            children: [
+              const Icon(Icons.error_outline, color: Colors.red, size: 16),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  branchesState.errorMessage ?? 'Failed to load branches',
+                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
+    ];
+  }
+
+  // Method to display validation error
+  Widget _buildValidationErrorWidget() {
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.red[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.red[200]!),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red[600],
+            size: 20,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              validationError!,
+              style: TextStyle(
+                color: Colors.red[700],
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Method to set validation error
+  void setValidationError(String? error) {
+    setState(() {
+      validationError = error;
+    });
+  }
+
+  // Method to clear validation error
+  void clearValidationError() {
+    setState(() {
+      validationError = null;
+    });
+  }
+
+  // Method to validate the current step and show errors
+  bool validateCurrentStep() {
+    // No additional validation needed for 2-step form
+    return true;
+  }
+
+  // Method to validate all steps and show comprehensive errors
+  
 }

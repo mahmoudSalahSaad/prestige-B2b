@@ -40,6 +40,17 @@ class LoginController extends _$LoginController {
       prefs.save(PrefKeys.token, r.authorization?.token);
       print("Tokkkkken======>${r.authorization?.token}");
       await saveUser(r.user!);
+      
+      // Save credentials securely for automatic re-login on session expiration
+      // Use phone if available, otherwise use email (which might be phone)
+      String phoneToSave = parameters.phone ?? parameters.email;
+      if (phoneToSave.isNotEmpty) {
+        await prefs.saveSecuredData('saved_phone', phoneToSave);
+      }
+      if (parameters.password.isNotEmpty) {
+        await prefs.saveSecuredData('saved_password', parameters.password);
+      }
+      
       state = AsyncData(state.requireValue.copyWith(userModel: r));
       NavigationService.pushNamedAndRemoveUntil(Routes.entryPoint);
     });

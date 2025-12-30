@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/core/base/base_response.dart';
+import 'package:shop/core/controller/language_controller.dart';
 import 'package:shop/core/services/network/end_points.dart';
 import 'package:shop/core/services/network/network_client.dart';
 import 'package:shop/data/datasource/remote/exception/error_widget.dart';
@@ -17,12 +19,15 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
       {required AuthEntity parameters}) async {
     NetworkCallType type = NetworkCallType.post;
 
+    print('Email: ${parameters.email}');
+    print('Password: ${parameters.password}');
+
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
       data: {
-        'email': parameters.email,
+        'phone': parameters.email, // Using email field for phone number
         'password': parameters.password,
       },
-      url: EndPoints.login,
+      url: '/customers/phone-login',
       type: type,
     );
     return result.fold((l) => Left(l), (r) {
@@ -34,6 +39,17 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
   @override
   Future<Either<ErrorModel, UserModel>> register(
       {required AuthEntity parameters}) async {
+    print('Email: ${parameters.email}');
+    print('Password: ${parameters.password}');
+    print('Name: ${parameters.name}');
+    print('Phone: ${parameters.phone}');
+    print('Address: ${parameters.address}');
+    print('Postal Code: ${parameters.postalCode}');
+    print('Confirm Password: ${parameters.confirmPassword}');
+    print('City Id: ${parameters.cityId}');
+    print('Country Id: ${parameters.countryId}');
+    print('Attachment: ${parameters.attachment}');
+    print('Commercial Register: ${parameters.commercialRegister}');
     NetworkCallType type = NetworkCallType.post;
     FormData formData = FormData.fromMap({
       'email': parameters.email,
@@ -45,18 +61,23 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
       'password_confirmation': parameters.confirmPassword,
       'city_id': parameters.cityId,
       'country_id': parameters.countryId,
-      "attachment": parameters.attachment != null
-          ? await MultipartFile.fromFile(parameters.attachment ?? '')
+      "attachment":
+          (parameters.attachment != null && parameters.attachment != "")
+              ? await MultipartFile.fromFile(parameters.attachment ?? '')
+              : "",
+      "comp_register": (parameters.commercialRegister != null &&
+              parameters.commercialRegister != "")
+          ? await MultipartFile.fromFile(parameters.commercialRegister ?? '')
           : "",
     });
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
       data: {},
       formData: formData,
-      url: EndPoints.register,
+      url: '/customers/otp-register',
       type: type,
     );
     return result.fold((l) => Left(l), (r) {
-      UserModel userModel = UserModel.fromJson(r.data);
+      UserModel userModel = UserModel.fromJson({});
       return Right(userModel);
     });
   }
@@ -133,8 +154,8 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
     NetworkCallType type = NetworkCallType.post;
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
-      data: {"email": parameters.email},
-      url: EndPoints.forgetPassword,
+      data: {"phone": parameters.email}, // Using email field for phone number
+      url: '/customers/forget-password/send-otp',
       type: type,
     );
     return result.fold((l) => Left(l), (r) {
@@ -146,6 +167,11 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
   Future<Either<ErrorModel, List>> resetPassword(
       {required AuthEntity parameters}) async {
     NetworkCallType type = NetworkCallType.post;
+
+    print("ResetPasswordRepository: Password: ${parameters.password}");
+    print(
+        "ResetPasswordRepository: Confirm Password: ${parameters.confirmPassword}");
+    print("ResetPasswordRepository: Token: ${parameters.token}");
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
       data: {
@@ -167,11 +193,23 @@ class AuthRequirementRepositoryImplementation extends AuthRepository {
     NetworkCallType type = NetworkCallType.post;
 
     Either<ErrorModel, BaseResponse> result = await networkClient.call(
-      data: {'email': parameters.email, "otp": parameters.otp},
-      url: EndPoints.resetPassword,
+      data: {
+        'phone': "${parameters.phone}",
+        "otp_code": "${parameters.otp}"
+      }, // Using email field for phone number
+      url: '/customers/verify-otp',
       type: type,
     );
+
+    final ref  = ProviderContainer() ; 
+
+
     return result.fold((l) => Left(l), (r) {
+      // Check if data is an empty list
+      if (r.data is List && (r.data as List).isEmpty) {
+        return  Left(ErrorModel(errorMessage: ref.read(languageControllerProvider).locale.languageCode == "ar" ? "رموز التحقق غير صالحة" : "Invalid OTP"));
+         
+      }
       return Right(r.data);
     });
   }

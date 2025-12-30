@@ -5,10 +5,11 @@ import 'package:shop/core/components/custom_text_field_widget.dart';
 import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/features/Address/domain/entities/address_entity.dart';
 import 'package:shop/features/Address/presentation/controllers/add_address_controller.dart';
-import 'package:shop/features/auth/presentation/views/components/sign_up_form.dart';
 import 'package:shop/features/settings/data/models/city_model.dart';
 import 'package:shop/features/settings/presentation/controllers/cities_controller.dart';
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
+
+import '../../../../generated/l10n.dart';
 
 class CreateNewAddressScreen extends ConsumerStatefulWidget {
   const CreateNewAddressScreen({super.key});
@@ -29,12 +30,61 @@ class _CreateNewAddressScreenState
   final countryIDController = TextEditingController();
   final cityIDController = TextEditingController();
   bool isBillingAddress = false;
-  bool isShippingAddress = false;
+  bool isShippingAddress = true;
+  bool _hasAutoSelectedCountry = false;
+  bool _hasInitialized = false;
+
+  void _autoSelectFirstCountry() {
+    if (_hasAutoSelectedCountry) return;
+
+    final countriesState = ref.read(countriesControllerProvider);
+    countriesState.whenData((state) {
+      if (state.countries != null &&
+          state.countries!.isNotEmpty &&
+          state.selectedCountry == null) {
+        final firstCountry = state.countries!.first;
+        ref
+            .read(countriesControllerProvider.notifier)
+            .selectCountry(firstCountry);
+        countryIDController.text = firstCountry.name.toString();
+        ref.read(citiesControllerProvider.notifier).getCities(firstCountry.id!);
+        _hasAutoSelectedCountry = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final countriesState = ref.watch(countriesControllerProvider);
+
+    // Load countries if not already loaded
+    countriesState.whenData((state) {
+      if (state.countries == null || state.countries!.isEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref.read(countriesControllerProvider.notifier).getCountries();
+        });
+      }
+    });
+
+    // Check for initial auto-selection (only once)
+    if (!_hasInitialized) {
+      _hasInitialized = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _autoSelectFirstCountry();
+      });
+    }
+
+    // Auto-select first country when countries are loaded (listener for state changes)
+    ref.listen<AsyncValue>(
+      countriesControllerProvider,
+      (previous, next) {
+        _autoSelectFirstCountry();
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create New Address"),
+        title: Text(S.of(context).create_new_address),
         centerTitle: true,
         forceMaterialTransparency: true,
       ),
@@ -50,45 +100,38 @@ class _CreateNewAddressScreenState
                 key: _formKey,
                 child: Column(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 240,
-                          child: Column(
-                            children: [
-                              CustomTextFieldWidget(
-                                controller: nameController,
-                                hintText: "Name",
-                                validate: (str) {
-                                  if (str != null) {
-                                    if (str.isNotEmpty) {
-                                      return null;
-                                    } else {
-                                      return "required";
-                                    }
-                                  } else {
-                                    return "required";
-                                  }
-                                },
-                                prefixIcon: "assets/icons/dot.svg",
-                              ),
-                            ],
+                    Image.asset(
+                      "assets/Illustration/Illustration-4.png",
+                      height: 300,
+                    ),
+                    SizedBox(
+                      child: Column(
+                        children: [
+                          CustomTextFieldWidget(
+                            controller: nameController,
+                            hintText: S.of(context).address_name,
+                            validate: (str) {
+                              if (str != null) {
+                                if (str.isNotEmpty) {
+                                  return null;
+                                } else {
+                                  return "required";
+                                }
+                              } else {
+                                return "required";
+                              }
+                            },
+                            prefixIcon: "assets/icons/dot.svg",
                           ),
-                        ),
-                        Image.asset(
-                          "assets/Illustration/Illustration-4.png",
-                          height: 100,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     CustomTextFieldWidget(
                       controller: lineOneController,
-                      hintText: "Line 1",
+                      hintText: S.of(context).address_line,
                       validate: (str) {
                         if (str != null) {
                           if (str.isNotEmpty) {
@@ -123,84 +166,9 @@ class _CreateNewAddressScreenState
                       height: 10,
                     ),
                     CustomTextFieldWidget(
-                      controller: lineTwoController,
-                      hintText: "Line 2(Optional)",
-                      maxLines: 1,
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
-                      controller: postalCodeController,
-                      hintText: "Postal Code",
-                      prefixIcon: "assets/icons/dot.svg",
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
-                      controller: stateController,
-                      hintText: "State(Optional)",
-                      prefixIcon: "assets/icons/dot.svg",
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
                       controller: countryIDController,
                       readOnly: true,
-                      hintText: "Select Country",
+                      hintText: S.of(context).country,
                       validate: (str) {
                         if (str != null) {
                           if (str.isNotEmpty) {
@@ -299,13 +267,21 @@ class _CreateNewAddressScreenState
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: List.generate(
-                                              ref
+                                              ((ref
+                                                              .watch(
+                                                                  citiesControllerProvider)
+                                                              .requireValue
+                                                              .cities
+                                                              ?.length) ??
+                                                          0) >
+                                                      20
+                                                  ? 20
+                                                  : (ref
                                                       .watch(
                                                           citiesControllerProvider)
                                                       .requireValue
-                                                      .cities
-                                                      ?.length ??
-                                                  0,
+                                                      .cities!
+                                                      .length),
                                               (index) => Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -350,7 +326,7 @@ class _CreateNewAddressScreenState
                                     );
                                   });
                             },
-                      hintText: "Select City",
+                      hintText: S.of(context).city,
                       readOnly: true,
                       suffixIcon: ref.watch(citiesControllerProvider).isLoading
                           ? const SizedBox(
@@ -371,64 +347,6 @@ class _CreateNewAddressScreenState
                       },
                       prefixIcon: "assets/icons/Mylocation.svg",
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Billing address",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Checkbox(
-                              value: isBillingAddress,
-                              checkColor: primaryColor,
-                              activeColor: Colors.white,
-                              onChanged: (val) {
-                                setState(() {
-                                  isBillingAddress = val!;
-                                });
-                              },
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Shipping address",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Checkbox(
-                              value: isShippingAddress,
-                              checkColor: primaryColor,
-                              activeColor: Colors.white,
-                              onChanged: (val) {
-                                setState(() {
-                                  isShippingAddress = val!;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    if (isBillingAddress == false && isShippingAddress == false)
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Please select at least one address option",
-                            style: TextStyle(color: Colors.red),
-                          )
-                        ],
-                      ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -486,7 +404,7 @@ class _CreateNewAddressScreenState
                                 padding: EdgeInsets.symmetric(
                                     horizontal: deviceWidth * 0.22),
                                 child: Text(
-                                  "Create new address",
+                                  S.of(context).create_new_address,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
@@ -499,6 +417,50 @@ class _CreateNewAddressScreenState
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CountryItemCard extends StatelessWidget {
+  const CountryItemCard({
+    super.key,
+    required this.country,
+    this.onTap,
+    required this.selectedCountry,
+  });
+
+  final CityModel country;
+  final CityModel selectedCountry;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: primaryMaterialColor)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                country.name ?? S.of(context).egypt,
+                style: Theme.of(context).textTheme.bodyLarge,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Radio(
+                value: country.id,
+                groupValue: selectedCountry.id,
+                onChanged: (val) {
+                  onTap?.call();
+                })
+          ],
         ),
       ),
     );

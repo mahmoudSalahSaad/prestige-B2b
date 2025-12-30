@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shop/features/product/data/models/item_details_model.dart';
 
 part 'items_model.freezed.dart';
 part 'items_model.g.dart';
@@ -21,6 +22,7 @@ class ProductModels with _$ProductModels {
     final String? slug,
     final PriceModel? price,
     final String? unit,
+    final List<VariationModel>? variations,
   }) = _ProductModels;
 
   factory ProductModels.fromJson(Map<String, dynamic> json) =>

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/network_image_with_loader.dart';
 import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 // For preview
 class CategoryModel {
@@ -61,8 +61,9 @@ class Categories extends ConsumerWidget {
               ),
             ),
         error: (error, stackTrace) => Text(error.toString()),
-        loading: () => Skeletonizer(
-            enabled: true,
+        loading: () => Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -112,28 +113,62 @@ class CategoryBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: press,
-      borderRadius: const BorderRadius.all(Radius.circular(30)),
+      borderRadius: const BorderRadius.all(Radius.circular(50)),
       child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-        decoration: BoxDecoration(
-          color: isActive ? primaryColor : Colors.transparent,
-          border: Border.all(
-              color:
-                  isActive ? Colors.transparent : Theme.of(context).hintColor),
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Row(
+        width: 80,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            if (svgSrc != null) NetworkImageWithLoader(svgSrc!),
-            if (svgSrc != null) const SizedBox(width: defaultPadding / 2),
+            // Circular container with category image
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isActive ? primaryColor : Colors.grey[100],
+                border: Border.all(
+                  color: isActive ? primaryColor : Colors.grey[300]!,
+                  width: 2,
+                ),
+                boxShadow: isActive
+                    ? [
+                        BoxShadow(
+                          color: primaryColor.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ]
+                    : null,
+              ),
+              child: svgSrc != null
+                  ? ClipOval(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: NetworkImageWithLoader(
+                          svgSrc!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : Icon(
+                      Icons.category,
+                      color: isActive ? Colors.white : Colors.grey[600],
+                      size: 32,
+                    ),
+            ),
+            const SizedBox(height: 8),
+            // Category name
             Text(
               category,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
                 color: isActive
-                    ? Colors.white
+                    ? primaryColor
                     : Theme.of(context).textTheme.bodyLarge!.color,
               ),
             ),

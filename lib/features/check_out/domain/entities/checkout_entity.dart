@@ -1,19 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CheckoutEntity extends Equatable {
-  final String? shippingCarrirer;
-  final String? shippingAddress;
-  final String? billingAddress;
-  final double? shippingAmount;
-  final String? deliveryDate;
+part 'checkout_entity.freezed.dart';
 
-  const CheckoutEntity({
-    this.shippingCarrirer,
-    this.shippingAddress,
-    this.billingAddress,
-    this.shippingAmount,
-    this.deliveryDate,
-  });
-  @override
-  List<Object> get props => [];
+@freezed
+class CheckoutEntity with _$CheckoutEntity {
+  const factory CheckoutEntity({
+    final String? shippingCarrirer,
+    final String? shippingAddress,
+    final String? billingAddress,
+    final double? shippingAmount,
+    final String? deliveryDate,
+    final String? paymentMethod,
+    final String? paymentType,
+    final String? transactionId,
+    final String? paymentStatus,
+  }) = _CheckoutEntity;
 }

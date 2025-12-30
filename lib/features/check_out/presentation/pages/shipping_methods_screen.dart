@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/features/check_out/data/models/shipping_method_model.dart';
 import 'package:shop/features/check_out/presentation/controllers/shipping_methods_controller.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shop/generated/l10n.dart';
 
 class ShippingMethodsScreen extends ConsumerWidget {
   const ShippingMethodsScreen({super.key});
@@ -12,7 +13,7 @@ class ShippingMethodsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shipping Methods"),
+        title: Text(S.of(context).shipping_methods),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -20,7 +21,7 @@ class ShippingMethodsScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Choose a shipping method",
+            Text(S.of(context).choose_shipping_method,
                 style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: defaultPadding),
             ref.watch(shippingMethodsControllerProvider).when(
@@ -33,7 +34,7 @@ class ShippingMethodsScreen extends ConsumerWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text("No shipping methods available!!")
+                            Text(S.of(context).no_shipping_methods)
                           ]
                         : List.generate(
                             data.shippingMethods.length,
@@ -43,8 +44,10 @@ class ShippingMethodsScreen extends ConsumerWidget {
                   );
                 },
                 error: (error, stackTrace) => Text(error.toString()),
-                loading: () => Skeletonizer(
-                        child: Column(
+                loading: () => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Column(
                       children: List.generate(
                           10,
                           (index) => ShippingMethodCardWidget(

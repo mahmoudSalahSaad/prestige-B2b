@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CheckoutState {
   OrderModel? get orderModel => throw _privateConstructorUsedError;
   DateTime? get dateTime => throw _privateConstructorUsedError;
+  PaymentMethodModel? get selectedPaymentMethod =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,9 +34,13 @@ abstract class $CheckoutStateCopyWith<$Res> {
           CheckoutState value, $Res Function(CheckoutState) then) =
       _$CheckoutStateCopyWithImpl<$Res, CheckoutState>;
   @useResult
-  $Res call({OrderModel? orderModel, DateTime? dateTime});
+  $Res call(
+      {OrderModel? orderModel,
+      DateTime? dateTime,
+      PaymentMethodModel? selectedPaymentMethod});
 
   $OrderModelCopyWith<$Res>? get orderModel;
+  $PaymentMethodModelCopyWith<$Res>? get selectedPaymentMethod;
 }
 
 /// @nodoc
@@ -54,6 +60,7 @@ class _$CheckoutStateCopyWithImpl<$Res, $Val extends CheckoutState>
   $Res call({
     Object? orderModel = freezed,
     Object? dateTime = freezed,
+    Object? selectedPaymentMethod = freezed,
   }) {
     return _then(_value.copyWith(
       orderModel: freezed == orderModel
@@ -64,6 +71,10 @@ class _$CheckoutStateCopyWithImpl<$Res, $Val extends CheckoutState>
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      selectedPaymentMethod: freezed == selectedPaymentMethod
+          ? _value.selectedPaymentMethod
+          : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
+              as PaymentMethodModel?,
     ) as $Val);
   }
 
@@ -80,6 +91,21 @@ class _$CheckoutStateCopyWithImpl<$Res, $Val extends CheckoutState>
       return _then(_value.copyWith(orderModel: value) as $Val);
     });
   }
+
+  /// Create a copy of CheckoutState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentMethodModelCopyWith<$Res>? get selectedPaymentMethod {
+    if (_value.selectedPaymentMethod == null) {
+      return null;
+    }
+
+    return $PaymentMethodModelCopyWith<$Res>(_value.selectedPaymentMethod!,
+        (value) {
+      return _then(_value.copyWith(selectedPaymentMethod: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -90,10 +116,15 @@ abstract class _$$CheckoutStateImplCopyWith<$Res>
       __$$CheckoutStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({OrderModel? orderModel, DateTime? dateTime});
+  $Res call(
+      {OrderModel? orderModel,
+      DateTime? dateTime,
+      PaymentMethodModel? selectedPaymentMethod});
 
   @override
   $OrderModelCopyWith<$Res>? get orderModel;
+  @override
+  $PaymentMethodModelCopyWith<$Res>? get selectedPaymentMethod;
 }
 
 /// @nodoc
@@ -111,6 +142,7 @@ class __$$CheckoutStateImplCopyWithImpl<$Res>
   $Res call({
     Object? orderModel = freezed,
     Object? dateTime = freezed,
+    Object? selectedPaymentMethod = freezed,
   }) {
     return _then(_$CheckoutStateImpl(
       orderModel: freezed == orderModel
@@ -121,6 +153,10 @@ class __$$CheckoutStateImplCopyWithImpl<$Res>
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      selectedPaymentMethod: freezed == selectedPaymentMethod
+          ? _value.selectedPaymentMethod
+          : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
+              as PaymentMethodModel?,
     ));
   }
 }
@@ -128,16 +164,19 @@ class __$$CheckoutStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CheckoutStateImpl implements _CheckoutState {
-  _$CheckoutStateImpl({this.orderModel, this.dateTime});
+  _$CheckoutStateImpl(
+      {this.orderModel, this.dateTime, this.selectedPaymentMethod});
 
   @override
   final OrderModel? orderModel;
   @override
   final DateTime? dateTime;
+  @override
+  final PaymentMethodModel? selectedPaymentMethod;
 
   @override
   String toString() {
-    return 'CheckoutState(orderModel: $orderModel, dateTime: $dateTime)';
+    return 'CheckoutState(orderModel: $orderModel, dateTime: $dateTime, selectedPaymentMethod: $selectedPaymentMethod)';
   }
 
   @override
@@ -148,11 +187,14 @@ class _$CheckoutStateImpl implements _CheckoutState {
             (identical(other.orderModel, orderModel) ||
                 other.orderModel == orderModel) &&
             (identical(other.dateTime, dateTime) ||
-                other.dateTime == dateTime));
+                other.dateTime == dateTime) &&
+            (identical(other.selectedPaymentMethod, selectedPaymentMethod) ||
+                other.selectedPaymentMethod == selectedPaymentMethod));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, orderModel, dateTime);
+  int get hashCode =>
+      Object.hash(runtimeType, orderModel, dateTime, selectedPaymentMethod);
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.
@@ -166,12 +208,15 @@ class _$CheckoutStateImpl implements _CheckoutState {
 abstract class _CheckoutState implements CheckoutState {
   factory _CheckoutState(
       {final OrderModel? orderModel,
-      final DateTime? dateTime}) = _$CheckoutStateImpl;
+      final DateTime? dateTime,
+      final PaymentMethodModel? selectedPaymentMethod}) = _$CheckoutStateImpl;
 
   @override
   OrderModel? get orderModel;
   @override
   DateTime? get dateTime;
+  @override
+  PaymentMethodModel? get selectedPaymentMethod;
 
   /// Create a copy of CheckoutState
   /// with the given fields replaced by the non-null parameter values.

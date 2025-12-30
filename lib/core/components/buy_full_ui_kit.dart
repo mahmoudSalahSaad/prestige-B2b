@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
+import '../../generated/l10n.dart';
 
 class BuyFullKit extends StatefulWidget {
   const BuyFullKit({super.key, required this.images});
@@ -101,7 +102,7 @@ class _BuyFullKitState extends State<BuyFullKit> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Get the full template",
+                        S.of(context).get_the_full_template,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: defaultPadding),
@@ -130,8 +131,9 @@ class _BuyFullKitState extends State<BuyFullKit> {
                                 });
                               },
                               // child: Text("Get full kit"),
-                              label:
-                                  Text(_isCopied ? "Link Copyed" : "Copy link"),
+                              label: Text(_isCopied
+                                  ? S.of(context).link_copied
+                                  : S.of(context).copy_link),
                               icon: SvgPicture.asset(
                                 "assets/icons/world_map.svg",
                                 colorFilter: const ColorFilter.mode(
@@ -148,7 +150,7 @@ class _BuyFullKitState extends State<BuyFullKit> {
                                 buyLink();
                               },
                               // child: Text("Get full kit"),
-                              label: const Text("Get full code"),
+                              label: Text(S.of(context).get_full_code),
                               icon: SvgPicture.asset(
                                 "assets/icons/Bag.svg",
                                 colorFilter: const ColorFilter.mode(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../generated/l10n.dart';
 
 class ProductInfo extends StatelessWidget {
   const ProductInfo({
@@ -34,12 +35,12 @@ class ProductInfo extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleLarge!
-                  .copyWith(color: Colors.amber),
+                  .copyWith(color: const Color(0xff1C3854)),
             ),
             const SizedBox(height: defaultPadding),
             const SizedBox(height: defaultPadding),
             Text(
-              "Product info",
+              S.of(context).product_info,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!

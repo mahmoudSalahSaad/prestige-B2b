@@ -9,7 +9,7 @@ abstract class ProductRepository {
   Future<Either<ErrorModel, ItemDetailsModel>> getProductDetails(
       {required ProductEntity parameters});
 
-  Future<Either<ErrorModel , List<PormotionModel>>> getPormotions({required NoParameters parameters});
+  Future<Either<ErrorModel , List<PormotionModel>>> getPormotions({required ProductEntity parameters});
 
 
   

@@ -23,7 +23,7 @@ class PopularProducts extends ConsumerWidget {
             data: (data) {
               return SizedBox(
                 width: double.infinity,
-                height: 240,
+                height: 250,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -32,7 +32,7 @@ class PopularProducts extends ConsumerWidget {
                   // Find demoPopularProducts on models/ProductModel.dart
                   itemCount: data.products.length,
                   itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: ProductCard(
                       image: data.products[index].thumbnail ?? "",
                       brandName: data.products[index].slug ?? "",
@@ -42,9 +42,11 @@ class PopularProducts extends ConsumerWidget {
                           data.products[index].price!.beforeDiscount,
                       hasDiscount:
                           data.products[index].price!.hasDiscount ?? false,
+                      variations: data.products[index].variations,
                       priceAfetDiscount:
                           data.products[index].price!.afterDiscount.toString(),
                       dicountpercent: 0,
+                      productId: data.products[index].id,
                       press: () {
                         NavigationService.push(Routes.productDetails,
                             arguments: {

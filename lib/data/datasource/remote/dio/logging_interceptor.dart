@@ -9,15 +9,15 @@ class LoggingInterceptor extends InterceptorsWrapper {
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     log(_tag,
-        "Request \n${options.method} : ${options.baseUrl}${options.path}  \nParameter: ${options.queryParameters}; \nEND Request");
+        "Request \n${options.method} : ${options.baseUrl}${options.path}  \Headers: ${options.headers}; \nEND Request");
     return super.onRequest(options, handler);
   }
 
   @override
   Future onResponse(
       Response response, ResponseInterceptorHandler handler) async {
-    log(_tag,
-        "Response \nStatus: ${response.statusCode}\nURL: ${response.requestOptions.method} ${response.requestOptions.baseUrl}${response.requestOptions.path}");
+    // log(_tag,
+    //     "Response \nStatus: ${response.statusCode}\nURL: ${response.requestOptions.method} ${response.requestOptions.baseUrl}${response.requestOptions.path}");
 
     String responseAsString = response.data.toString();
     if (responseAsString.length > maxCharactersPerLine) {
@@ -29,7 +29,7 @@ class LoggingInterceptor extends InterceptorsWrapper {
         }
       }
     } else {
-      log(_tag, 'Response: ${response.data}');
+      // log(_tag, 'Response: ${response.data}');
     }
     log(_tag, "Receive END HTTP");
 

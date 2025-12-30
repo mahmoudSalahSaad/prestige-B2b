@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PromotionsStaticPageState {
   PromotionsModel? get promtions => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
 
   /// Create a copy of PromotionsStaticPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $PromotionsStaticPageStateCopyWith<$Res> {
           $Res Function(PromotionsStaticPageState) then) =
       _$PromotionsStaticPageStateCopyWithImpl<$Res, PromotionsStaticPageState>;
   @useResult
-  $Res call({PromotionsModel? promtions});
+  $Res call({PromotionsModel? promtions, bool isLoading});
 
   $PromotionsModelCopyWith<$Res>? get promtions;
 }
@@ -53,12 +54,17 @@ class _$PromotionsStaticPageStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? promtions = freezed,
+    Object? isLoading = null,
   }) {
     return _then(_value.copyWith(
       promtions: freezed == promtions
           ? _value.promtions
           : promtions // ignore: cast_nullable_to_non_nullable
               as PromotionsModel?,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -86,7 +92,7 @@ abstract class _$$PromotionsStaticPageStateImplCopyWith<$Res>
       __$$PromotionsStaticPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PromotionsModel? promtions});
+  $Res call({PromotionsModel? promtions, bool isLoading});
 
   @override
   $PromotionsModelCopyWith<$Res>? get promtions;
@@ -108,12 +114,17 @@ class __$$PromotionsStaticPageStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? promtions = freezed,
+    Object? isLoading = null,
   }) {
     return _then(_$PromotionsStaticPageStateImpl(
       promtions: freezed == promtions
           ? _value.promtions
           : promtions // ignore: cast_nullable_to_non_nullable
               as PromotionsModel?,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -121,14 +132,17 @@ class __$$PromotionsStaticPageStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PromotionsStaticPageStateImpl implements _PromotionsStaticPageState {
-  _$PromotionsStaticPageStateImpl({this.promtions});
+  _$PromotionsStaticPageStateImpl({this.promtions, this.isLoading = false});
 
   @override
   final PromotionsModel? promtions;
+  @override
+  @JsonKey()
+  final bool isLoading;
 
   @override
   String toString() {
-    return 'PromotionsStaticPageState(promtions: $promtions)';
+    return 'PromotionsStaticPageState(promtions: $promtions, isLoading: $isLoading)';
   }
 
   @override
@@ -137,11 +151,13 @@ class _$PromotionsStaticPageStateImpl implements _PromotionsStaticPageState {
         (other.runtimeType == runtimeType &&
             other is _$PromotionsStaticPageStateImpl &&
             (identical(other.promtions, promtions) ||
-                other.promtions == promtions));
+                other.promtions == promtions) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, promtions);
+  int get hashCode => Object.hash(runtimeType, promtions, isLoading);
 
   /// Create a copy of PromotionsStaticPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -154,11 +170,14 @@ class _$PromotionsStaticPageStateImpl implements _PromotionsStaticPageState {
 }
 
 abstract class _PromotionsStaticPageState implements PromotionsStaticPageState {
-  factory _PromotionsStaticPageState({final PromotionsModel? promtions}) =
-      _$PromotionsStaticPageStateImpl;
+  factory _PromotionsStaticPageState(
+      {final PromotionsModel? promtions,
+      final bool isLoading}) = _$PromotionsStaticPageStateImpl;
 
   @override
   PromotionsModel? get promtions;
+  @override
+  bool get isLoading;
 
   /// Create a copy of PromotionsStaticPageState
   /// with the given fields replaced by the non-null parameter values.

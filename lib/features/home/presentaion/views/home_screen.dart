@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/Banner/S/banner_s_style_1.dart';
 import 'package:shop/core/components/skleton/banner/banner_m_skelton.dart';
 import 'package:shop/core/components/skleton/product/products_skelton.dart';
 import 'package:shop/core/resources/values_manager.dart';
+import 'package:shop/features/discover/presentaion/views/product_by_category_screen.dart';
 import 'package:shop/features/home/presentaion/controllers/home_controller.dart';
 import 'package:shop/features/home/presentaion/views/components/categories.dart';
 import 'package:shop/features/home/presentaion/views/components/featured_products.dart';
 import 'package:shop/features/home/presentaion/views/components/offers_carousel.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shop/features/product/presentation/views/product_details_screen.dart';
+import 'package:shop/generated/l10n.dart';
+
 import 'components/best_sellers.dart';
 import 'components/flash_sale.dart';
 import 'components/offer_carousel_and_categories.dart';
 import 'components/popular_products.dart';
-
-
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -72,7 +74,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     const SliverToBoxAdapter(child: PopularProducts()),
                     SliverToBoxAdapter(
                         child: FeaturedProducts(
-                      title: "Featured Products",
+                      title: S.of(context).featured_products,
                       deals: data1.homeModel?.sections?.featuredproducts,
                     )),
                     const SliverToBoxAdapter(
@@ -88,35 +90,74 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             data1.homeModel?.sections?.image4col?.images
                                     ?.length ??
                                 0,
-                            (index) => Container(
-                              height: (data1.homeModel?.sections?.image4col
-                                          ?.images
-                                          ?.elementAt(index)
-                                          .height ??
-                                      0)
-                                  .toDouble(),
-                              width: deviceWidth,
-                              margin: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 3), // changes position of shadow
+                            (index) => InkWell(
+                              onTap: () {
+                                final imageModel = data1
+                                    .homeModel?.sections?.image4col?.images
+                                    ?.elementAt(index);
+                                final linkType = imageModel?.linkType;
+                                final slug = imageModel?.linkSlug ??
+                                    imageModel?.link ??
+                                    "";
+
+                                if (linkType == "product" && slug.isNotEmpty) {
+                                  // Navigate to product details
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => ProductDetailsScreen(
+                                        productSlug: slug,
+                                      ),
+                                    ),
+                                  );
+                                } else if (linkType == "category" &&
+                                    slug.isNotEmpty) {
+                                  // Navigate to category screen
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => ProductByCategoryScreen(
+                                        categoryName: slug,
+                                        title: slug,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  // Default behavior: show full screen image
+                                  _showFullScreenImage(
+                                    context,
+                                    imageModel?.path ?? "",
+                                  );
+                                }
+                              },
+                              child: Container(
+                                height: (data1.homeModel?.sections?.image4col
+                                            ?.images
+                                            ?.elementAt(index)
+                                            .height ??
+                                        0)
+                                    .toDouble(),
+                                width: deviceWidth,
+                                margin: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 7,
+                                      offset: const Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  child: Image.network(
+                                    data1.homeModel?.sections?.image4col?.images
+                                            ?.elementAt(index)
+                                            .path ??
+                                        "",
+                                    fit: BoxFit.fill,
                                   ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                child: Image.network(
-                                  data1.homeModel?.sections?.image4col?.images
-                                          ?.elementAt(index)
-                                          .path ??
-                                      "",
-                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
@@ -144,8 +185,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Skeletonizer(
-                                enabled: true,
+                            Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
@@ -186,6 +228,96 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ],
                   )),
         ),
+      ),
+    );
+  }
+
+  void _showFullScreenImage(BuildContext context, String imageUrl) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FullScreenImageOverlay(imageUrl: imageUrl);
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300),
+      ),
+    );
+  }
+}
+
+class FullScreenImageOverlay extends StatelessWidget {
+  final String imageUrl;
+
+  const FullScreenImageOverlay({
+    super.key,
+    required this.imageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          // Full screen image
+          Center(
+            child: InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 3.0,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                      color: Colors.white,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.error,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          // Close button
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 16,
+            right: 16,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

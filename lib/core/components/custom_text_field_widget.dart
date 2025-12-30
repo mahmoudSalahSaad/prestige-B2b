@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../constants.dart';
+import '../../generated/l10n.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
   const CustomTextFieldWidget({
@@ -53,18 +54,14 @@ class CustomTextFieldWidget extends StatelessWidget {
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: hintText ?? "Full name",
-        suffixIcon: Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: defaultPadding * 0.75,
-                horizontal: defaultPadding * 0.75),
-            child: suffixIcon),
+        hintText: hintText ?? S.of(context).full_name,
+       
         prefixIcon: prefixWidget ??
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),
               child: SvgPicture.asset(
-                prefixIcon ?? "assets/icons/card.svg",
+                "assets/icons/card.svg",
                 height: 24,
                 width: 24,
                 colorFilter: ColorFilter.mode(

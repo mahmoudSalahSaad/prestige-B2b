@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/base_injection.dart';
-import 'package:shop/core/resources/assets_menager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/services/local/cache_consumer.dart';
@@ -13,6 +12,7 @@ import 'package:shop/features/auth/presentation/controller/login_controller.dart
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
 import 'package:shop/features/home/presentaion/controllers/get_products_controller.dart';
+import 'package:shop/features/settings/presentation/controllers/branches_controller.dart';
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -28,6 +28,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async {
       await ref.watch(countriesControllerProvider.notifier).getCountries();
+      await ref.watch(branchesControllerProvider.notifier).getBranches();
 
       ref.watch(getProductsControllerProvider);
       AppPrefs appPrefs = getIt();
@@ -65,7 +66,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Image.asset(AssetsManager.appLogo),
+          child: Image.asset("assets/logo/presige-logo.png", width: 250, height: 250,),
         ),
       ),
     );

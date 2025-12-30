@@ -29,6 +29,9 @@ _$ProductModelsImpl _$$ProductModelsImplFromJson(Map<String, dynamic> json) =>
           ? null
           : PriceModel.fromJson(json['price'] as Map<String, dynamic>),
       unit: json['unit'] as String?,
+      variations: (json['variations'] as List<dynamic>?)
+          ?.map((e) => VariationModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
@@ -40,6 +43,7 @@ Map<String, dynamic> _$$ProductModelsImplToJson(_$ProductModelsImpl instance) =>
       'slug': instance.slug,
       'price': instance.price,
       'unit': instance.unit,
+      'variations': instance.variations,
     };
 
 _$PriceModelImpl _$$PriceModelImplFromJson(Map<String, dynamic> json) =>

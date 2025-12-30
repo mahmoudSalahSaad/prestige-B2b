@@ -24,6 +24,7 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -47,34 +48,34 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Text(
             widget.promotions.name ?? "",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 4),
-          if (widget.promotions.description != null)
-            Text(
-              widget.promotions.description ?? "",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-          const SizedBox(height: 4),
-          Text(
-            "Buy ${widget.promotions.xyOffer?.buyQuantity} ${widget.promotions.xyOffer?.buyProduct} and get ${widget.promotions.xyOffer?.getProduct}",
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 2),
+          if (widget.promotions.description != null)
+            Text(
+              widget.promotions.description ?? "",
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
+          const SizedBox(height: 2),
+          Text(
+            "Buy ${widget.promotions.xyOffer?.buyQuantity} ${widget.promotions.xyOffer?.buyProduct} and get ${widget.promotions.xyOffer?.getProduct}",
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 12,
               color: Colors.grey,
             ),
           ),
@@ -84,12 +85,12 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: Colors.grey,
             ),
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           Row(
             children: [
@@ -115,27 +116,27 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     color: Colors.grey,
                   )),
               const Spacer(),
               GestureDetector(
                 onTap: ref
-                        .watch(promotionsStaticPageControllerProvider(
-                            widget.promotions.id!))
-                        .isLoading
+                        .watch(promotionsStaticPageControllerProvider(0))
+                        .maybeWhen(
+                          data: (data) => data.isLoading,
+                          orElse: () => false,
+                        )
                     ? () {}
                     : () {
                         if (_formKey.currentState!.validate()) {
                           ref
-                              .read(promotionsStaticPageControllerProvider(
-                                      widget.promotions.id!)
+                              .read(promotionsStaticPageControllerProvider(0)
                                   .notifier)
                               .addToCart(
                                 int.parse(_textEditingController.text),
                                 widget.promotions.id!,
                               );
-                          // Handle the buy action
                         }
                       },
                 child: Container(
@@ -147,9 +148,11 @@ class _PrmotionsCardXYOFFERState extends ConsumerState<PrmotionsCardXYOFFER> {
                   ),
                   child: Center(
                     child: ref
-                            .watch(promotionsStaticPageControllerProvider(
-                                widget.promotions.id!))
-                            .isLoading
+                            .watch(promotionsStaticPageControllerProvider(0))
+                            .maybeWhen(
+                              data: (data) => data.isLoading,
+                              orElse: () => false,
+                            )
                         ? const Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 10),

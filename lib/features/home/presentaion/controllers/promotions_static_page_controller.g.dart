@@ -7,7 +7,7 @@ part of 'promotions_static_page_controller.dart';
 // **************************************************************************
 
 String _$promotionsStaticPageControllerHash() =>
-    r'7b86dff85c64298dbca966a2195b7431505a9097';
+    r'ceca3236200f26ee1480f8fdbac5efda3c71003a';
 
 /// Copied from Dart SDK
 class _SystemHash {

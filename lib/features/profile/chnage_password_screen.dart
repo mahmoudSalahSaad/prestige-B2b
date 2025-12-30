@@ -6,6 +6,7 @@ import 'package:shop/constants.dart';
 import 'package:shop/core/components/password_text_feild_widget.dart';
 import 'package:shop/features/auth/doman/entity/auth_entity.dart';
 import 'package:shop/features/profile/controllers/profile_controller.dart';
+import 'package:shop/generated/l10n.dart';
 
 class ChnagePasswordScreen extends ConsumerStatefulWidget {
   const ChnagePasswordScreen({super.key});
@@ -32,8 +33,8 @@ class _ChnagePasswordScreenState extends ConsumerState<ChnagePasswordScreen> {
         leading: const SizedBox(),
         leadingWidth: 0,
         centerTitle: false,
-        title:
-            Text("PRESTIGE", style: Theme.of(context).textTheme.headlineSmall),
+        title: Text(S.of(context).prestige_brand,
+            style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           IconButton(
             onPressed: () {

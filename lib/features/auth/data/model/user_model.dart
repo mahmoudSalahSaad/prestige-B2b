@@ -22,6 +22,7 @@ class User with _$User {
       final String? name,
       final String? email,
       final String? role,
+      @JsonKey(name: "reset_password_token") final String? resetPasswordToken,
       final String? phone,
       final String? address,
       @JsonKey(name: "postal_code") final String? postalCode,
@@ -31,7 +32,7 @@ class User with _$User {
       @JsonKey(name: "budget_start_date") final String? budgetStartDate,
       final String? number,
       @JsonKey(name: "full_address") final String? fullAddress,
-    
+      final Group? group,
       final CityModel? city,
       final CityModel? country}) = _User;
 
@@ -48,4 +49,13 @@ class AuthrizationModel with _$AuthrizationModel {
       _$AuthrizationModelFromJson(json);
 }
 
+@freezed
+class Group with _$Group {
+  factory Group({
+    final int? id,
+    final String? name,
+    final String? slug,
+  }) = _Group;
 
+  factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
+}

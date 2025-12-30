@@ -7,7 +7,9 @@ import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
+import 'package:shop/generated/l10n.dart';
 
+import 'components/language_selection_bottom_sheet.dart';
 import 'components/profile_card.dart';
 import 'components/profile_menu_item_list_tile.dart';
 
@@ -47,13 +49,13 @@ class ProfileScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
             child: Text(
-              "Account",
+              S.of(context).account,
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
           const SizedBox(height: defaultPadding / 2),
           ProfileMenuListTile(
-            text: "Orders",
+            text: S.of(context).orders,
             svgSrc: "assets/icons/Order.svg",
             press: () {
               // Navigator.pushNamed(context, ordersScreenRoute);
@@ -72,7 +74,7 @@ class ProfileScreen extends ConsumerWidget {
           //   press: () {},
           // ),
           ProfileMenuListTile(
-            text: "Addresses",
+            text: S.of(context).addresses,
             svgSrc: "assets/icons/Address.svg",
             press: () {
               // Navigator.pushNamed(context, addressesScreenRoute);
@@ -126,25 +128,25 @@ class ProfileScreen extends ConsumerWidget {
           //     style: Theme.of(context).textTheme.titleSmall,
           //   ),
           // ),
-          // ProfileMenuListTile(
-          //   text: "Language",
-          //   svgSrc: "assets/icons/Language.svg",
-          //   press: () {
-          //     // Navigator.pushNamed(context, selectLanguageScreenRoute);
-          //   },
-          // ),
+          ProfileMenuListTile(
+            text: S.of(context).language,
+            svgSrc: "assets/icons/Language.svg",
+            press: () {
+              LanguageSelectionBottomSheet.show(context);
+            },
+          ),
 
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 2),
             child: Text(
-              "Help & Support",
+              S.of(context).help_support,
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
 
           ProfileMenuListTile(
-            text: "Privacy Policy",
+            text: S.of(context).privacy_policy,
             svgSrc: "assets/icons/FAQ.svg",
             press: () {
               NavigationService.push(Routes.privacyPolicyScreen);
@@ -171,9 +173,10 @@ class ProfileScreen extends ConsumerWidget {
                 BlendMode.srcIn,
               ),
             ),
-            title: const Text(
-              "Log Out",
-              style: TextStyle(color: errorColor, fontSize: 14, height: 1),
+            title: Text(
+              S.of(context).log_out,
+              style:
+                  const TextStyle(color: errorColor, fontSize: 14, height: 1),
             ),
           )
         ],

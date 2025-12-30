@@ -11,6 +11,8 @@ class OrderModel with _$OrderModel {
       final String? status,
       @JsonKey(name: "billing_address") final String? billingAddress,
       @JsonKey(name: "shipping_amount") final double? shippingAmount,
+      @JsonKey(name: "payment_status") final String? paymentStatus,
+      @JsonKey(name: "paid_at") final String? paidAt,
       @Default([]) final List<OrderItemModel>? items}) = _OrderModel;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>

@@ -39,8 +39,10 @@ class DiscoverdRepositoryImplementation extends DiscoverRepository {
       data: {"with": "children"},
     );
 
-    print(
-        "pfpdokgdf======>${result.fold((l) => l.errorMessage, (r) => r.data)}");
+    print("pfpdokgdf======>${result.fold((l) {
+      // Authentication errors are now handled centrally in NetworkClient
+      return l.errorMessage;
+    }, (r) => r.data)}");
 
     /// If the result is an error, return the error
     return result.fold(
@@ -72,17 +74,31 @@ class DiscoverdRepositoryImplementation extends DiscoverRepository {
       {required ProductEntity parameters}) async {
     NetworkCallType type = NetworkCallType.get;
 
+    // Build query parameters
+    Map<String, dynamic> queryParams = {};
+    if (parameters.page != null) queryParams['page'] = parameters.page;
+    if (parameters.perPage != null)
+      queryParams['per_page'] = parameters.perPage;
+    if (parameters.direction != null)
+      queryParams['direction'] = parameters.direction;
+    if (parameters.search != null && parameters.search!.isNotEmpty) {
+      queryParams['search'] = parameters.search;
+    }
+    if (parameters.categoryId != null)
+      queryParams['category_id'] = parameters.categoryId;
+
     /// The result of the network call
     Either<ErrorModel, BaseResponse> result = await networkClient(
       /// The url of the network call
-      url: /* EndPoints.productdetails(parameters.productSlug) */
-          EndPoints.getProductsByCategory(parameters.productSlug),
+      url: parameters.productSlug != null
+          ? EndPoints.getProductsByCategory(parameters.productSlug!)
+          : EndPoints.productList,
 
       /// The type of network call
       type: type,
 
-      /// The data to be sent with the network call
-      data: {},
+      /// The data to be sent with the network call (query parameters)
+      data: queryParams,
     );
     return result.fold(
       (l) => Left(l),

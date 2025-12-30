@@ -33,9 +33,10 @@ class FeaturedProducts extends ConsumerWidget {
               // While loading use 👇
               // const ProductsSkelton(),
               SizedBox(
-                height: 220,
+                height: 240,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(defaultPadding),
                   // Find demoPopularProducts on models/ProductModel.dart
                   itemCount: deals?.length,
                   itemBuilder: (context, index) => Padding(
@@ -55,6 +56,8 @@ class FeaturedProducts extends ConsumerWidget {
                       hasDiscount: deals?[index].price?.hasDiscount ?? false,
                       priceAfetDiscount:
                           deals?[index].price?.afterDiscount.toString() ?? "",
+                      productId: deals?[index].id,
+                      variations: deals?[index].variations,
                       press: () {
                         // Navigator.pushNamed(context, productDetailsScreenRoute,
                         // arguments: index.isEven);

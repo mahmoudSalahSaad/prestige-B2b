@@ -1,236 +1,374 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/core/controller/language_controller.dart';
+import 'package:shop/core/extensions/num_extensions.dart';
 import 'package:shop/features/cart/domain/entities/cart_entity.dart';
 import 'package:shop/features/cart/presentation/controllers/add_item_to_cart_controller.dart';
+import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:shop/features/cart/presentation/controllers/remove_item_to_cart_controller.dart';
 
 import '../../../constants.dart';
 import '../network_image_with_loader.dart';
 
 class SecondaryProductCard extends ConsumerWidget {
+  final String unit;
+  final int itemId;
+  final double total;
+  final int quantity;
+  final String image;
+  final String brandName;
+  final String title;
+  final double priceAfetDiscount;
+  final double price;
+  final bool? hasDiscount;
+  final VoidCallback onDelete;
+
   const SecondaryProductCard({
     super.key,
+    required this.unit,
+    required this.itemId,
+    required this.total,
+    required this.quantity,
     required this.image,
     required this.brandName,
     required this.title,
+    required this.priceAfetDiscount,
     required this.price,
-    required this.itemId,
-    this.priceAfetDiscount,
-    this.dicountpercent,
-    this.press,
-    this.style,
-    this.hasDiscount = false,
-    required this.total,
-    required this.quantity,
-    this.unit,
+    required this.hasDiscount,
+    required this.onDelete,
   });
-  final String image, brandName, title;
-  final double price;
-  final double? priceAfetDiscount;
-  final int? dicountpercent;
-  final VoidCallback? press;
-
-  final ButtonStyle? style;
-
-  final double total;
-  final int quantity;
-  final int itemId;
-  final bool? hasDiscount;
-  final String? unit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return OutlinedButton(
       onPressed: () {},
-      style: style ??
-          OutlinedButton.styleFrom(
-              minimumSize: const Size(256, 114),
-              side: BorderSide(color: Colors.grey.shade400),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(defaultBorderRadious),
-                side: const BorderSide(color: Colors.red),
-              ),
-              maximumSize: const Size(256, 114),
-              padding: const EdgeInsets.all(8)),
-      child: Row(
-        children: [
-          AspectRatio(
-            aspectRatio: 1.15,
-            child: Stack(
-              children: [
-                NetworkImageWithLoader(image, radius: defaultBorderRadious),
-              ],
-            ),
+      style: OutlinedButton.styleFrom(
+          minimumSize: Size(double.infinity, 120.h),
+          side: BorderSide(color: Colors.grey.shade400),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadious.r),
           ),
-          const SizedBox(width: defaultPadding / 4),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(defaultPadding / 2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
+          padding: EdgeInsets.all(8.r)),
+      child: Container(
+        width: double.infinity,
+        height: 120.h,
+        padding: EdgeInsets.all(8.r),
+        child: Stack(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Product Image
+                SizedBox(
+                  width: 80.w,
+                  height: 80.h,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(defaultBorderRadious.r),
+                    child: NetworkImageWithLoader(
+                      image,
+                      radius: defaultBorderRadious.r,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12.w),
+
+                // Content Section
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
+                      // Top Row: Product Info + Quantity Controls
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 150,
-                            child: Text(
-                              brandName.toUpperCase(),
-                              maxLines: 1,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(fontSize: 10),
+                          // Product Info
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Text(
+                                //   brandName.toUpperCase(),
+                                //   maxLines: 1,
+                                //   overflow: TextOverflow.ellipsis,
+                                //   style: Theme.of(context)
+                                //       .textTheme
+                                //       .bodyMedium!
+                                //       .copyWith(
+                                //         fontSize: 10.sp,
+                                //         color: Colors.grey[600],
+                                //       ),
+                                // ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: defaultPadding / 2),
-                          SizedBox(
-                            width: 150,
+
+                          SizedBox(width: 8.w),
+
+                          // Quantity Controls
+                          if (priceAfetDiscount != 0)
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[50],
+                                borderRadius: BorderRadius.circular(20.r),
+                                border: Border.all(color: Colors.grey[300]!),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    onTap: ref
+                                            .watch(
+                                                removeItemToCartControllerProvider(
+                                                    itemId))
+                                            .isLoading
+                                        ? () {}
+                                        : () => ref
+                                            .read(
+                                                removeItemToCartControllerProvider(
+                                                        itemId)
+                                                    .notifier)
+                                            .removeItemFromCart(
+                                                parameters: CartEntity(
+                                                    quantity: 0,
+                                                    productID: itemId)),
+                                    child: Container(
+                                      width: 28.w,
+                                      height: 28.h,
+                                      decoration: BoxDecoration(
+                                        color: primaryMaterialColor.shade100,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: ref
+                                                .watch(
+                                                    removeItemToCartControllerProvider(
+                                                        itemId))
+                                                .isLoading
+                                            ? SizedBox(
+                                                width: 12.w,
+                                                height: 12.h,
+                                                child:
+                                                    const CircularProgressIndicator(
+                                                  color: Colors.black87,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            : Icon(Icons.remove,
+                                                size: 16.r,
+                                                color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 12.w),
+                                    child: Text(
+                                      "$quantity",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: ref
+                                            .watch(
+                                                addItemToCartControllerProvider(
+                                                    itemId))
+                                            .isLoading
+                                        ? () {}
+                                        : () => ref
+                                            .read(
+                                                addItemToCartControllerProvider(
+                                                        itemId)
+                                                    .notifier)
+                                            .addItemToCart(
+                                                parameters: CartEntity(
+                                                    quantity: 1,
+                                                    productID: itemId)),
+                                    child: Container(
+                                      width: 28.w,
+                                      height: 28.h,
+                                      decoration: BoxDecoration(
+                                        color: primaryMaterialColor.shade100,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: ref
+                                                .watch(
+                                                    addItemToCartControllerProvider(
+                                                        itemId))
+                                                .isLoading
+                                            ? SizedBox(
+                                                width: 12.w,
+                                                height: 12.h,
+                                                child:
+                                                    const CircularProgressIndicator(
+                                                  color: Colors.black87,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            : Icon(Icons.add,
+                                                size: 16.r,
+                                                color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // Bottom Row: Price + Total
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Price per unit
+                          Expanded(
+                            flex: 2,
+                            child: priceAfetDiscount > price
+                                ? RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "$priceAfetDiscount JOD",
+                                          style: TextStyle(
+                                            color: const Color(0xFF31B0D8),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: " x $quantity $unit",
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Text(
+                                    "$price JOD x $quantity $unit",
+                                    style: TextStyle(
+                                      color: const Color(0xFF31B0D8),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                          ),
+
+                          // Total price
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF31B0D8).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(6.r),
+                            ),
                             child: Text(
-                              title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(fontSize: 12),
+                              "${total.toStringAsFixed(1)} JOD",
+                              style: TextStyle(
+                                color: const Color(0xFF31B0D8),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      if (priceAfetDiscount != 0)
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: ref
-                                      .watch(removeItemToCartControllerProvider(
-                                          itemId))
-                                      .isLoading
-                                  ? () {}
-                                  : () => ref
-                                      .read(removeItemToCartControllerProvider(
-                                              itemId)
-                                          .notifier)
-                                      .removeItemFromCart(
-                                          parameters: CartEntity(
-                                              quantity: 0, productID: itemId)),
-                              child: Container(
-                                height: 24,
-                                width: 24,
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  color: primaryMaterialColor.shade100,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: ref
-                                          .watch(
-                                              removeItemToCartControllerProvider(
-                                                  itemId))
-                                          .isLoading
-                                      ? const CircularProgressIndicator(
-                                          color: Colors.black87,
-                                          strokeWidth: 2,
-                                        )
-                                      : const Icon(Icons.remove, size: 16),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: defaultPadding / 3),
-                            Text("$quantity",
-                                style: const TextStyle(fontSize: 12)),
-                            const SizedBox(width: defaultPadding / 3),
-                            InkWell(
-                              onTap: ref
-                                      .watch(addItemToCartControllerProvider(
-                                          itemId))
-                                      .isLoading
-                                  ? () {}
-                                  : () => ref
-                                      .read(addItemToCartControllerProvider(
-                                              itemId)
-                                          .notifier)
-                                      .addItemToCart(
-                                          parameters: CartEntity(
-                                              quantity: 0, productID: itemId)),
-                              child: Container(
-                                height: 24,
-                                width: 24,
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  color: primaryMaterialColor.shade100,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: ref
-                                          .watch(
-                                              addItemToCartControllerProvider(
-                                                  itemId))
-                                          .isLoading
-                                      ? const CircularProgressIndicator(
-                                          color: Colors.black87,
-                                          strokeWidth: 2,
-                                        )
-                                      : const Icon(Icons.add, size: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
                     ],
                   ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      (priceAfetDiscount ?? 0) > price
-                          ? Row(
-                              children: [
-                                Text(
-                                  "$priceAfetDiscount",
-                                  style: const TextStyle(
-                                    color: Color(0xFF31B0D8),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  "x $quantity ${unit ?? ""}",
-                                  style: const TextStyle(
-                                    color: Color(0xFF31B0D8),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Text(
-                              "$price X $quantity ${unit ?? ""}",
-                              style: const TextStyle(
-                                color: Color(0xFF31B0D8),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                            ),
-                      const SizedBox(width: defaultPadding / 4),
-                      Text(
-                        "Total: ${total.toStringAsFixed(1)} JOD",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyMedium!.color,
-                          fontSize: 14,
+                ),
+              ],
+            ),
+
+            // Delete button
+            Positioned(
+              top: 0,
+              right:
+                  ref.watch(languageControllerProvider).locale.languageCode ==
+                          "ar"
+                      ? 0
+                      : 300.w,
+              left: ref.watch(languageControllerProvider).locale.languageCode ==
+                      "ar"
+                  ? 300.w
+                  : 0,
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final cartState = ref.watch(cartControllerProvider);
+                  final isDeleting = cartState is AsyncLoading;
+
+                  return GestureDetector(
+                    onTap: isDeleting
+                        ? null
+                        : () {
+                            print("Delete button tapped for item: $itemId");
+                            onDelete();
+                          },
+                    child: Container(
+                      width: 36.w,
+                      height: 36.h,
+                      decoration: BoxDecoration(
+                        color: isDeleting ? Colors.grey[100] : Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                        border: Border.all(
+                          color: isDeleting
+                              ? Colors.grey.withOpacity(0.3)
+                              : Colors.red.withOpacity(0.2),
+                          width: 1,
                         ),
                       ),
-                    ],
-                  )
-                ],
+                      child: isDeleting
+                          ? SizedBox(
+                              width: 16.w,
+                              height: 16.h,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.grey,
+                              ),
+                            )
+                          : Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                              size: 20.r,
+                            ),
+                    ),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

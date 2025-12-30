@@ -227,6 +227,8 @@ mixin _$User {
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
+  @JsonKey(name: "reset_password_token")
+  String? get resetPasswordToken => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   @JsonKey(name: "postal_code")
@@ -240,6 +242,7 @@ mixin _$User {
   String? get number => throw _privateConstructorUsedError;
   @JsonKey(name: "full_address")
   String? get fullAddress => throw _privateConstructorUsedError;
+  Group? get group => throw _privateConstructorUsedError;
   CityModel? get city => throw _privateConstructorUsedError;
   CityModel? get country => throw _privateConstructorUsedError;
 
@@ -262,6 +265,7 @@ abstract class $UserCopyWith<$Res> {
       String? name,
       String? email,
       String? role,
+      @JsonKey(name: "reset_password_token") String? resetPasswordToken,
       String? phone,
       String? address,
       @JsonKey(name: "postal_code") String? postalCode,
@@ -271,9 +275,11 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "budget_start_date") String? budgetStartDate,
       String? number,
       @JsonKey(name: "full_address") String? fullAddress,
+      Group? group,
       CityModel? city,
       CityModel? country});
 
+  $GroupCopyWith<$Res>? get group;
   $CityModelCopyWith<$Res>? get city;
   $CityModelCopyWith<$Res>? get country;
 }
@@ -297,6 +303,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? name = freezed,
     Object? email = freezed,
     Object? role = freezed,
+    Object? resetPasswordToken = freezed,
     Object? phone = freezed,
     Object? address = freezed,
     Object? postalCode = freezed,
@@ -306,6 +313,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? budgetStartDate = freezed,
     Object? number = freezed,
     Object? fullAddress = freezed,
+    Object? group = freezed,
     Object? city = freezed,
     Object? country = freezed,
   }) {
@@ -325,6 +333,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       role: freezed == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resetPasswordToken: freezed == resetPasswordToken
+          ? _value.resetPasswordToken
+          : resetPasswordToken // ignore: cast_nullable_to_non_nullable
               as String?,
       phone: freezed == phone
           ? _value.phone
@@ -362,6 +374,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.fullAddress
           : fullAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -371,6 +387,20 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           : country // ignore: cast_nullable_to_non_nullable
               as CityModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GroupCopyWith<$Res>? get group {
+    if (_value.group == null) {
+      return null;
+    }
+
+    return $GroupCopyWith<$Res>(_value.group!, (value) {
+      return _then(_value.copyWith(group: value) as $Val);
+    });
   }
 
   /// Create a copy of User
@@ -414,6 +444,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? name,
       String? email,
       String? role,
+      @JsonKey(name: "reset_password_token") String? resetPasswordToken,
       String? phone,
       String? address,
       @JsonKey(name: "postal_code") String? postalCode,
@@ -423,9 +454,12 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "budget_start_date") String? budgetStartDate,
       String? number,
       @JsonKey(name: "full_address") String? fullAddress,
+      Group? group,
       CityModel? city,
       CityModel? country});
 
+  @override
+  $GroupCopyWith<$Res>? get group;
   @override
   $CityModelCopyWith<$Res>? get city;
   @override
@@ -448,6 +482,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = freezed,
     Object? role = freezed,
+    Object? resetPasswordToken = freezed,
     Object? phone = freezed,
     Object? address = freezed,
     Object? postalCode = freezed,
@@ -457,6 +492,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? budgetStartDate = freezed,
     Object? number = freezed,
     Object? fullAddress = freezed,
+    Object? group = freezed,
     Object? city = freezed,
     Object? country = freezed,
   }) {
@@ -476,6 +512,10 @@ class __$$UserImplCopyWithImpl<$Res>
       role: freezed == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resetPasswordToken: freezed == resetPasswordToken
+          ? _value.resetPasswordToken
+          : resetPasswordToken // ignore: cast_nullable_to_non_nullable
               as String?,
       phone: freezed == phone
           ? _value.phone
@@ -513,6 +553,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.fullAddress
           : fullAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -533,6 +577,7 @@ class _$UserImpl implements _User {
       this.name,
       this.email,
       this.role,
+      @JsonKey(name: "reset_password_token") this.resetPasswordToken,
       this.phone,
       this.address,
       @JsonKey(name: "postal_code") this.postalCode,
@@ -542,6 +587,7 @@ class _$UserImpl implements _User {
       @JsonKey(name: "budget_start_date") this.budgetStartDate,
       this.number,
       @JsonKey(name: "full_address") this.fullAddress,
+      this.group,
       this.city,
       this.country});
 
@@ -556,6 +602,9 @@ class _$UserImpl implements _User {
   final String? email;
   @override
   final String? role;
+  @override
+  @JsonKey(name: "reset_password_token")
+  final String? resetPasswordToken;
   @override
   final String? phone;
   @override
@@ -579,13 +628,15 @@ class _$UserImpl implements _User {
   @JsonKey(name: "full_address")
   final String? fullAddress;
   @override
+  final Group? group;
+  @override
   final CityModel? city;
   @override
   final CityModel? country;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, role: $role, phone: $phone, address: $address, postalCode: $postalCode, photo: $photo, budget: $budget, isActive: $isActive, budgetStartDate: $budgetStartDate, number: $number, fullAddress: $fullAddress, city: $city, country: $country)';
+    return 'User(id: $id, name: $name, email: $email, role: $role, resetPasswordToken: $resetPasswordToken, phone: $phone, address: $address, postalCode: $postalCode, photo: $photo, budget: $budget, isActive: $isActive, budgetStartDate: $budgetStartDate, number: $number, fullAddress: $fullAddress, group: $group, city: $city, country: $country)';
   }
 
   @override
@@ -597,6 +648,8 @@ class _$UserImpl implements _User {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.resetPasswordToken, resetPasswordToken) ||
+                other.resetPasswordToken == resetPasswordToken) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.postalCode, postalCode) ||
@@ -610,6 +663,7 @@ class _$UserImpl implements _User {
             (identical(other.number, number) || other.number == number) &&
             (identical(other.fullAddress, fullAddress) ||
                 other.fullAddress == fullAddress) &&
+            (identical(other.group, group) || other.group == group) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country));
   }
@@ -622,6 +676,7 @@ class _$UserImpl implements _User {
       name,
       email,
       role,
+      resetPasswordToken,
       phone,
       address,
       postalCode,
@@ -631,6 +686,7 @@ class _$UserImpl implements _User {
       budgetStartDate,
       number,
       fullAddress,
+      group,
       city,
       country);
 
@@ -656,6 +712,7 @@ abstract class _User implements User {
       final String? name,
       final String? email,
       final String? role,
+      @JsonKey(name: "reset_password_token") final String? resetPasswordToken,
       final String? phone,
       final String? address,
       @JsonKey(name: "postal_code") final String? postalCode,
@@ -665,6 +722,7 @@ abstract class _User implements User {
       @JsonKey(name: "budget_start_date") final String? budgetStartDate,
       final String? number,
       @JsonKey(name: "full_address") final String? fullAddress,
+      final Group? group,
       final CityModel? city,
       final CityModel? country}) = _$UserImpl;
 
@@ -678,6 +736,9 @@ abstract class _User implements User {
   String? get email;
   @override
   String? get role;
+  @override
+  @JsonKey(name: "reset_password_token")
+  String? get resetPasswordToken;
   @override
   String? get phone;
   @override
@@ -700,6 +761,8 @@ abstract class _User implements User {
   @override
   @JsonKey(name: "full_address")
   String? get fullAddress;
+  @override
+  Group? get group;
   @override
   CityModel? get city;
   @override
@@ -860,5 +923,183 @@ abstract class _AuthrizationModel implements AuthrizationModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthrizationModelImplCopyWith<_$AuthrizationModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Group _$GroupFromJson(Map<String, dynamic> json) {
+  return _Group.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Group {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get slug => throw _privateConstructorUsedError;
+
+  /// Serializes this Group to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Group
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $GroupCopyWith<Group> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GroupCopyWith<$Res> {
+  factory $GroupCopyWith(Group value, $Res Function(Group) then) =
+      _$GroupCopyWithImpl<$Res, Group>;
+  @useResult
+  $Res call({int? id, String? name, String? slug});
+}
+
+/// @nodoc
+class _$GroupCopyWithImpl<$Res, $Val extends Group>
+    implements $GroupCopyWith<$Res> {
+  _$GroupCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Group
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? slug = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      slug: freezed == slug
+          ? _value.slug
+          : slug // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
+  factory _$$GroupImplCopyWith(
+          _$GroupImpl value, $Res Function(_$GroupImpl) then) =
+      __$$GroupImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, String? name, String? slug});
+}
+
+/// @nodoc
+class __$$GroupImplCopyWithImpl<$Res>
+    extends _$GroupCopyWithImpl<$Res, _$GroupImpl>
+    implements _$$GroupImplCopyWith<$Res> {
+  __$$GroupImplCopyWithImpl(
+      _$GroupImpl _value, $Res Function(_$GroupImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Group
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? slug = freezed,
+  }) {
+    return _then(_$GroupImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      slug: freezed == slug
+          ? _value.slug
+          : slug // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GroupImpl implements _Group {
+  _$GroupImpl({this.id, this.name, this.slug});
+
+  factory _$GroupImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GroupImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+  @override
+  final String? slug;
+
+  @override
+  String toString() {
+    return 'Group(id: $id, name: $name, slug: $slug)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GroupImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.slug, slug) || other.slug == slug));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, slug);
+
+  /// Create a copy of Group
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GroupImplCopyWith<_$GroupImpl> get copyWith =>
+      __$$GroupImplCopyWithImpl<_$GroupImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GroupImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Group implements Group {
+  factory _Group({final int? id, final String? name, final String? slug}) =
+      _$GroupImpl;
+
+  factory _Group.fromJson(Map<String, dynamic> json) = _$GroupImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  String? get slug;
+
+  /// Create a copy of Group
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GroupImplCopyWith<_$GroupImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/features/discover/presentaion/controllers/discover_controller.dart';
+import 'package:shop/generated/l10n.dart';
 
 import 'categories.dart';
 
@@ -27,7 +28,7 @@ class OffersCarouselAndCategories extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Text(
-            "Categories",
+            S.of(context).categories,
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),

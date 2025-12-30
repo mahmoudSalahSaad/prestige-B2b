@@ -18,6 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CitiesState {
   List<CityModel>? get cities => throw _privateConstructorUsedError;
   CityModel? get selectedCity => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  int get pageSize => throw _privateConstructorUsedError;
+  bool get hasMoreData => throw _privateConstructorUsedError;
+  bool get isLoadingMore => throw _privateConstructorUsedError;
 
   /// Create a copy of CitiesState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +36,13 @@ abstract class $CitiesStateCopyWith<$Res> {
           CitiesState value, $Res Function(CitiesState) then) =
       _$CitiesStateCopyWithImpl<$Res, CitiesState>;
   @useResult
-  $Res call({List<CityModel>? cities, CityModel? selectedCity});
+  $Res call(
+      {List<CityModel>? cities,
+      CityModel? selectedCity,
+      int currentPage,
+      int pageSize,
+      bool hasMoreData,
+      bool isLoadingMore});
 
   $CityModelCopyWith<$Res>? get selectedCity;
 }
@@ -54,6 +64,10 @@ class _$CitiesStateCopyWithImpl<$Res, $Val extends CitiesState>
   $Res call({
     Object? cities = freezed,
     Object? selectedCity = freezed,
+    Object? currentPage = null,
+    Object? pageSize = null,
+    Object? hasMoreData = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_value.copyWith(
       cities: freezed == cities
@@ -64,6 +78,22 @@ class _$CitiesStateCopyWithImpl<$Res, $Val extends CitiesState>
           ? _value.selectedCity
           : selectedCity // ignore: cast_nullable_to_non_nullable
               as CityModel?,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageSize: null == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMoreData: null == hasMoreData
+          ? _value.hasMoreData
+          : hasMoreData // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -90,7 +120,13 @@ abstract class _$$CitiesStateImplCopyWith<$Res>
       __$$CitiesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CityModel>? cities, CityModel? selectedCity});
+  $Res call(
+      {List<CityModel>? cities,
+      CityModel? selectedCity,
+      int currentPage,
+      int pageSize,
+      bool hasMoreData,
+      bool isLoadingMore});
 
   @override
   $CityModelCopyWith<$Res>? get selectedCity;
@@ -111,6 +147,10 @@ class __$$CitiesStateImplCopyWithImpl<$Res>
   $Res call({
     Object? cities = freezed,
     Object? selectedCity = freezed,
+    Object? currentPage = null,
+    Object? pageSize = null,
+    Object? hasMoreData = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_$CitiesStateImpl(
       cities: freezed == cities
@@ -121,6 +161,22 @@ class __$$CitiesStateImplCopyWithImpl<$Res>
           ? _value.selectedCity
           : selectedCity // ignore: cast_nullable_to_non_nullable
               as CityModel?,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageSize: null == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMoreData: null == hasMoreData
+          ? _value.hasMoreData
+          : hasMoreData // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -129,7 +185,12 @@ class __$$CitiesStateImplCopyWithImpl<$Res>
 
 class _$CitiesStateImpl implements _CitiesState {
   _$CitiesStateImpl(
-      {final List<CityModel>? cities = const [], this.selectedCity})
+      {final List<CityModel>? cities = const [],
+      this.selectedCity,
+      this.currentPage = 1,
+      this.pageSize = 10,
+      this.hasMoreData = false,
+      this.isLoadingMore = false})
       : _cities = cities;
 
   final List<CityModel>? _cities;
@@ -145,10 +206,22 @@ class _$CitiesStateImpl implements _CitiesState {
 
   @override
   final CityModel? selectedCity;
+  @override
+  @JsonKey()
+  final int currentPage;
+  @override
+  @JsonKey()
+  final int pageSize;
+  @override
+  @JsonKey()
+  final bool hasMoreData;
+  @override
+  @JsonKey()
+  final bool isLoadingMore;
 
   @override
   String toString() {
-    return 'CitiesState(cities: $cities, selectedCity: $selectedCity)';
+    return 'CitiesState(cities: $cities, selectedCity: $selectedCity, currentPage: $currentPage, pageSize: $pageSize, hasMoreData: $hasMoreData, isLoadingMore: $isLoadingMore)';
   }
 
   @override
@@ -158,12 +231,26 @@ class _$CitiesStateImpl implements _CitiesState {
             other is _$CitiesStateImpl &&
             const DeepCollectionEquality().equals(other._cities, _cities) &&
             (identical(other.selectedCity, selectedCity) ||
-                other.selectedCity == selectedCity));
+                other.selectedCity == selectedCity) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.pageSize, pageSize) ||
+                other.pageSize == pageSize) &&
+            (identical(other.hasMoreData, hasMoreData) ||
+                other.hasMoreData == hasMoreData) &&
+            (identical(other.isLoadingMore, isLoadingMore) ||
+                other.isLoadingMore == isLoadingMore));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_cities), selectedCity);
+      runtimeType,
+      const DeepCollectionEquality().hash(_cities),
+      selectedCity,
+      currentPage,
+      pageSize,
+      hasMoreData,
+      isLoadingMore);
 
   /// Create a copy of CitiesState
   /// with the given fields replaced by the non-null parameter values.
@@ -177,12 +264,24 @@ class _$CitiesStateImpl implements _CitiesState {
 abstract class _CitiesState implements CitiesState {
   factory _CitiesState(
       {final List<CityModel>? cities,
-      final CityModel? selectedCity}) = _$CitiesStateImpl;
+      final CityModel? selectedCity,
+      final int currentPage,
+      final int pageSize,
+      final bool hasMoreData,
+      final bool isLoadingMore}) = _$CitiesStateImpl;
 
   @override
   List<CityModel>? get cities;
   @override
   CityModel? get selectedCity;
+  @override
+  int get currentPage;
+  @override
+  int get pageSize;
+  @override
+  bool get hasMoreData;
+  @override
+  bool get isLoadingMore;
 
   /// Create a copy of CitiesState
   /// with the given fields replaced by the non-null parameter values.

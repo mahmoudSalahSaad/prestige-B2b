@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import '../../generated/l10n.dart';
 
 class OrderProgress extends StatelessWidget {
   const OrderProgress({
@@ -27,7 +28,7 @@ class OrderProgress extends StatelessWidget {
         Expanded(
           child: ProcessDotWithLine(
             isShowLeftLine: false,
-            title: "Ordered",
+            title: S.of(context).ordered,
             status: orderStatus,
             nextStatus: processingStatus,
           ),
@@ -35,14 +36,14 @@ class OrderProgress extends StatelessWidget {
         Expanded(
           child: ProcessDotWithLine(
             isActive: processingStatus == OrderProcessStatus.processing,
-            title: "Processing",
+            title: S.of(context).processing,
             status: processingStatus,
             nextStatus: packedStatus,
           ),
         ),
         Expanded(
           child: ProcessDotWithLine(
-            title: "Packed",
+            title: S.of(context).packed,
             status: packedStatus,
             nextStatus: shippedStatus,
             isActive: packedStatus == OrderProcessStatus.processing,
@@ -50,16 +51,16 @@ class OrderProgress extends StatelessWidget {
         ),
         Expanded(
           child: ProcessDotWithLine(
-            title: "Shipped",
+            title: S.of(context).shipped,
             status: shippedStatus,
             nextStatus: isCanceled ? OrderProcessStatus.error : deliveredStatus,
             isActive: shippedStatus == OrderProcessStatus.processing,
           ),
         ),
         isCanceled
-            ? const Expanded(
+            ? Expanded(
                 child: ProcessDotWithLine(
-                  title: "Canceled",
+                  title: S.of(context).canceled,
                   status: OrderProcessStatus.canceled,
                   isShowRightLine: false,
                   isActive: true,
@@ -67,7 +68,7 @@ class OrderProgress extends StatelessWidget {
               )
             : Expanded(
                 child: ProcessDotWithLine(
-                  title: "Delivered",
+                  title: S.of(context).delivered,
                   status: deliveredStatus,
                   isShowRightLine: false,
                   isActive: deliveredStatus == OrderProcessStatus.done,

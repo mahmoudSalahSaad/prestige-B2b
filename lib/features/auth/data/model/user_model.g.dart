@@ -28,6 +28,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       name: json['name'] as String?,
       email: json['email'] as String?,
       role: json['role'] as String?,
+      resetPasswordToken: json['reset_password_token'] as String?,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
       postalCode: json['postal_code'] as String?,
@@ -37,6 +38,9 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       budgetStartDate: json['budget_start_date'] as String?,
       number: json['number'] as String?,
       fullAddress: json['full_address'] as String?,
+      group: json['group'] == null
+          ? null
+          : Group.fromJson(json['group'] as Map<String, dynamic>),
       city: json['city'] == null
           ? null
           : CityModel.fromJson(json['city'] as Map<String, dynamic>),
@@ -51,6 +55,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'name': instance.name,
       'email': instance.email,
       'role': instance.role,
+      'reset_password_token': instance.resetPasswordToken,
       'phone': instance.phone,
       'address': instance.address,
       'postal_code': instance.postalCode,
@@ -60,6 +65,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'budget_start_date': instance.budgetStartDate,
       'number': instance.number,
       'full_address': instance.fullAddress,
+      'group': instance.group,
       'city': instance.city,
       'country': instance.country,
     };
@@ -74,4 +80,17 @@ Map<String, dynamic> _$$AuthrizationModelImplToJson(
         _$AuthrizationModelImpl instance) =>
     <String, dynamic>{
       'token': instance.token,
+    };
+
+_$GroupImpl _$$GroupImplFromJson(Map<String, dynamic> json) => _$GroupImpl(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      slug: json['slug'] as String?,
+    );
+
+Map<String, dynamic> _$$GroupImplToJson(_$GroupImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
     };

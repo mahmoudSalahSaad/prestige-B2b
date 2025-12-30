@@ -66,7 +66,7 @@ class ProductRepositoryImplementation extends ProductRepository {
 
   @override
   Future<Either<ErrorModel, List<PormotionModel>>> getPormotions(
-      {required NoParameters parameters}) async {
+      {required ProductEntity parameters}) async {
     /// The type of network call (get, post, put, delete)
     NetworkCallType type = NetworkCallType.post;
 
@@ -80,7 +80,9 @@ class ProductRepositoryImplementation extends ProductRepository {
       type: type,
 
       /// The data to be sent with the network call
-      data: {},
+      data: {
+        "group_id": parameters.groupId,
+      },
     );
 
     print(

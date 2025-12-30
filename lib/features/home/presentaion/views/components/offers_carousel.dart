@@ -94,7 +94,6 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
             },
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                print("sadsasd");
 
                 if (widget.slider?.images?[index].linkType == "product") {
                   NavigationService.push(Routes.productDetails, arguments: {
@@ -109,9 +108,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
               },
               child: BannerMStyle2(
                 press: () {
-                  print("sadsasd");
-                  print(
-                      "saddsadlnsakmads===>${widget.slider?.images?[index].linkType}");
+      
                   if (widget.slider?.images?[index].linkType == "product") {
                     NavigationService.push(Routes.productDetails, arguments: {
                       "slug": widget.slider?.images?[index].linkSlug

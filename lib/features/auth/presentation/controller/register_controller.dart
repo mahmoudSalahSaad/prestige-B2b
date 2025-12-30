@@ -3,8 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shop/base_injection.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
-import 'package:shop/core/services/local/cache_consumer.dart';
-import 'package:shop/core/services/local/storage_keys.dart';
 import 'package:shop/core/utils/alerts.dart';
 import 'package:shop/features/auth/data/model/user_model.dart';
 import 'package:shop/features/auth/doman/entity/auth_entity.dart';
@@ -34,13 +32,16 @@ class RegisterController extends _$RegisterController {
       Alerts.showSnackBar(l.errorMessage ?? "");
       state = AsyncError(l, StackTrace.current);
     }, (r) async {
-      AppPrefs prefs = getIt();
-
-      print("Tokkkkken======>${r.authorization?.token}");
-      await prefs.save(PrefKeys.token, r.authorization?.token ?? "");
-      await prefs.save(PrefKeys.user, (r.user?.toJson() ?? "").toString());
+      // Registration successful, navigate to OTP verification
       state = AsyncData(state.requireValue.copyWith(userModel: r));
-      NavigationService.pushNamedAndRemoveUntil(Routes.login);
+
+      // Navigate to OTP screen with phone number
+      print(
+          "RegisterController: Navigating to OTP with phone: ${parameters.phone}");
+      NavigationService.push(Routes.otpPassword, arguments: {
+        'phone': parameters.phone,
+        'isRegistration': true,
+      });
     });
   }
 }

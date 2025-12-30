@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shop/theme/input_decoration_theme.dart';
 
 import '../../../../constants.dart';
+import '../../../../generated/l10n.dart';
 
 class LocationPermissonStoreAvailabilityScreen extends StatelessWidget {
   const LocationPermissonStoreAvailabilityScreen({super.key});
@@ -73,20 +74,20 @@ class LocationPermissonStoreAvailabilityScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Your Location Services are turned off.",
+                      S.of(context).location_services_off,
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).textTheme.bodyLarge!.color),
                     ),
                     const SizedBox(height: defaultPadding),
-                    const Text(
-                      "Turn on Location Services in your device Settings to search for stores by current location. You can still search by Country/Region, City or Zip Code.",
+                    Text(
+                      S.of(context).location_services_description,
                     ),
                     const SizedBox(height: defaultPadding * 1.5),
                     ElevatedButton(
                       onPressed: () {},
-                      child: const Text("Settings"),
+                      child: Text(S.of(context).settings_label),
                     )
                   ],
                 ),

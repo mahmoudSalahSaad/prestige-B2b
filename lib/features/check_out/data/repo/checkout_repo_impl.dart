@@ -25,6 +25,11 @@ class CheckoutRepoImpl extends CheckoutRepo {
         "shipping_carrier": parameters.shippingCarrirer,
         "shipping_amount": parameters.shippingAmount,
         "delivery_date": parameters.deliveryDate,
+        "payment_method": parameters.paymentMethod,
+        "paid_at": parameters.paymentStatus == "paid" ?
+         DateTime.now().toIso8601String() : null,
+        "transaction_id": parameters.transactionId,
+        "payment_status": parameters.paymentStatus,
       },
       url: EndPoints.checkout,
       type: type,

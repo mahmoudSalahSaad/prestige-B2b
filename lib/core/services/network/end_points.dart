@@ -8,7 +8,7 @@ class EndPoints {
   static const String categoriesChildern = '/categories/children';
   static const String sliders = '/sliders';
   static const String productList = '/products';
-  static String productdetails(String slug) => '/products/product-1';
+  static String productdetails(String slug) => '/products/$slug';
 
   static String getProductsByCategory(String category) =>
       '/categories/$category/products';
@@ -32,4 +32,5 @@ class EndPoints {
 
   static String getHomeStaticPage = "/pages/home-app";
   static String getPromotionsStaticPage = "/pages/promotions";
+  static String getBranches = "/branches";
 }

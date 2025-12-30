@@ -6,10 +6,12 @@ import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/features/Address/data/models/address_model.dart';
 import 'package:shop/features/Address/domain/entities/address_entity.dart';
 import 'package:shop/features/Address/presentation/controllers/add_address_controller.dart';
-import 'package:shop/features/auth/presentation/views/components/sign_up_form.dart';
+import 'package:shop/features/Address/presentation/pages/create_new_address.dart';
 import 'package:shop/features/settings/data/models/city_model.dart';
 import 'package:shop/features/settings/presentation/controllers/cities_controller.dart';
 import 'package:shop/features/settings/presentation/controllers/countries_controller.dart';
+
+import '../../../../generated/l10n.dart';
 
 class UpdateAddressScreen extends ConsumerStatefulWidget {
   const UpdateAddressScreen({
@@ -63,7 +65,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Update Address"),
+        title: Text(S.of(context).update_address),
         centerTitle: true,
         forceMaterialTransparency: true,
       ),
@@ -79,45 +81,38 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 240,
-                          child: Column(
-                            children: [
-                              CustomTextFieldWidget(
-                                controller: nameController,
-                                hintText: "Name",
-                                validate: (str) {
-                                  if (str != null) {
-                                    if (str.isNotEmpty) {
-                                      return null;
-                                    } else {
-                                      return "required";
-                                    }
-                                  } else {
-                                    return "required";
-                                  }
-                                },
-                                prefixIcon: "assets/icons/dot.svg",
-                              ),
-                            ],
+                    Image.asset(
+                      "assets/Illustration/Illustration-4.png",
+                      height: 300,
+                    ),
+                    SizedBox(
+                      child: Column(
+                        children: [
+                          CustomTextFieldWidget(
+                            controller: nameController,
+                            hintText: S.of(context).address_name,
+                            validate: (str) {
+                              if (str != null) {
+                                if (str.isNotEmpty) {
+                                  return null;
+                                } else {
+                                  return "required";
+                                }
+                              } else {
+                                return "required";
+                              }
+                            },
+                            prefixIcon: "assets/icons/dot.svg",
                           ),
-                        ),
-                        Image.asset(
-                          "assets/Illustration/Illustration-4.png",
-                          height: 100,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     CustomTextFieldWidget(
                       controller: lineOneController,
-                      hintText: "Line 1",
+                      hintText: S.of(context).address_line,
                       validate: (str) {
                         if (str != null) {
                           if (str.isNotEmpty) {
@@ -152,84 +147,9 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                       height: 10,
                     ),
                     CustomTextFieldWidget(
-                      controller: lineTwoController,
-                      hintText: "Line 2(Optional)",
-                      maxLines: 1,
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
-                      controller: postalCodeController,
-                      hintText: "Postal Code",
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                      prefixIcon: "assets/icons/dot.svg",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
-                      controller: stateController,
-                      hintText: "State(Optional)",
-                      prefixIcon: "assets/icons/dot.svg",
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldWidget(
                       controller: countryIDController,
                       readOnly: true,
-                      hintText: "Select Country",
+                      hintText: S.of(context).country,
                       validate: (str) {
                         if (str != null) {
                           if (str.isNotEmpty) {
@@ -328,13 +248,22 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: List.generate(
-                                              ref
-                                                      .watch(
-                                                          citiesControllerProvider)
-                                                      .requireValue
-                                                      .cities
-                                                      ?.length ??
-                                                  0,
+                                              (ref
+                                                              .watch(
+                                                                  citiesControllerProvider)
+                                                              .requireValue
+                                                              .cities
+                                                              ?.length ??
+                                                          0) >
+                                                      20
+                                                  ? 20
+                                                  : (ref
+                                                          .watch(
+                                                              citiesControllerProvider)
+                                                          .requireValue
+                                                          .cities
+                                                          ?.length ??
+                                                      0),
                                               (index) => Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -379,7 +308,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                     );
                                   });
                             },
-                      hintText: "Select City",
+                      hintText: S.of(context).city,
                       readOnly: true,
                       suffixIcon: ref.watch(citiesControllerProvider).isLoading
                           ? const SizedBox(
@@ -400,64 +329,6 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                       },
                       prefixIcon: "assets/icons/Mylocation.svg",
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Billing address",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Checkbox(
-                              value: isBillingAddress,
-                              checkColor: primaryColor,
-                              activeColor: Colors.white,
-                              onChanged: (val) {
-                                setState(() {
-                                  isBillingAddress = val!;
-                                });
-                              },
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Shipping address",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Checkbox(
-                              value: isShippingAddress,
-                              checkColor: primaryColor,
-                              activeColor: Colors.white,
-                              onChanged: (val) {
-                                setState(() {
-                                  isShippingAddress = val!;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    if (isBillingAddress == false && isShippingAddress == false)
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 18,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Please select at least one address option",
-                            style: TextStyle(color: Colors.red),
-                          )
-                        ],
-                      ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -516,7 +387,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: deviceWidth * 0.26),
                                 child: Text(
-                                  "Update Address",
+                                  S.of(context).update_address,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop/generated/l10n.dart';
 
 import '../../constants.dart';
 import 'order_process.dart';
@@ -63,7 +64,7 @@ class OrderStatusCard extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                const Text("Order"),
+                                Text(S.of(context).order),
                                 const SizedBox(width: defaultPadding / 2),
                                 Text("#$orderId"),
                               ],

@@ -23,9 +23,8 @@ class PromotionsStaticPageController extends _$PromotionsStaticPageController {
   }
 
   Future<void> getPromotions() async {
-    Future.delayed(const Duration(seconds: 0), () {
-      state = const AsyncLoading();
-    });
+    // Set loading state immediately without Future.delayed to prevent race conditions
+    state = const AsyncLoading();
 
     final GetPromotionsStaticPageUseCase getPromotionsStaticPageUseCase =
         getIt();
@@ -40,9 +39,10 @@ class PromotionsStaticPageController extends _$PromotionsStaticPageController {
   }
 
   addToCart(int qty, int id) async {
-    Future.delayed(const Duration(seconds: 0), () {
-      state = const AsyncLoading();
-    });
+    // Update state to show loading for this specific action
+    final currentState = state.requireValue;
+    state = AsyncData(currentState.copyWith(isLoading: true));
+
     AddPromotionToCartUseCase addPromotionToCartUseCase = getIt();
 
     final result = await addPromotionToCartUseCase.call(
@@ -54,12 +54,12 @@ class PromotionsStaticPageController extends _$PromotionsStaticPageController {
 
     result.fold(
       (l) {
-        state = AsyncError(l.errorMessage.toString(), StackTrace.current);
+        state = AsyncData(currentState.copyWith(isLoading: false));
         Alerts.showSnackBar(l.errorMessage.toString(),
             alertsType: AlertsType.error);
       },
       (r) {
-        state = AsyncData(state.requireValue);
+        state = AsyncData(currentState.copyWith(isLoading: false));
       },
     );
   }

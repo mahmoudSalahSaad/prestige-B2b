@@ -9,6 +9,7 @@ import 'package:shop/features/product/presentation/views/location_permission_sto
 import 'package:shop/features/product/presentation/views/size_guide_screen.dart';
 
 import '../../../../constants.dart';
+import '../../../../generated/l10n.dart';
 import 'components/product_quantity.dart';
 import 'components/unit_price.dart';
 
@@ -25,8 +26,8 @@ class _ProductBuyNowScreenState extends State<ProductBuyNowScreen> {
     return Scaffold(
       bottomNavigationBar: CartButton(
         price: 0,
-        title: "Add to cart",
-        subTitle: "Total price",
+        title: S.of(context).buy_now,
+        subTitle: S.of(context).unit_price,
         press: () {
           customModalBottomSheet(
             context,
@@ -84,6 +85,9 @@ class _ProductBuyNowScreenState extends State<ProductBuyNowScreen> {
                           numOfItem: 2,
                           onIncrement: () {},
                           onDecrement: () {},
+                          onQuantityChanged: (quantity) {
+                            // Handle manual quantity change
+                          },
                         ),
                       ],
                     ),

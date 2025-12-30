@@ -15,6 +15,7 @@ import 'package:shop/core/services/local/cache_consumer.dart';
 import 'package:shop/features/auth/doman/entity/auth_entity.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 import 'package:shop/features/profile/controllers/profile_controller.dart';
+import 'package:shop/generated/l10n.dart';
 
 // class UpdateProfileScreen extends ConsumerWidget {
 //   const UpdateProfileScreen({super.key});
@@ -87,8 +88,8 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
         leading: const SizedBox(),
         leadingWidth: 0,
         centerTitle: false,
-        title:
-            Text("PRESTIGE", style: Theme.of(context).textTheme.headlineSmall),
+        title: Text(S.of(context).prestige_brand,
+            style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           IconButton(
             onPressed: () {
@@ -260,7 +261,7 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
                               password: ""));
                     }
                   },
-                  child: const Text("Save"),
+                  child: Text(S.of(context).save),
                 ),
               ],
             ),
@@ -270,13 +271,13 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Want To Change Password ?"),
+                Text(S.of(context).want_to_change_password),
                 TextButton(
                     onPressed: () {
                       NavigationService.push(Routes.chnagePasswordScreen);
                     },
                     child: Text(
-                      "Change Password",
+                      S.of(context).change_password,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: primaryColor,
                           ),
@@ -305,8 +306,9 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
                             child: Center(
                               child: Column(
                                 children: [
-                                  const Text(
-                                      "Are you sure you want to remove your account ?"),
+                                  Text(S
+                                      .of(context)
+                                      .remove_account_confirmation),
                                   const SizedBox(
                                     height: 32,
                                   ),
@@ -317,7 +319,7 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
                                           onPressed: () {
                                             NavigationService.goBack();
                                           },
-                                          child: const Text("Cancel"),
+                                          child: Text(S.of(context).cancel),
                                         ),
                                       ),
                                       const SizedBox(
@@ -337,7 +339,7 @@ class _UpdatePorfileScreenState extends ConsumerState<UpdatePorfileScreen> {
                                                 .pushNamedAndRemoveUntil(
                                                     Routes.login);
                                           },
-                                          child: const Text("Confirm"),
+                                          child: Text(S.of(context).confirm),
                                         ),
                                       )
                                     ],

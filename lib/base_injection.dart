@@ -15,10 +15,13 @@ import 'package:shop/features/Address/domain/usecases/update_address_use_case.da
 import 'package:shop/features/auth/data/repowsitory_implemrntion/repository_implementation.dart';
 import 'package:shop/features/auth/doman/repository/repository.dart';
 import 'package:shop/features/auth/doman/use_cases/change_password_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/forget_password_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/login_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/register_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/remove_account_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/reset_password_use_case.dart';
 import 'package:shop/features/auth/doman/use_cases/update_profile_use_case.dart';
+import 'package:shop/features/auth/doman/use_cases/verify_otp_use_case.dart';
 import 'package:shop/features/cart/data/repo/cart_repository_implementation.dart';
 import 'package:shop/features/cart/domain/repo/cart_repository.dart';
 import 'package:shop/features/cart/domain/usecases/add_item_to_cart_use_case.dart';
@@ -74,6 +77,11 @@ Future<void> init() async {
       () => GetProductsByCategoriesUseCase(discoverRepository: getIt()));
   getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt()));
   getIt.registerLazySingleton(() => RegisterUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(() => VerifyOtpUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => ForgetPasswordUseCase(authRepository: getIt()));
+  getIt.registerLazySingleton(
+      () => ResetPasswordUseCase(authRepository: getIt()));
   getIt.registerLazySingleton(() => AddToCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(() => GetMyCartUseCase(cartRepository: getIt()));
   getIt.registerLazySingleton(

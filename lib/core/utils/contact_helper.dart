@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'logger.dart';
 import 'alerts.dart';
+import 'logger.dart';
 
 class ContactHelper {
   static void launchMap({num? lat = 47.6, num? long = -122.3}) async {
@@ -26,7 +26,7 @@ class ContactHelper {
   }
 
   static launchURL(String toMailId) async {
-    var url = 'mailto:$toMailId';
+    var url = toMailId;
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     } else {

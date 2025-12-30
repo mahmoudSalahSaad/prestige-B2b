@@ -3,19 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/features/cart/presentation/controllers/cart_controller.dart';
 
 import '../../constants.dart';
+import '../../generated/l10n.dart';
 
 class CartButton extends ConsumerWidget {
   const CartButton({
     super.key,
     required this.price,
-    this.title = "Buy Now",
-    this.subTitle = "Unit price",
+    this.title,
+    this.subTitle,
     required this.press,
     this.isLoading = false,
   });
 
   final double price;
-  final String title, subTitle;
+  final String? title, subTitle;
   final VoidCallback press;
   final bool? isLoading;
 
@@ -50,7 +51,7 @@ class CartButton extends ConsumerWidget {
                               color: Colors.white,
                             )
                           : Text(
-                              title,
+                              title ?? S.of(context).buy_now,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!

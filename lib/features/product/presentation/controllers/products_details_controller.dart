@@ -66,6 +66,20 @@ class ProductsDetailsController extends _$ProductsDetailsController {
     );
   }
 
+  onQuantityChanged(int quantity) {
+    if (quantity < 1) {
+      quantity = 1;
+    }
+    state = AsyncData(
+      ProductsDetailsState(
+        productDetails: state.requireValue.productDetails!.copyWith(
+          product: state.requireValue.productDetails!.product!
+              .copyWith(quantity: quantity),
+        ),
+      ),
+    );
+  }
+
   selectVariation(VariationModel variation) {
     state = AsyncData(
       ProductsDetailsState(

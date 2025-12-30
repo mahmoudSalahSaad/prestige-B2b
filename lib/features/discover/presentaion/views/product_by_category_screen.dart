@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/features/discover/presentaion/controllers/products_by_categories_controller.dart';
 import 'package:shop/features/product/presentation/views/product_details_screen.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shop/generated/l10n.dart';
 
 class ProductByCategoryScreen extends ConsumerWidget {
   const ProductByCategoryScreen(
@@ -27,7 +28,7 @@ class ProductByCategoryScreen extends ConsumerWidget {
         leadingWidth: 32,
         centerTitle: false,
         title: Text(
-          "PRESTIGE",
+          S.of(context).prestige_brand,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: const [],
@@ -63,7 +64,7 @@ class ProductByCategoryScreen extends ConsumerWidget {
                         const SizedBox(
                           height: defaultPadding,
                         ),
-                        const Text("Oops, No Product found!!")
+                        Text(S.of(context).no_product_found)
                       ],
                     ),
                   ),
@@ -79,11 +80,11 @@ class ProductByCategoryScreen extends ConsumerWidget {
                             print("sjhbdjbdvs==>${data.items}");
                             return SliverGrid(
                               gridDelegate:
-                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200.0,
-                                mainAxisSpacing: defaultPadding,
-                                crossAxisSpacing: defaultPadding,
-                                childAspectRatio: 0.66,
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 4,
+                                childAspectRatio: 0.56,
                               ),
                               delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
@@ -108,6 +109,7 @@ class ProductByCategoryScreen extends ConsumerWidget {
                                             .toString() ??
                                         "0",
                                     dicountpercent: 0,
+                                    productId: data.items?.items?[index].id,
                                     press: () {
                                       // Navigator.pushNamed(context, productDetailsScreenRoute);
 
@@ -132,8 +134,9 @@ class ProductByCategoryScreen extends ConsumerWidget {
                                 child: Text(error.toString()),
                               ),
                           loading: () => SliverToBoxAdapter(
-                                child: Skeletonizer(
-                                    enabled: true,
+                                child: Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
                                     child: Column(
                                       children: [
                                         SizedBox(
@@ -168,24 +171,3 @@ class ProductByCategoryScreen extends ConsumerWidget {
     );
   }
 }
-/* Skeletonizer(
-                                enabled: true,
-                                child: Column(
-                                  children: [
-                                    GridView.builder(
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2),
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          return ProductCard(
-                                            image:
-                                                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAACUCAMAAADGZBfIAAAAb1BMVEUAAACirKkWFhYYGBgEBAQqLCsODg7f7egrKytSU1RVW1hVWlppb2+0ubcSEhJXWVgeISA+Q0EjJSR+hIK/w8KPlZM2ODcxMjGtsbA7Pj2ZoJ52eHeGiokbHBtGR0dMTU3t+fViZWTM1dLY393FzMrra56nAAAClElEQVR4nO3ZbW+rIAAFYERkdbMqKlqrrcP6/3/jRdHevixLlrEQmvN8qdEv5wREqoQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwEtiacpcZ/gTPCq46wx/gu521HUGmzhfxync7UJzVNcnd3ms4SE1t9a1WC7ayGUiSzilZgZeiwlRhy4T2cLTcJmMW7FIiJ3bRLakdFnnwygKCSNUtPWLrI6M0pSsxQhrhMhdJ7IlpfP6YYrlrWj0KaZPFN4XnIdMz8EooiSthTBrCRfx2fs1JA0pJ7zQO4+iFWapb4YsjgvHuX6NpXRdL3KzchRDnGWD91Pxlq7FTucsy+LGdRQ72P+fZq7V8puzL0LfXcL7u+sZ0wtI4+8T+ts5dlfLr9mo0/LcKL5KzlfMt2KElG9X6vFapJJN7Vsvevzcen32jxfr5Nrs7Nndxshw2K8O7ePVU6x3HUbh2VT8QVq/im2WTbzKb9MzwtvQ1z5XOr4KJnlfI+5U7SqQFXOb6DiNl4ncbam6vuvUye9BK6dxvBwexqdI+rLsYjeJrIiry3ipMj02qttGLB70Ud2Vupqv87EILuNYlfOD6jxNHWGN3iJmx+PSJ56rKerldFR6tEwLcqgOGakP+ol27mW5nMpV15dPTzgvnPpg3Uwl1b7n5CMIPghPpFzvrlZlqbt0v2FiM3LaV/Pu4z0I3vW/zF7225t7z7ZTT/qq6shWjCgpE9eJ7Bj0gM0DtxRjhEnZC9eZrJDVNMy/H2bEiAhk5zaRHcm+Oi4HWzFSXtcPr3X7ynxcWVbF5Z2HlJnbTFbkiTLbwrWYFmfev9teLfuLdSr6uNf4XlSWr/CF9gvFC74lBQAAAAAAAAAAAAAAAAAAAAAAAAAAAPiZf8d2HeY2LqARAAAAAElFTkSuQmCC',
-                                            brandName: "asd.m,.am",
-                                            title: "sda,mdas",
-                                            price: 000,
-                                            press: () {},
-                                          );
-                                        })
-                                  ],
-                                )) */

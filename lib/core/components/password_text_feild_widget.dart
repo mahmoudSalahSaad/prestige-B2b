@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../constants.dart';
+import '../../generated/l10n.dart';
 
 class PasswordTextEditingController extends StatefulWidget {
   const PasswordTextEditingController({
@@ -27,6 +28,7 @@ class _PasswordTextEditingControllerState
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       onSaved: (pass) {
         // Password
       },
@@ -34,7 +36,7 @@ class _PasswordTextEditingControllerState
       validator: widget.validate,
       obscureText: obscure,
       decoration: InputDecoration(
-          hintText: widget.hintText ?? "Password",
+          hintText: widget.hintText ?? S.of(context).password,
           prefixIcon: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: defaultPadding * 0.75),

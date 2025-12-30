@@ -5,6 +5,7 @@ import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
+import 'package:shop/generated/l10n.dart';
 import 'package:shop/models/product_model.dart';
 
 class BestSellers extends ConsumerWidget {
@@ -26,16 +27,17 @@ class BestSellers extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Text(
-                  title ?? "Deals",
+                  title ?? S.of(context).deals,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               // While loading use 👇
               // const ProductsSkelton(),
               SizedBox(
-                height: 220,
+                height: 240,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                   padding: const EdgeInsets.all(defaultPadding),
                   // Find demoPopularProducts on models/ProductModel.dart
                   itemCount: deals?.length,
                   itemBuilder: (context, index) => Padding(
@@ -47,7 +49,7 @@ class BestSellers extends ConsumerWidget {
                     ),
                     child: ProductCard(
                       image: deals?[index].thumbnail ?? "",
-                      brandName: deals?[index].slug ?? "",
+                      brandName: "",
                       title: deals?[index].name ?? "",
                       price: deals?[index].price?.beforeDiscount ?? 0,
                       priceBeforeDiscount:
@@ -55,6 +57,8 @@ class BestSellers extends ConsumerWidget {
                       hasDiscount: deals?[index].price?.hasDiscount ?? false,
                       priceAfetDiscount:
                           deals?[index].price?.afterDiscount.toString() ?? "",
+                      productId: deals?[index].id,
+                      variations: deals?[index].variations,
                       press: () {
                         // Navigator.pushNamed(context, productDetailsScreenRoute,
                         // arguments: index.isEven);

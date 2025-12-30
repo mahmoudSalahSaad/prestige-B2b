@@ -7,7 +7,7 @@ part of 'remove_item_to_cart_controller.dart';
 // **************************************************************************
 
 String _$removeItemToCartControllerHash() =>
-    r'7539e651702817618260329a88f11840638039d7';
+    r'64cb02acbb7acb9c44d7cf530bdc7e2e61d32e18';
 
 /// Copied from Dart SDK
 class _SystemHash {

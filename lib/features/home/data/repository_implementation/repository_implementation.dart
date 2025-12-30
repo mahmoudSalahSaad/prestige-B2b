@@ -34,7 +34,10 @@ class RepositoryImplementation implements Repository {
       type: type,
       data: {},
     );
-    return result.fold((l) => Left(l), (r) {
+    return result.fold((l) {
+      // Authentication errors are now handled centrally in NetworkClient
+      return Left(l);
+    }, (r) {
       List<CategoryModel> categories = [];
       try {
         // Iterate over the list of categories and convert each one to a CategoryModel object
@@ -44,6 +47,10 @@ class RepositoryImplementation implements Repository {
         // Return a Right containing the list of categories
         return Right(categories);
       } catch (e) {
+        print("e======>$e");
+        // if(e.errorMessage == "Unauthenticated."){
+        //   NavigationService.pushNamedAndRemoveUntil(Routes.login);
+        // }
         // If there is an error, return a Left containing an ErrorModel object
         return Left(ErrorModel(errorMessage: e.toString()));
       }

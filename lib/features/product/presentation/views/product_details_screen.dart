@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/components/buy_full_ui_kit.dart';
 import 'package:shop/core/components/cart_button.dart';
@@ -18,7 +19,7 @@ import 'package:shop/features/product/presentation/views/components/product_quan
 import 'package:shop/features/product/presentation/views/components/unit_price.dart';
 import 'package:shop/features/product/presentation/views/product_buy_now_screen.dart';
 import 'package:shop/features/product/presentation/views/product_returns_screen.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shop/generated/l10n.dart';
 
 import 'components/product_images.dart';
 import 'components/product_info.dart';
@@ -47,8 +48,6 @@ class ProductDetailsScreen extends ConsumerWidget {
                         press: ref.watch(cartControllerProvider).isLoading
                             ? () {}
                             : () async {
-                                print("variationID====>${data.variationID}");
-
                                 if (data.productDetails!.product!.variations
                                     .isNotEmpty) {
                                   if (data.variationID != null) {
@@ -66,13 +65,29 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             unitID: data.unitId))
                                         .then((value) {
                                       Alerts.showSnackBar(
-                                          "Product added to cart",
+                                          S.of(context).product_added_to_cart,
                                           alertsType: AlertsType.success);
                                     });
                                   } else {
-                                    Alerts.showSnackBar(
-                                        "Please select a variation",
-                                        alertsType: AlertsType.success);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(S
+                                              .of(context)
+                                              .please_select_variation),
+                                          content: null,
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(S.of(context).cancel),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   }
                                 } else {
                                   await ref
@@ -86,7 +101,8 @@ class ProductDetailsScreen extends ConsumerWidget {
                                               0,
                                           variationID: data.variationID))
                                       .then((value) {
-                                    Alerts.showSnackBar("Product added to cart",
+                                    Alerts.showSnackBar(
+                                        S.of(context).product_added_to_cart,
                                         alertsType: AlertsType.success);
                                   });
                                 }
@@ -118,31 +134,6 @@ class ProductDetailsScreen extends ConsumerWidget {
                         description:
                             "${data.productDetails?.product?.description}",
                       ),
-                      ProductListTile(
-                        svgSrc: "assets/icons/Product.svg",
-                        title: "Product Details",
-                        isShowBottomBorder: true,
-                        press: () {
-                          customModalBottomSheet(
-                            context,
-                            height: MediaQuery.of(context).size.height * 0.92,
-                            child: SizedBox(
-                              width: deviceWidth,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                        "${data.productDetails?.product?.description}"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -153,7 +144,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                       .isNotEmpty ??
                                   false)
                                 Text(
-                                  "Variations",
+                                  S.of(context).select,
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -289,6 +280,13 @@ class ProductDetailsScreen extends ConsumerWidget {
                                           .notifier)
                                       .onDecrement();
                                 },
+                                onQuantityChanged: (quantity) {
+                                  ref
+                                      .read(ProductsDetailsControllerProvider(
+                                              productSlug ?? "product-1")
+                                          .notifier)
+                                      .onQuantityChanged(quantity);
+                                },
                               ),
                             ],
                           ),
@@ -304,7 +302,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                       0) >
                                   0)
                                 Text(
-                                  "Pormotions",
+                                  S.of(context).pormotions,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               const SizedBox(
@@ -334,7 +332,27 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Buy ${data.productDetails?.promotions?[index].xYOffer?.buyQuantity} And Get ${data.productDetails?.promotions?[index].xYOffer?.getQuantity} ${data.productDetails?.promotions?[index].xYOffer?.getProduct?.name}",
+                                            S.of(context).buy_x_get_y(
+                                                  data
+                                                          .productDetails
+                                                          ?.promotions?[index]
+                                                          .xYOffer
+                                                          ?.buyQuantity ??
+                                                      0,
+                                                  data
+                                                          .productDetails
+                                                          ?.promotions?[index]
+                                                          .xYOffer
+                                                          ?.getQuantity ??
+                                                      0,
+                                                  data
+                                                          .productDetails
+                                                          ?.promotions?[index]
+                                                          .xYOffer
+                                                          ?.getProduct
+                                                          ?.name ??
+                                                      '',
+                                                ),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall,
@@ -387,7 +405,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         sliver: SliverToBoxAdapter(
                           child: (data.productDetails?.related?.length ?? 0) > 0
                               ? Text(
-                                  "You may also like",
+                                  S.of(context).you_may_also_like,
                                   style:
                                       Theme.of(context).textTheme.titleSmall!,
                                 )
@@ -432,6 +450,8 @@ class ProductDetailsScreen extends ConsumerWidget {
                                   price: data.productDetails?.related?[index]
                                           .price?.beforeDiscount ??
                                       0,
+                                  variations: data.productDetails
+                                      ?.related?[index].variations,
                                   priceBeforeDiscount: data
                                           .productDetails
                                           ?.related?[index]
@@ -471,8 +491,9 @@ class ProductDetailsScreen extends ConsumerWidget {
               );
             },
             error: (error, StackTrace) => Text(error.toString()),
-            loading: () => Skeletonizer(
-                enabled: true,
+            loading: () => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
                 child: Scaffold(
                   bottomNavigationBar: isProductAvailable
                       ? CartButton(
@@ -527,7 +548,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         ),
                         ProductListTile(
                           svgSrc: "assets/icons/Product.svg",
-                          title: "Product Details",
+                          title: S.of(context).product_details,
                           press: () {
                             customModalBottomSheet(
                               context,
@@ -540,7 +561,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         ),
                         ProductListTile(
                           svgSrc: "assets/icons/Delivery.svg",
-                          title: "Shipping Information",
+                          title: S.of(context).shipping_information,
                           press: () {
                             customModalBottomSheet(
                               context,
@@ -555,7 +576,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         ),
                         ProductListTile(
                           svgSrc: "assets/icons/Return.svg",
-                          title: "Returns",
+                          title: S.of(context).returns,
                           isShowBottomBorder: true,
                           press: () {
                             customModalBottomSheet(
@@ -567,7 +588,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                         ),
                         ProductListTile(
                           svgSrc: "assets/icons/Chat.svg",
-                          title: "Reviews",
+                          title: S.of(context).reviews,
                           isShowBottomBorder: true,
                           press: () {
                             // Navigator.pushNamed(context, productReviewsScreenRoute);
@@ -577,7 +598,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                           padding: const EdgeInsets.all(defaultPadding),
                           sliver: SliverToBoxAdapter(
                             child: Text(
-                              "You may also like",
+                              S.of(context).you_may_also_like,
                               style: Theme.of(context).textTheme.titleSmall!,
                             ),
                           ),

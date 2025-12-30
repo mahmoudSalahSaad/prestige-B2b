@@ -18,6 +18,7 @@ class _PrmotionsCardAmountDiscountState
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,7 +45,7 @@ class _PrmotionsCardAmountDiscountState
           const SizedBox(height: 8),
           Text(
             widget.promotions.name ?? "",
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 16,
@@ -54,7 +55,7 @@ class _PrmotionsCardAmountDiscountState
           const SizedBox(height: 4),
           Text(
             "DIscount: ${widget.promotions.discount}",
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
@@ -66,7 +67,7 @@ class _PrmotionsCardAmountDiscountState
             children: [
               Text(
                 "Min Amount ${widget.promotions.maxAmount}",
-                maxLines: 1,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 14,
@@ -78,7 +79,7 @@ class _PrmotionsCardAmountDiscountState
           const SizedBox(height: 2),
           Text(
             "End at ${DateTime.parse("${widget.promotions.endDate}").toAppDate()}",
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,

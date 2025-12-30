@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utils/constants.dart';
 import '../local/cache_consumer.dart';
@@ -18,6 +19,8 @@ class ApiConsumer {
   final Interceptor _interceptor;
   final AppPrefs _cacheConsumer;
 
+  final ref = ProviderContainer();
+
   ApiConsumer(this._dio, this._interceptor, this._cacheConsumer) {
     BaseOptions options = BaseOptions(
       baseUrl: _baseURL,
@@ -28,7 +31,7 @@ class ApiConsumer {
       headers: {
         _xApiKey: _apiKey,
         _contentType: _applicationJson,
-        _accept: _applicationJson
+        _accept: _applicationJson,
       },
     );
 
@@ -62,12 +65,15 @@ class ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     final String? token = await _cacheConsumer.getSecuredData(PrefKeys.token);
+    final lang =
+        await _cacheConsumer.get("selected_language", defaultValue: "en");
     return await _dio.get(
       url,
       queryParameters: queryParameters,
       options: Options(
         headers: {
-          _authorization: token != null ? "Bearer $token" : Constants.empty
+          _authorization: token != null ? "Bearer $token" : Constants.empty,
+          "X-App-Locale": lang,
         },
       ),
     );
@@ -79,13 +85,17 @@ class ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     final String? token = await _cacheConsumer.getSecuredData(PrefKeys.token);
+    final lang =
+        await _cacheConsumer.get("selected_language", defaultValue: "en");
+
     return await _dio.put(
       url,
       queryParameters: queryParameters,
       data: requestBody,
       options: Options(
         headers: {
-          _authorization: token != null ? "Bearer $token" : Constants.empty
+          _authorization: token != null ? "Bearer $token" : Constants.empty,
+          "X-App-Locale": lang,
         },
       ),
     );
@@ -97,13 +107,16 @@ class ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     final String? token = await _cacheConsumer.getSecuredData(PrefKeys.token);
+    final lang =
+        await _cacheConsumer.get("selected_language", defaultValue: "en");
     return await _dio.delete(
       url,
       queryParameters: queryParameters,
       data: requestBody,
       options: Options(
         headers: {
-          _authorization: token != null ? "Bear $token" : Constants.empty
+          _authorization: token != null ? "Bearer $token" : Constants.empty,
+          "X-App-Locale": lang,
         },
       ),
     );

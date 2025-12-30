@@ -7,7 +7,7 @@ part of 'countries_controller.dart';
 // **************************************************************************
 
 String _$countriesControllerHash() =>
-    r'e7dc06ed67020a536bcac0bdb6caa284aa5592c7';
+    r'7ee18eecadff5472f8444911c64a7878a4770f17';
 
 /// See also [CountriesController].
 @ProviderFor(CountriesController)

@@ -6,7 +6,7 @@ part of 'cities_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$citiesControllerHash() => r'003d21a009899588f6d628f4640d61ee7f809be3';
+String _$citiesControllerHash() => r'836637bdc91298f74c57b38cad41be103ea0775d';
 
 /// See also [CitiesController].
 @ProviderFor(CitiesController)

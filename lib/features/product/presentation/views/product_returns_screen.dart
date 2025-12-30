@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
+import '../../../../generated/l10n.dart';
 
 class ProductReturnsScreen extends StatelessWidget {
   const ProductReturnsScreen({super.key});
@@ -23,17 +24,17 @@ class ProductReturnsScreen extends StatelessWidget {
                     child: BackButton(),
                   ),
                   Text(
-                    "Return",
+                    S.of(context).return_to,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   const SizedBox(width: 40),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(defaultPadding),
+             Padding(
+              padding: const EdgeInsets.all(defaultPadding),
               child: Text(
-                "Free pre-paid returns and exchanges for orders shipped to the US. Get refunded faster with easy online returns and print a FREE pre-paid return SmartLabel@ online! Return or exchange any unused or defective merchandise by mail or at one of our US or Canada store locations. Made to order items cannot be canceled, exchange or returned.",
+                S.of(context).returns_description,
               ),
             )
           ],

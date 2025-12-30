@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
- platform :ios, '12.0'
+ platform :ios, '16.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -37,8 +37,20 @@ target 'Runner' do
   end
 end
 
+
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    
+    target.build_configurations.each do |config|
+      # Disable bitcode to fix App Store submission issue
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      
+      # PayTabs SDK specific settings
+      if target.name == 'PayTabsSDK'
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      end
+    end
   end
 end

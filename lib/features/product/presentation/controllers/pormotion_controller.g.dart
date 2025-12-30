@@ -7,7 +7,7 @@ part of 'pormotion_controller.dart';
 // **************************************************************************
 
 String _$pormotionControllerHash() =>
-    r'a665e2d6f3a4e08c3e32ab3f57deafec1c0e4c88';
+    r'5b433eb7891f2e819dff3fcaccdae2fe7078d888';
 
 /// See also [PormotionController].
 @ProviderFor(PormotionController)

@@ -17,15 +17,38 @@ class RemoveItemToCartController extends _$RemoveItemToCartController {
     Future.delayed(Duration.zero, () {
       state = const AsyncLoading();
     });
-    RemoveItemToCartUseCase removeItemToCartUseCase = getIt();
 
+    // Optimistic update: immediately decrement quantity in UI
+    final cartController = ref.read(cartControllerProvider.notifier);
+    final currentCart = ref.read(cartControllerProvider).valueOrNull;
+
+    if (currentCart?.cartModel?.items != null) {
+      final item = currentCart!.cartModel!.items!.firstWhere(
+        (item) => item.id == parameters.productID,
+        orElse: () => throw Exception('Item not found'),
+      );
+      try {
+        final newQuantity = (item.quantity ?? 0) - 1;
+        if (newQuantity > 0) {
+          cartController.updateQuantityOptimistically(
+              parameters.productID, newQuantity);
+        }
+      } catch (e) {
+        // Item not found, proceed with normal flow
+      }
+    }
+
+    RemoveItemToCartUseCase removeItemToCartUseCase = getIt();
     final result = await removeItemToCartUseCase.call(parameters);
 
     result.fold((l) {
+      // Revert optimistic update on error
+      cartController.refreshCartSilently();
       state = AsyncError(l, StackTrace.current);
     }, (r) {
+      // Silent refresh to sync with server data
+      cartController.refreshCartSilently();
       state = const AsyncData(null);
-      ref.read(cartControllerProvider.notifier).updateCart(r);
     });
   }
 }

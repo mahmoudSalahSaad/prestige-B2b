@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants.dart';
+import '../../generated/l10n.dart';
 
 class CardInfo extends StatelessWidget {
   const CardInfo({
@@ -133,7 +134,7 @@ class CardInfo extends StatelessWidget {
                   FilteringTextInputFormatter.digitsOnly,
                 ],
                 decoration: InputDecoration(
-                  hintText: "CVV",
+                  hintText: S.of(context).cvv,
                   counterText: "",
                   prefixIcon: Padding(
                     padding: const EdgeInsets.symmetric(

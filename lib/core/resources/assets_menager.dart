@@ -18,5 +18,5 @@ class AssetsManager {
   static String addCar = '$_iconsPath/car (4).svg';
   static String home = '$_iconsPath/grid.svg';
 
-  static String appLogo = "assets/logo/prestige.png";
+  static String appLogo = "assets/logo/mustafa.png";
 }

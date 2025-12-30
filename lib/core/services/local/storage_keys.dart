@@ -6,5 +6,6 @@ class PrefKeys {
   static const String isFirstTime = "ift";
   static const String lang = "lang";
   static const String countryId = "cakljsndkjasndkjasd";
-  static const String user = "MahmoudSalahSaadFayed" ; 
+  static const String user = "MahmoudSalahSaadFayed";
+  static const String resetPasswordToken = "reset_password_token";
 }

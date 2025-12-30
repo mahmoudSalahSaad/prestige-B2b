@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants.dart';
+import '../../generated/l10n.dart';
 
 class ReviewCard extends StatelessWidget {
   const ReviewCard({
@@ -55,7 +56,10 @@ class ReviewCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text("Based on $numOfReviews Reviews"),
+                Text(S
+                    .of(context)
+                    .based_on_reviews
+                    .toString().replaceAll('{count}', numOfReviews.toString())),
                 const SizedBox(height: defaultPadding),
                 RatingBar.builder(
                   initialRating: rating,

@@ -17,6 +17,7 @@ class AuthEntity extends Equatable {
   final String? companyName;
   final String? groupName;
   final String? vatNumber;
+  final String? commercialRegister;
 
   const AuthEntity({
     required this.email,
@@ -35,6 +36,7 @@ class AuthEntity extends Equatable {
     this.companyName,
     this.groupName,
     this.vatNumber,
+    this.commercialRegister,
   });
   @override
   List<Object> get props => [email, password];

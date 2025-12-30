@@ -12,6 +12,37 @@ class CartRepositoryImplementation extends CartRepository {
   final NetworkClient networkClient;
 
   CartRepositoryImplementation({required this.networkClient});
+
+  /// Helper method to safely parse cart data from API response
+  CartModel _parseCartData(dynamic data) {
+    // Handle case where API returns empty list [] instead of empty cart object
+    if (data is List && data.isEmpty) {
+      return CartModel(
+        id: null,
+        shippingAmount: 0,
+        discount: 0,
+        total: 0,
+        promotionDiscount: 0,
+        items: [],
+      );
+    }
+
+    // Handle normal case where API returns cart object
+    if (data is Map<String, dynamic>) {
+      return CartModel.fromJson(data);
+    }
+
+    // Fallback: return empty cart for any other unexpected data type
+    return CartModel(
+      id: null,
+      shippingAmount: 0,
+      discount: 0,
+      total: 0,
+      promotionDiscount: 0,
+      items: [],
+    );
+  }
+
   @override
   Future<Either<ErrorModel, CartModel>> addToCart(
       {required CartEntity parameters}) async {
@@ -29,7 +60,7 @@ class CartRepositoryImplementation extends CartRepository {
     return response.fold((l) {
       return Left(l);
     }, (r) {
-      return Right(CartModel.fromJson(r.data));
+      return Right(_parseCartData(r.data));
     });
   }
 
@@ -42,9 +73,36 @@ class CartRepositoryImplementation extends CartRepository {
         .call(data: {}, url: EndPoints.myCart, type: networkCallType);
 
     return response.fold((l) {
+      // Authentication errors are now handled centrally in NetworkClient
       return Left(l);
     }, (r) {
-      return Right(CartModel.fromJson(r.data));
+      // Handle case where API returns empty list [] instead of empty cart object
+      if (r.data is List && (r.data as List).isEmpty) {
+        // Return empty cart model when API returns empty array
+        return Right(CartModel(
+          id: null,
+          shippingAmount: 0,
+          discount: 0,
+          total: 0,
+          promotionDiscount: 0,
+          items: [],
+        ));
+      }
+
+      // Handle normal case where API returns cart object
+      if (r.data is Map<String, dynamic>) {
+        return Right(CartModel.fromJson(r.data));
+      }
+
+      // Fallback: return empty cart for any other unexpected data type
+      return Right(CartModel(
+        id: null,
+        shippingAmount: 0,
+        discount: 0,
+        total: 0,
+        promotionDiscount: 0,
+        items: [],
+      ));
     });
   }
 
@@ -63,7 +121,7 @@ class CartRepositoryImplementation extends CartRepository {
     return response.fold((l) {
       return Left(l);
     }, (r) {
-      return Right(CartModel.fromJson(r.data));
+      return Right(_parseCartData(r.data));
     });
   }
 
@@ -80,7 +138,7 @@ class CartRepositoryImplementation extends CartRepository {
     return response.fold((l) {
       return Left(l);
     }, (r) {
-      return Right(CartModel.fromJson(r.data));
+      return Right(_parseCartData(r.data));
     });
   }
 
@@ -98,7 +156,7 @@ class CartRepositoryImplementation extends CartRepository {
     return response.fold((l) {
       return Left(l);
     }, (r) {
-      return Right(CartModel.fromJson(r.data));
+      return Right(_parseCartData(r.data));
     });
   }
 }

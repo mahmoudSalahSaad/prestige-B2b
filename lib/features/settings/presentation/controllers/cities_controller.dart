@@ -17,17 +17,44 @@ class CitiesController extends _$CitiesController {
     return state.requireValue;
   }
 
-  getCities(int countryId) async {
+  getCities(int countryId, {bool loadMore = false}) async {
     GetCitiesUseCase getCitiesUseCase = getIt();
 
-    Future.delayed(Duration.zero, () {
-      state = const AsyncLoading();
-    });
+    if (!loadMore) {
+      Future.delayed(Duration.zero, () {
+        state = const AsyncLoading();
+      });
+    } else {
+      // Set loading more state
+      state = state.whenData((value) => value.copyWith(isLoadingMore: true));
+    }
 
     final result =
         await getCitiesUseCase.call(CountryEntity(id: countryId, name: ''));
-    result.fold((l) => state = AsyncError(l, StackTrace.current),
-        (r) => state = AsyncData(CitiesState(cities: r)));
+    result.fold(
+      (l) => state = AsyncError(l, StackTrace.current),
+      (r) {
+        if (loadMore) {
+          // Append to existing cities
+          final currentCities = state.requireValue.cities ?? [];
+          final newCities = [...currentCities, ...r];
+          state = AsyncData(CitiesState(
+            cities: newCities,
+            currentPage: state.requireValue.currentPage + 1,
+            hasMoreData: r.length >= state.requireValue.pageSize,
+            isLoadingMore: false,
+          ));
+        } else {
+          // Load first page
+          state = AsyncData(CitiesState(
+            cities: r,
+            currentPage: 1,
+            hasMoreData: r.length >= 10, // Assuming page size is 10
+            isLoadingMore: false,
+          ));
+        }
+      },
+    );
   }
 
   selectCity(CityModel city) {

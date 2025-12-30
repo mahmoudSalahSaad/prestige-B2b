@@ -5,10 +5,10 @@ import 'package:shop/features/auth/doman/repository/repository.dart';
 
 import '../../../../core/base/base_usecase.dart';
 
-class LoginUseCase extends BaseUseCase<List, AuthEntity> {
+class ResetPasswordUseCase extends BaseUseCase<List, AuthEntity> {
   final AuthRepository authRepository;
 
-  LoginUseCase({required this.authRepository});
+  ResetPasswordUseCase({required this.authRepository});
   /*
   * USE CASE
   * base on BaseUseCase

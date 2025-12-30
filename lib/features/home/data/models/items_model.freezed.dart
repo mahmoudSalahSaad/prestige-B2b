@@ -185,6 +185,7 @@ mixin _$ProductModels {
   String? get slug => throw _privateConstructorUsedError;
   PriceModel? get price => throw _privateConstructorUsedError;
   String? get unit => throw _privateConstructorUsedError;
+  List<VariationModel>? get variations => throw _privateConstructorUsedError;
 
   /// Serializes this ProductModels to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -209,7 +210,8 @@ abstract class $ProductModelsCopyWith<$Res> {
       String? thumbnail,
       String? slug,
       PriceModel? price,
-      String? unit});
+      String? unit,
+      List<VariationModel>? variations});
 
   $PriceModelCopyWith<$Res>? get price;
 }
@@ -236,6 +238,7 @@ class _$ProductModelsCopyWithImpl<$Res, $Val extends ProductModels>
     Object? slug = freezed,
     Object? price = freezed,
     Object? unit = freezed,
+    Object? variations = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -266,6 +269,10 @@ class _$ProductModelsCopyWithImpl<$Res, $Val extends ProductModels>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String?,
+      variations: freezed == variations
+          ? _value.variations
+          : variations // ignore: cast_nullable_to_non_nullable
+              as List<VariationModel>?,
     ) as $Val);
   }
 
@@ -299,7 +306,8 @@ abstract class _$$ProductModelsImplCopyWith<$Res>
       String? thumbnail,
       String? slug,
       PriceModel? price,
-      String? unit});
+      String? unit,
+      List<VariationModel>? variations});
 
   @override
   $PriceModelCopyWith<$Res>? get price;
@@ -325,6 +333,7 @@ class __$$ProductModelsImplCopyWithImpl<$Res>
     Object? slug = freezed,
     Object? price = freezed,
     Object? unit = freezed,
+    Object? variations = freezed,
   }) {
     return _then(_$ProductModelsImpl(
       id: freezed == id
@@ -355,6 +364,10 @@ class __$$ProductModelsImplCopyWithImpl<$Res>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String?,
+      variations: freezed == variations
+          ? _value._variations
+          : variations // ignore: cast_nullable_to_non_nullable
+              as List<VariationModel>?,
     ));
   }
 }
@@ -369,7 +382,9 @@ class _$ProductModelsImpl implements _ProductModels {
       this.thumbnail,
       this.slug,
       this.price,
-      this.unit});
+      this.unit,
+      final List<VariationModel>? variations})
+      : _variations = variations;
 
   factory _$ProductModelsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductModelsImplFromJson(json);
@@ -389,10 +404,19 @@ class _$ProductModelsImpl implements _ProductModels {
   final PriceModel? price;
   @override
   final String? unit;
+  final List<VariationModel>? _variations;
+  @override
+  List<VariationModel>? get variations {
+    final value = _variations;
+    if (value == null) return null;
+    if (_variations is EqualUnmodifiableListView) return _variations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ProductModels(id: $id, name: $name, shortDescription: $shortDescription, thumbnail: $thumbnail, slug: $slug, price: $price, unit: $unit)';
+    return 'ProductModels(id: $id, name: $name, shortDescription: $shortDescription, thumbnail: $thumbnail, slug: $slug, price: $price, unit: $unit, variations: $variations)';
   }
 
   @override
@@ -408,13 +432,23 @@ class _$ProductModelsImpl implements _ProductModels {
                 other.thumbnail == thumbnail) &&
             (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.unit, unit) || other.unit == unit));
+            (identical(other.unit, unit) || other.unit == unit) &&
+            const DeepCollectionEquality()
+                .equals(other._variations, _variations));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, shortDescription, thumbnail, slug, price, unit);
+      runtimeType,
+      id,
+      name,
+      shortDescription,
+      thumbnail,
+      slug,
+      price,
+      unit,
+      const DeepCollectionEquality().hash(_variations));
 
   /// Create a copy of ProductModels
   /// with the given fields replaced by the non-null parameter values.
@@ -440,7 +474,8 @@ abstract class _ProductModels implements ProductModels {
       final String? thumbnail,
       final String? slug,
       final PriceModel? price,
-      final String? unit}) = _$ProductModelsImpl;
+      final String? unit,
+      final List<VariationModel>? variations}) = _$ProductModelsImpl;
 
   factory _ProductModels.fromJson(Map<String, dynamic> json) =
       _$ProductModelsImpl.fromJson;
@@ -460,6 +495,8 @@ abstract class _ProductModels implements ProductModels {
   PriceModel? get price;
   @override
   String? get unit;
+  @override
+  List<VariationModel>? get variations;
 
   /// Create a copy of ProductModels
   /// with the given fields replaced by the non-null parameter values.

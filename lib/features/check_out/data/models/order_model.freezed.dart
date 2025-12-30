@@ -27,6 +27,10 @@ mixin _$OrderModel {
   String? get billingAddress => throw _privateConstructorUsedError;
   @JsonKey(name: "shipping_amount")
   double? get shippingAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: "paid_at")
+  String? get paidAt => throw _privateConstructorUsedError;
   List<OrderItemModel>? get items => throw _privateConstructorUsedError;
 
   /// Serializes this OrderModel to a JSON map.
@@ -51,6 +55,8 @@ abstract class $OrderModelCopyWith<$Res> {
       String? status,
       @JsonKey(name: "billing_address") String? billingAddress,
       @JsonKey(name: "shipping_amount") double? shippingAmount,
+      @JsonKey(name: "payment_status") String? paymentStatus,
+      @JsonKey(name: "paid_at") String? paidAt,
       List<OrderItemModel>? items});
 
   $UserCopyWith<$Res>? get user;
@@ -76,6 +82,8 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? status = freezed,
     Object? billingAddress = freezed,
     Object? shippingAmount = freezed,
+    Object? paymentStatus = freezed,
+    Object? paidAt = freezed,
     Object? items = freezed,
   }) {
     return _then(_value.copyWith(
@@ -99,6 +107,14 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.shippingAmount
           : shippingAmount // ignore: cast_nullable_to_non_nullable
               as double?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paidAt: freezed == paidAt
+          ? _value.paidAt
+          : paidAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -135,6 +151,8 @@ abstract class _$$OrderModelImplCopyWith<$Res>
       String? status,
       @JsonKey(name: "billing_address") String? billingAddress,
       @JsonKey(name: "shipping_amount") double? shippingAmount,
+      @JsonKey(name: "payment_status") String? paymentStatus,
+      @JsonKey(name: "paid_at") String? paidAt,
       List<OrderItemModel>? items});
 
   @override
@@ -159,6 +177,8 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? billingAddress = freezed,
     Object? shippingAmount = freezed,
+    Object? paymentStatus = freezed,
+    Object? paidAt = freezed,
     Object? items = freezed,
   }) {
     return _then(_$OrderModelImpl(
@@ -182,6 +202,14 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.shippingAmount
           : shippingAmount // ignore: cast_nullable_to_non_nullable
               as double?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paidAt: freezed == paidAt
+          ? _value.paidAt
+          : paidAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -199,6 +227,8 @@ class _$OrderModelImpl implements _OrderModel {
       this.status,
       @JsonKey(name: "billing_address") this.billingAddress,
       @JsonKey(name: "shipping_amount") this.shippingAmount,
+      @JsonKey(name: "payment_status") this.paymentStatus,
+      @JsonKey(name: "paid_at") this.paidAt,
       final List<OrderItemModel>? items = const []})
       : _items = items;
 
@@ -217,6 +247,12 @@ class _$OrderModelImpl implements _OrderModel {
   @override
   @JsonKey(name: "shipping_amount")
   final double? shippingAmount;
+  @override
+  @JsonKey(name: "payment_status")
+  final String? paymentStatus;
+  @override
+  @JsonKey(name: "paid_at")
+  final String? paidAt;
   final List<OrderItemModel>? _items;
   @override
   @JsonKey()
@@ -230,7 +266,7 @@ class _$OrderModelImpl implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, user: $user, status: $status, billingAddress: $billingAddress, shippingAmount: $shippingAmount, items: $items)';
+    return 'OrderModel(id: $id, user: $user, status: $status, billingAddress: $billingAddress, shippingAmount: $shippingAmount, paymentStatus: $paymentStatus, paidAt: $paidAt, items: $items)';
   }
 
   @override
@@ -245,13 +281,24 @@ class _$OrderModelImpl implements _OrderModel {
                 other.billingAddress == billingAddress) &&
             (identical(other.shippingAmount, shippingAmount) ||
                 other.shippingAmount == shippingAmount) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.paidAt, paidAt) || other.paidAt == paidAt) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, user, status, billingAddress,
-      shippingAmount, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      user,
+      status,
+      billingAddress,
+      shippingAmount,
+      paymentStatus,
+      paidAt,
+      const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of OrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -276,6 +323,8 @@ abstract class _OrderModel implements OrderModel {
       final String? status,
       @JsonKey(name: "billing_address") final String? billingAddress,
       @JsonKey(name: "shipping_amount") final double? shippingAmount,
+      @JsonKey(name: "payment_status") final String? paymentStatus,
+      @JsonKey(name: "paid_at") final String? paidAt,
       final List<OrderItemModel>? items}) = _$OrderModelImpl;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
@@ -293,6 +342,12 @@ abstract class _OrderModel implements OrderModel {
   @override
   @JsonKey(name: "shipping_amount")
   double? get shippingAmount;
+  @override
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus;
+  @override
+  @JsonKey(name: "paid_at")
+  String? get paidAt;
   @override
   List<OrderItemModel>? get items;
 

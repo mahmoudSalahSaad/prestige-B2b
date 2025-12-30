@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:shop/generated/l10n.dart';
 
 // Just for demo
 const productDemoImg1 = "https://i.imgur.com/CGCyp1d.png";
@@ -73,7 +74,7 @@ final passwordValidator = MultiValidator([
 
 final emaildValidator = MultiValidator([
   RequiredValidator(errorText: 'Email is required'),
-  EmailValidator(errorText: "Enter a valid email address"),
+  EmailValidator(errorText: S.current.enter_valid_email),
 ]);
 
-const pasNotMatchErrorText = "passwords do not match";
+final pasNotMatchErrorText = S.current.passwords_no_match;

@@ -56,23 +56,7 @@ class BannerMStyle2 extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: defaultPadding),
-              SizedBox(
-                width: 130,
-                child: ElevatedButton(
-                  onPressed: press,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    backgroundColor: Colors.white.withOpacity(0.6),
-                  ),
-                  child: Text(
-                    "Shop Now",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ),
+        
             ],
           ),
         ),

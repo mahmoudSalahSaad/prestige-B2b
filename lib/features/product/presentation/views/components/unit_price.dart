@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../generated/l10n.dart';
 
 class UnitPrice extends StatelessWidget {
   const UnitPrice({
@@ -18,7 +19,7 @@ class UnitPrice extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Unit price",
+          S.of(context).unit_price,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: defaultPadding / 1),

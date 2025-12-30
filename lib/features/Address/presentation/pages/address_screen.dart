@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/core/resources/values_manager.dart';
 import 'package:shop/core/routing/navigation_services.dart';
@@ -7,7 +8,8 @@ import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/Address/presentation/controllers/address_controller.dart';
 import 'package:shop/features/auth/presentation/controller/login_controller.dart';
 import 'package:shop/features/check_out/presentation/pages/check_out_screen.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../generated/l10n.dart';
 
 class AddressScreen extends ConsumerWidget {
   const AddressScreen({super.key});
@@ -17,7 +19,7 @@ class AddressScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Address"),
+        title: Text(S.of(context).address),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -60,7 +62,7 @@ class AddressScreen extends ConsumerWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: deviceWidth * 0.22),
                         child: Text(
-                          "Create new address",
+                          S.of(context).create_new_address_button,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -120,8 +122,9 @@ class AddressScreen extends ConsumerWidget {
                   );
                 },
                 error: (error, stactTrace) => Text("$error"),
-                loading: () => Skeletonizer(
-                      enabled: true,
+                loading: () => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
                       child: Column(
                         children: List.generate(
                             4,

@@ -51,10 +51,17 @@ class RouteGenerator {
       return platformPageRoute(const ForgotPasswordScreen());
     }
     if (settings.name == Routes.otpPassword) {
-      return platformPageRoute(const OtpScreen());
+      return platformPageRoute(const OtpScreen(), settings: settings);
     }
     if (settings.name == Routes.resetPassword) {
-      return platformPageRoute(const ResetPasswordScreen());
+      // Extract arguments and pass to constructor
+      final args = settings.arguments as Map<String, dynamic>?;
+      return platformPageRoute(
+        ResetPasswordScreen(
+          phoneNumber: args?['phone']?.toString(),
+        ),
+        settings: settings,
+      );
     }
 
     if (settings.name == Routes.entryPoint) {

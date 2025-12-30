@@ -11,6 +11,7 @@ import 'package:shop/features/discover/presentaion/views/discover_screen.dart';
 import 'package:shop/features/home/presentaion/views/home_screen.dart';
 import 'package:shop/features/home/presentaion/views/pormotions_screen.dart';
 import 'package:shop/features/profile/profile_screen.dart';
+import 'package:shop/generated/l10n.dart';
 
 class EntryPoint extends ConsumerStatefulWidget {
   const EntryPoint({super.key});
@@ -51,15 +52,19 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
         // pinned: true,
         // floating: true,
         // snap: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        backgroundColor: Theme.of(context).primaryColor,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         leading: const SizedBox(),
         scrolledUnderElevation: 0,
         elevation: 0,
         leadingWidth: 0,
         centerTitle: false,
-        title:
-            Text("PRESTIGE", style: Theme.of(context).textTheme.headlineSmall),
+        title: Row(
+          children: [
+            Image.asset("assets/logo/presige-logo-neg.png",
+                height: 50, width: 120),
+          ],
+        ),
         actions: const [],
       ),
       // body: _pages[_currentIndex],
@@ -96,24 +101,61 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
           selectedFontSize: 12,
           selectedItemColor: primaryColor,
           unselectedItemColor: Colors.transparent,
+
           items: [
             BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Stores.svg"),
-              activeIcon:
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  svgIcon("assets/icons/Stores.svg"),
+                  Text(S.of(context).home_nav),
+                ],
+              ),
+              activeIcon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   svgIcon("assets/icons/Stores.svg", color: primaryColor),
-              label: "Home",
+                  Text(
+                    S.of(context).home_nav,
+                    style: const TextStyle(fontSize: 12, color: primaryColor),
+                  ),
+                ],
+              ),
+              label: "",
             ),
             BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Category.svg"),
-              activeIcon:
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  svgIcon("assets/icons/Category.svg"),
+                  Text(S.of(context).shop_nav),
+                ],
+              ),
+              activeIcon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   svgIcon("assets/icons/Category.svg", color: primaryColor),
-              label: "Shop",
+                  Text(S.of(context).shop_nav, style: const TextStyle(fontSize: 12 , color: primaryColor),),
+                ],
+              ),
+              label: "",
             ),
             BottomNavigationBarItem(
               icon: Stack(
                 alignment: Alignment.center,
                 children: [
-                  svgIcon("assets/icons/Bag.svg"),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      svgIcon("assets/icons/Bag.svg"),
+                      Text(S.of(context).cart_nav),
+                    ],
+                  ),
                   if (((ref
                                       .watch(cartControllerProvider)
                                       .requireValue
@@ -135,7 +177,14 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
               activeIcon: Stack(
                 alignment: Alignment.center,
                 children: [
-                  svgIcon("assets/icons/Bag.svg", color: primaryColor),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      svgIcon("assets/icons/Bag.svg", color: primaryColor),
+                      Text(S.of(context).cart_nav, style: const TextStyle(fontSize: 12 , color: primaryColor),),
+                    ],
+                  ),
                   Container(
                     padding: const EdgeInsets.all(4),
                     margin: const EdgeInsets.only(bottom: 10, right: 16),
@@ -146,19 +195,45 @@ class _EntryPointState extends ConsumerState<EntryPoint> {
                   )
                 ],
               ),
-              label: "Cart",
+              label: "",
             ),
             BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Discount.svg"),
-              activeIcon:
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  svgIcon("assets/icons/Discount.svg"),
+                  Text(S.of(context).promotions_nav),
+                ],
+              ),
+              activeIcon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   svgIcon("assets/icons/Discount.svg", color: primaryColor),
-              label: "Pormotions",
+                  Text(S.of(context).promotions_nav, style: const TextStyle(fontSize: 12 , color: primaryColor),),
+                ],
+              ),
+              label: "",
             ),
             BottomNavigationBarItem(
-              icon: svgIcon("assets/icons/Profile.svg"),
-              activeIcon:
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  svgIcon("assets/icons/Profile.svg"),
+                  Text(S.of(context).profile_nav, ),
+                ],
+              ),
+              activeIcon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   svgIcon("assets/icons/Profile.svg", color: primaryColor),
-              label: "Profile",
+                  Text(S.of(context).profile_nav, style: const TextStyle(fontSize: 12 , color: primaryColor),),
+                ],
+              ),
+              label: "",
             ),
           ],
         ),

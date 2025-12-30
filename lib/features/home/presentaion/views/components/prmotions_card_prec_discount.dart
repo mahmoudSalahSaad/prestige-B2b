@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/core/resources/color.dart';
 import 'package:shop/core/utils/date/date_utils.dart';
 import 'package:shop/features/home/data/models/promotions_model.dart';
+import 'package:shop/generated/l10n.dart';
 
 class PrmotionsCardPrecDiscount extends ConsumerStatefulWidget {
   const PrmotionsCardPrecDiscount({super.key, required this.promotions});
@@ -18,6 +19,7 @@ class _PrmotionsCardPrecDiscountState
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,7 +46,7 @@ class _PrmotionsCardPrecDiscountState
           const SizedBox(height: 8),
           Text(
             widget.promotions.name ?? "",
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 16,
@@ -53,8 +55,8 @@ class _PrmotionsCardPrecDiscountState
           ),
           const SizedBox(height: 4),
           Text(
-            "DIscount: ${widget.promotions.discount}%",
-            maxLines: 1,
+            "${S.of(context).discount}: ${widget.promotions.discount}%",
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
@@ -65,8 +67,8 @@ class _PrmotionsCardPrecDiscountState
           Row(
             children: [
               Text(
-                "Min Amount ${widget.promotions.maxAmount}",
-                maxLines: 1,
+                "${S.of(context).min_amount} ${widget.promotions.maxAmount}",
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 14,
@@ -77,8 +79,8 @@ class _PrmotionsCardPrecDiscountState
           ),
           const SizedBox(height: 2),
           Text(
-            "End at ${DateTime.parse("${widget.promotions.endDate}").toAppDate()}",
-            maxLines: 1,
+            "${S.of(context).end_at} ${DateTime.parse("${widget.promotions.endDate}").toAppDate()}",
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
