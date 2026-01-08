@@ -14,10 +14,7 @@ import 'package:shop/features/settings/presentation/controllers/countries_contro
 import '../../../../generated/l10n.dart';
 
 class UpdateAddressScreen extends ConsumerStatefulWidget {
-  const UpdateAddressScreen({
-    super.key,
-    required this.addressModel,
-  });
+  const UpdateAddressScreen({super.key, required this.addressModel});
   final AddressModel addressModel;
 
   @override
@@ -55,6 +52,11 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
       ref
           .read(countriesControllerProvider.notifier)
           .selectCountry(widget.addressModel.country!);
+
+      ref
+          .read(citiesControllerProvider.notifier)
+          .getCities(widget.addressModel.country!.id!);
+
       ref
           .read(citiesControllerProvider.notifier)
           .selectCity(widget.addressModel.city!);
@@ -107,9 +109,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     CustomTextFieldWidget(
                       controller: lineOneController,
                       hintText: S.of(context).address_line,
@@ -134,18 +134,15 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                           children: [
                             Icon(
                               Icons.location_on_outlined,
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withOpacity(0.3),
+                              color: Theme.of(
+                                context,
+                              ).iconTheme.color?.withOpacity(0.3),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     CustomTextFieldWidget(
                       controller: countryIDController,
                       readOnly: true,
@@ -163,73 +160,83 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                       },
                       onTap: () async {
                         await showModalBottomSheet(
-                            context: context,
-                            builder: (_) {
-                              return Container(
-                                width: deviceWidth,
-                                padding: const EdgeInsets.all(16),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: List.generate(
-                                        ref
-                                                .watch(
-                                                    countriesControllerProvider)
+                          context: context,
+                          builder: (_) {
+                            return Container(
+                              width: deviceWidth,
+                              padding: const EdgeInsets.all(16),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: List.generate(
+                                    ref
+                                            .watch(countriesControllerProvider)
+                                            .requireValue
+                                            .countries
+                                            ?.length ??
+                                        0,
+                                    (index) => Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 10,
+                                      ),
+                                      child: CountryItemCard(
+                                        country: ref
+                                            .read(countriesControllerProvider)
+                                            .requireValue
+                                            .countries![index],
+                                        selectedCountry:
+                                            ref
+                                                .read(
+                                                  countriesControllerProvider,
+                                                )
                                                 .requireValue
-                                                .countries
-                                                ?.length ??
-                                            0,
-                                        (index) => Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 10),
-                                              child: CountryItemCard(
-                                                country: ref
+                                                .selectedCountry ??
+                                            CityModel(id: 0),
+                                        onTap: () {
+                                          ref
+                                              .read(
+                                                countriesControllerProvider
+                                                    .notifier,
+                                              )
+                                              .selectCountry(
+                                                ref
                                                     .read(
-                                                        countriesControllerProvider)
+                                                      countriesControllerProvider,
+                                                    )
                                                     .requireValue
                                                     .countries![index],
-                                                selectedCountry: ref
-                                                        .read(
-                                                            countriesControllerProvider)
-                                                        .requireValue
-                                                        .selectedCountry ??
-                                                    CityModel(id: 0),
-                                                onTap: () {
-                                                  ref
-                                                      .read(
-                                                          countriesControllerProvider
-                                                              .notifier)
-                                                      .selectCountry(ref
-                                                          .read(
-                                                              countriesControllerProvider)
-                                                          .requireValue
-                                                          .countries![index]);
+                                              );
 
-                                                  countryIDController.text = ref
-                                                      .read(
-                                                          countriesControllerProvider)
-                                                      .requireValue
-                                                      .countries![index]
-                                                      .name
-                                                      .toString();
+                                          countryIDController.text = ref
+                                              .read(countriesControllerProvider)
+                                              .requireValue
+                                              .countries![index]
+                                              .name
+                                              .toString();
 
-                                                  ref
-                                                      .read(
-                                                          citiesControllerProvider
-                                                              .notifier)
-                                                      .getCities(ref
-                                                          .read(
-                                                              countriesControllerProvider)
-                                                          .requireValue
-                                                          .countries![index]
-                                                          .id!);
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            )),
+                                          ref
+                                              .read(
+                                                citiesControllerProvider
+                                                    .notifier,
+                                              )
+                                              .getCities(
+                                                ref
+                                                    .read(
+                                                      countriesControllerProvider,
+                                                    )
+                                                    .requireValue
+                                                    .countries![index]
+                                                    .id!,
+                                              );
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              );
-                            });
+                              ),
+                            );
+                          },
+                        );
                       },
                       prefixIcon: "assets/icons/Mylocation.svg",
                     ),
@@ -240,73 +247,85 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                           ? () {}
                           : () async {
                               showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) {
-                                    return Container(
-                                      width: deviceWidth,
-                                      padding: const EdgeInsets.all(16),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: List.generate(
-                                              (ref
-                                                              .watch(
-                                                                  citiesControllerProvider)
-                                                              .requireValue
-                                                              .cities
-                                                              ?.length ??
-                                                          0) >
-                                                      20
-                                                  ? 20
-                                                  : (ref
+                                context: context,
+                                builder: (_) {
+                                  return Container(
+                                    width: deviceWidth,
+                                    padding: const EdgeInsets.all(16),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: List.generate(
+                                          (ref
                                                           .watch(
-                                                              citiesControllerProvider)
+                                                            citiesControllerProvider,
+                                                          )
                                                           .requireValue
                                                           .cities
                                                           ?.length ??
-                                                      0),
-                                              (index) => Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 10),
-                                                    child: CountryItemCard(
-                                                      country: ref
+                                                      0) >
+                                                  20
+                                              ? 20
+                                              : (ref
+                                                        .watch(
+                                                          citiesControllerProvider,
+                                                        )
+                                                        .requireValue
+                                                        .cities
+                                                        ?.length ??
+                                                    0),
+                                          (index) => Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 10,
+                                            ),
+                                            child: CountryItemCard(
+                                              country: ref
+                                                  .read(
+                                                    citiesControllerProvider,
+                                                  )
+                                                  .requireValue
+                                                  .cities![index],
+                                              selectedCountry:
+                                                  ref
+                                                      .read(
+                                                        citiesControllerProvider,
+                                                      )
+                                                      .requireValue
+                                                      .selectedCity ??
+                                                  CityModel(id: 0),
+                                              onTap: () {
+                                                ref
+                                                    .read(
+                                                      citiesControllerProvider
+                                                          .notifier,
+                                                    )
+                                                    .selectCity(
+                                                      ref
                                                           .read(
-                                                              citiesControllerProvider)
+                                                            citiesControllerProvider,
+                                                          )
                                                           .requireValue
                                                           .cities![index],
-                                                      selectedCountry: ref
-                                                              .read(
-                                                                  citiesControllerProvider)
-                                                              .requireValue
-                                                              .selectedCity ??
-                                                          CityModel(id: 0),
-                                                      onTap: () {
-                                                        ref
-                                                            .read(
-                                                                citiesControllerProvider
-                                                                    .notifier)
-                                                            .selectCity(ref
-                                                                .read(
-                                                                    citiesControllerProvider)
-                                                                .requireValue
-                                                                .cities![index]);
+                                                    );
 
-                                                        cityIDController.text = ref
-                                                            .read(
-                                                                citiesControllerProvider)
-                                                            .requireValue
-                                                            .cities![index]
-                                                            .name
-                                                            .toString();
+                                                cityIDController.text = ref
+                                                    .read(
+                                                      citiesControllerProvider,
+                                                    )
+                                                    .requireValue
+                                                    .cities![index]
+                                                    .name
+                                                    .toString();
 
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                  )),
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    );
-                                  });
+                                    ),
+                                  );
+                                },
+                              );
                             },
                       hintText: S.of(context).city,
                       readOnly: true,
@@ -314,7 +333,8 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                           ? const SizedBox(
                               height: 20,
                               width: 20,
-                              child: CircularProgressIndicator())
+                              child: CircularProgressIndicator(),
+                            )
                           : null,
                       validate: (str) {
                         if (str != null) {
@@ -329,9 +349,7 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                       },
                       prefixIcon: "assets/icons/Mylocation.svg",
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     InkWell(
                       onTap: ref.watch(addAddressControllerProvider).isLoading
                           ? () {}
@@ -340,30 +358,29 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                                 ref
                                     .read(addAddressControllerProvider.notifier)
                                     .updateAddress(
-                                        parameters: AddressEntity(
-                                            id: widget.addressModel.id,
-                                            name: nameController.text,
-                                            cityId: ref
-                                                .read(citiesControllerProvider)
-                                                .requireValue
-                                                .selectedCity!
-                                                .id
-                                                .toString(),
-                                            countryId: ref
-                                                .read(
-                                                    countriesControllerProvider)
-                                                .requireValue
-                                                .selectedCountry!
-                                                .id
-                                                .toString(),
-                                            line: lineOneController.text,
-                                            line2: lineTwoController.text,
-                                            state: stateController.text,
-                                            postalCode:
-                                                postalCodeController.text,
-                                            isBillingAddress: isBillingAddress,
-                                            isShippingAddress:
-                                                isShippingAddress));
+                                      parameters: AddressEntity(
+                                        id: widget.addressModel.id,
+                                        name: nameController.text,
+                                        cityId: ref
+                                            .read(citiesControllerProvider)
+                                            .requireValue
+                                            .selectedCity!
+                                            .id
+                                            .toString(),
+                                        countryId: ref
+                                            .read(countriesControllerProvider)
+                                            .requireValue
+                                            .selectedCountry!
+                                            .id
+                                            .toString(),
+                                        line: lineOneController.text,
+                                        line2: lineTwoController.text,
+                                        state: stateController.text,
+                                        postalCode: postalCodeController.text,
+                                        isBillingAddress: isBillingAddress,
+                                        isShippingAddress: isShippingAddress,
+                                      ),
+                                    );
                               }
                             },
                       child: Container(
@@ -385,19 +402,19 @@ class _UpdateAddressScreenState extends ConsumerState<UpdateAddressScreen> {
                               )
                             : Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: deviceWidth * 0.26),
+                                  horizontal: deviceWidth * 0.26,
+                                ),
                                 child: Text(
                                   S.of(context).update_address,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
+                                  style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(color: Colors.white),
-                                )),
+                                ),
+                              ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

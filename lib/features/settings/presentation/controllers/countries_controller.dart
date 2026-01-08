@@ -21,40 +21,47 @@ class CountriesController extends _$CountriesController {
     GetCountriesUseCase getCountriesUseCase = getIt();
 
     if (!loadMore) {
-      Future.delayed(Duration.zero, () {
-        state = const AsyncLoading();
-      });
+      if (state.hasValue) {
+        state = AsyncData(state.requireValue.copyWith(isLoadingMore: true));
+      } else {
+        Future.delayed(Duration.zero, () {
+          state = const AsyncLoading();
+        });
+      }
     } else {
       // Set loading more state
       state = state.whenData((value) => value.copyWith(isLoadingMore: true));
     }
 
     final result = await getCountriesUseCase.call(const NoParameters());
-    result.fold(
-      (l) => state = AsyncError(l, StackTrace.current),
-      (r) {
-        if (loadMore) {
-          // Append to existing countries
-          final currentCountries = state.requireValue.countries ?? [];
-          final newCountries = [...currentCountries, ...r];
-          state = AsyncData(CountriesState(
+    result.fold((l) => state = AsyncError(l, StackTrace.current), (r) {
+      if (loadMore) {
+        // Append to existing countries
+        final currentCountries = state.requireValue.countries ?? [];
+        final newCountries = [...currentCountries, ...r];
+        state = AsyncData(
+          state.requireValue.copyWith(
             countries: newCountries,
-            selectedCountry: newCountries.first,
+            selectedCountry:
+                state.requireValue.selectedCountry ?? newCountries.first,
             currentPage: state.requireValue.currentPage + 1,
             hasMoreData: r.length >= state.requireValue.pageSize,
             isLoadingMore: false,
-          ));
-        } else {
-          // Load first page
-          state = AsyncData(CountriesState(
+          ),
+        );
+      } else {
+        // Load first page
+        state = AsyncData(
+          state.requireValue.copyWith(
             countries: r,
+            selectedCountry: state.requireValue.selectedCountry,
             currentPage: 1,
             hasMoreData: r.length >= 10, // Assuming page size is 10
             isLoadingMore: false,
-          ));
-        }
-      },
-    );
+          ),
+        );
+      }
+    });
   }
 
   selectCountry(CityModel country) {
