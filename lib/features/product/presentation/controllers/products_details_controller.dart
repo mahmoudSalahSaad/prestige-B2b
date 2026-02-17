@@ -31,7 +31,36 @@ class ProductsDetailsController extends _$ProductsDetailsController {
       print("sadsaddsadsaldmdsa=======>${l.errorMessage}");
       state = AsyncError(l, StackTrace.current);
     }, (r) {
-      state = AsyncData(ProductsDetailsState(productDetails: r));
+      // Auto-select first variation if product has variations
+      if (r.product?.variations.isNotEmpty ?? false) {
+        final firstVariation = r.product!.variations.first;
+        // Calculate correct prices for first variation
+        final double originalPrice = firstVariation.price ?? 0;
+        final double? discountPrice = firstVariation.discountPrice;
+        final bool hasValidDiscount = discountPrice != null &&
+            discountPrice > 0 &&
+            discountPrice < originalPrice;
+
+        state = AsyncData(
+          ProductsDetailsState(
+            productDetails: r.copyWith(
+              product: r.product!.copyWith(
+                price: PriceModel(
+                  hasDiscount: hasValidDiscount,
+                  afterDiscount:
+                      hasValidDiscount ? discountPrice : originalPrice,
+                  beforeDiscount: originalPrice,
+                ),
+              ),
+            ),
+            variationID: firstVariation.id,
+            priceId: firstVariation.productPriceId,
+            unitId: firstVariation.unitId,
+          ),
+        );
+      } else {
+        state = AsyncData(ProductsDetailsState(productDetails: r));
+      }
     });
   }
 
@@ -81,6 +110,13 @@ class ProductsDetailsController extends _$ProductsDetailsController {
   }
 
   selectVariation(VariationModel variation) {
+    // Calculate correct prices: variation.price is original, variation.discountPrice is discounted
+    final double originalPrice = variation.price ?? 0;
+    final double? discountPrice = variation.discountPrice;
+    final bool hasValidDiscount = discountPrice != null &&
+        discountPrice > 0 &&
+        discountPrice < originalPrice;
+
     state = AsyncData(
       ProductsDetailsState(
         variationID: variation.id,
@@ -89,10 +125,12 @@ class ProductsDetailsController extends _$ProductsDetailsController {
         productDetails: state.requireValue.productDetails!.copyWith(
           product: state.requireValue.productDetails!.product!.copyWith(
               price: PriceModel(
-            hasDiscount: variation.discountPrice != 0 ? true : false,
-            afterDiscount: variation.price ?? 0,
-            beforeDiscount:
-                (variation.price ?? 0) + (variation.discountPrice ?? 0),
+            // hasDiscount: true if discountPrice exists and is valid
+            hasDiscount: hasValidDiscount,
+            // afterDiscount: use discountPrice if valid, otherwise use original price
+            afterDiscount: hasValidDiscount ? discountPrice : originalPrice,
+            // beforeDiscount: always use original price (for strikethrough)
+            beforeDiscount: originalPrice,
           )),
         ),
       ),

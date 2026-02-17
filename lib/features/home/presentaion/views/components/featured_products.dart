@@ -5,7 +5,6 @@ import 'package:shop/core/components/product/product_card.dart';
 import 'package:shop/core/routing/navigation_services.dart';
 import 'package:shop/core/routing/routes.dart';
 import 'package:shop/features/home/data/models/items_model.dart';
-import 'package:shop/models/product_model.dart';
 
 class FeaturedProducts extends ConsumerWidget {
   const FeaturedProducts({
@@ -17,7 +16,7 @@ class FeaturedProducts extends ConsumerWidget {
   final String? title;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return deals!.isEmpty
+    return (deals == null || deals!.isEmpty)
         ? const SizedBox()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +41,7 @@ class FeaturedProducts extends ConsumerWidget {
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(
                       left: defaultPadding,
-                      right: index == demoPopularProducts.length - 1
+                      right: index == (deals?.length ?? 0) - 1
                           ? defaultPadding
                           : 0,
                     ),

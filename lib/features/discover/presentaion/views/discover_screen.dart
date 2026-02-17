@@ -306,7 +306,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen>
                                 crossAxisSpacing: 20,
                                 childAspectRatio: 0.80,
                               ),
-                              
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) {
                                   final product = data.products![index];
@@ -316,17 +315,19 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen>
                                       image: product.thumbnail ?? "",
                                       brandName: product.slug ?? "",
                                       title: product.name ?? "",
+                                      // ProductCard will use variation prices when variations exist
+                                      // This price prop is only used as fallback when no variations
                                       price: product.price?.beforeDiscount ?? 0,
                                       priceBeforeDiscount:
-                                          product.price?.beforeDiscount ?? 0,
+                                          product.price?.beforeDiscount,
                                       priceAfetDiscount: product
-                                              .price?.afterDiscount
-                                              .toString() ??
-                                          "0",
+                                          .price?.afterDiscount
+                                          ?.toString(),
                                       dicountpercent: 0,
                                       productId: product.id,
                                       hasDiscount:
                                           product.price?.hasDiscount ?? false,
+                                      // Pass variations - ProductCard will use variation prices when available
                                       variations: product.variations,
                                       press: () {
                                         Navigator.of(context).push(

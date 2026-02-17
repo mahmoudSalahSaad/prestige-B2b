@@ -25,14 +25,21 @@ class UnitPrice extends StatelessWidget {
         const SizedBox(height: defaultPadding / 1),
         Text.rich(
           TextSpan(
-            text: priceAfterDiscount == null
+            text: (priceAfterDiscount == null ||
+                    priceAfterDiscount == 0 ||
+                    (priceAfterDiscount != null && priceAfterDiscount! >= price))
                 ? "${price.toStringAsFixed(2)} JOD"
                 : "${priceAfterDiscount!.toStringAsFixed(2)} JOD",
             style: Theme.of(context).textTheme.titleLarge,
             children: [
-              if (price != 0)
+              // Only show strikethrough price when there's a valid discount
+              // (priceAfterDiscount is not null, > 0, and less than original price)
+              if (priceAfterDiscount != null &&
+                  priceAfterDiscount! > 0 &&
+                  price > 0 &&
+                  price > priceAfterDiscount!)
                 TextSpan(
-                  text: "${price.toStringAsFixed(2)} JOD",
+                  text: " ${price.toStringAsFixed(2)} JOD",
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Theme.of(context).textTheme.bodyMedium!.color,
                       decoration: TextDecoration.lineThrough),

@@ -50,16 +50,40 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   @override
   void initState() {
     super.initState();
-    // Initialize with first variation if available
+    // Initialize with first variation if available (default selection)
+    // Always prioritize variations when they exist - use variation prices
     if (widget.variations != null && widget.variations!.isNotEmpty) {
       selectedVariation = widget.variations!.first;
-      currentPrice = selectedVariation!.price;
-      currentDiscountPrice = selectedVariation!.discountPrice;
+      final variationPrice = selectedVariation!.price ?? 0.0;
+      final variationDiscountPrice = selectedVariation!.discountPrice;
+
+      currentPrice = variationPrice;
+      // Set discount price if it exists and is different from original price
+      // Show discount when discountPrice exists, is > 0, and is less than original price
+      if (variationDiscountPrice != null &&
+          variationDiscountPrice > 0 &&
+          variationPrice > 0 &&
+          variationDiscountPrice < variationPrice) {
+        currentDiscountPrice = variationDiscountPrice;
+      } else {
+        currentDiscountPrice = null;
+      }
     } else {
+      // No variations - use product price
       currentPrice = widget.price;
-      currentDiscountPrice = widget.priceAfetDiscount != null
-          ? double.tryParse(widget.priceAfetDiscount!)
-          : null;
+      // Parse discount price from string and validate it
+      if (widget.priceAfetDiscount != null) {
+        final parsedDiscount = double.tryParse(widget.priceAfetDiscount!);
+        // Only use discount if it's valid and less than original price
+        currentDiscountPrice = (parsedDiscount != null &&
+                parsedDiscount > 0 &&
+                parsedDiscount < widget.price &&
+                widget.hasDiscount)
+            ? parsedDiscount
+            : null;
+      } else {
+        currentDiscountPrice = null;
+      }
     }
   }
 
@@ -125,45 +149,54 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                     final unitPrice = currentPrice ?? 0.0;
                     final unitDiscountPrice = currentDiscountPrice;
                     final totalPrice = unitPrice * quantity;
-                    final totalDiscountPrice =
-                        unitDiscountPrice != null && unitDiscountPrice > 0
-                            ? unitDiscountPrice * quantity
-                            : null;
 
-                    return (totalDiscountPrice != null &&
-                            totalDiscountPrice > 0)
-                        ? Row(
-                            children: [
-                              Text(
-                                "${totalDiscountPrice.toStringAsFixed(2)} JOD",
-                                style: const TextStyle(
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 10,
-                                ),
-                              ),
-                              const SizedBox(width: defaultPadding / 4),
-                              Text(
-                                "${totalPrice.toStringAsFixed(2)} JOD",
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .color,
-                                  fontSize: 7,
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Text(
-                            "${totalPrice.toStringAsFixed(2)} JOD",
+                    // If there's a discount price, calculate total discount price
+                    final totalDiscountPrice = (unitDiscountPrice != null &&
+                            unitDiscountPrice > 0 &&
+                            unitPrice > 0 &&
+                            unitDiscountPrice < unitPrice)
+                        ? unitDiscountPrice * quantity
+                        : null;
+
+                    // Show discount price prominently with original price struck through
+                    if (totalDiscountPrice != null && totalDiscountPrice > 0) {
+                      return Row(
+                        children: [
+                          // Discount price (prominently displayed)
+                          Text(
+                            "${totalDiscountPrice.toStringAsFixed(2)} JOD",
                             style: const TextStyle(
                               color: primaryColor,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w800,
                               fontSize: 10,
                             ),
-                          );
+                          ),
+                          const SizedBox(width: defaultPadding / 4),
+                          // Original price with strikethrough
+                          Text(
+                            "${totalPrice.toStringAsFixed(2)} JOD",
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .color,
+                              fontSize: 7,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      // No discount - show regular price
+                      return Text(
+                        "${totalPrice.toStringAsFixed(2)} JOD",
+                        style: const TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 10,
+                        ),
+                      );
+                    }
                   },
                 ),
                 const Spacer(),
@@ -325,7 +358,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                                       ),
                                     );
 
-                                    //show snackbar
+                                //show snackbar
 
                                 if (mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -424,8 +457,21 @@ class _ProductCardState extends ConsumerState<ProductCard> {
             'Price: ${variation.price}, Discount: ${variation.discountPrice}');
         setState(() {
           selectedVariation = variation;
-          currentPrice = variation.price;
-          currentDiscountPrice = variation.discountPrice;
+          final variationPrice = variation.price ?? 0.0;
+          final variationDiscountPrice = variation.discountPrice;
+
+          // Set original price
+          currentPrice = variationPrice;
+
+          // Set discount price if it exists and is valid (less than original)
+          if (variationDiscountPrice != null &&
+              variationDiscountPrice > 0 &&
+              variationPrice > 0 &&
+              variationDiscountPrice < variationPrice) {
+            currentDiscountPrice = variationDiscountPrice;
+          } else {
+            currentDiscountPrice = null;
+          }
         });
         print(
             'Updated currentPrice: $currentPrice, currentDiscountPrice: $currentDiscountPrice');

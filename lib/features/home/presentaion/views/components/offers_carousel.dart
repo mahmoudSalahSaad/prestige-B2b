@@ -123,7 +123,7 @@ class _OffersCarouselState extends ConsumerState<OffersCarousel> {
                         });
                   }
                 },
-                image: widget.slider?.images?[index].path,
+                image: widget.slider?.images?[index].path ?? "https://i.imgur.com/J1Qjut7.png",
                 title: '',
               ),
             ),

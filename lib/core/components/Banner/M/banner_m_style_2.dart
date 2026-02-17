@@ -20,7 +20,7 @@ class BannerMStyle2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerM(
-      image: image!,
+      image: image ?? "https://i.imgur.com/J1Qjut7.png",
       press: press,
       children: [
         Padding(

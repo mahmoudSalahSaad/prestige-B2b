@@ -134,272 +134,450 @@ class ProductDetailsScreen extends ConsumerWidget {
                         description:
                             "${data.productDetails?.product?.description}",
                       ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (data.productDetails?.product?.variations
-                                      .isNotEmpty ??
-                                  false)
-                                Text(
-                                  S.of(context).select,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                      // Variations Section with Enhanced UI
+                      if (data.productDetails?.product?.variations.isNotEmpty ??
+                          false)
+                        SliverToBoxAdapter(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding, vertical: 8),
+                            padding: const EdgeInsets.all(defaultPadding),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 2),
                                 ),
-                              if (data.productDetails?.product?.variations
-                                      .isNotEmpty ??
-                                  false)
-                                const SizedBox(
-                                  height: 10,
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.style_outlined,
+                                      color: primaryColor,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      S.of(context).select,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                              if (data.productDetails?.product?.variations
-                                      .isNotEmpty ??
-                                  false)
+                                const SizedBox(height: 16),
                                 SizedBox(
                                   width: deviceWidth,
                                   child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                        children: List.generate(
-                                            data.productDetails?.product
-                                                    ?.variations.length ??
-                                                0,
-                                            (index) => InkWell(
-                                                  onTap: () {
-                                                    ref
-                                                        .read(productsDetailsControllerProvider(
+                                      children: List.generate(
+                                        data.productDetails?.product?.variations
+                                                .length ??
+                                            0,
+                                        (index) {
+                                          final variation = data.productDetails!
+                                              .product!.variations[index];
+                                          final isSelected = ref
+                                                  .watch(
+                                                      productsDetailsControllerProvider(
+                                                          productSlug ??
+                                                              "product-1"))
+                                                  .requireValue
+                                                  .variationID ==
+                                              variation.id;
+
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              right: index ==
+                                                      (data
+                                                                  .productDetails
+                                                                  ?.product
+                                                                  ?.variations
+                                                                  .length ??
+                                                              0) -
+                                                          1
+                                                  ? 0
+                                                  : 12,
+                                              left: index ==
+                                                      (data
+                                                                  .productDetails
+                                                                  ?.product
+                                                                  ?.variations
+                                                                  .length ??
+                                                              0) -
+                                                          1
+                                                  ? 0
+                                                  : 12,
+                                            ),
+                                            child: InkWell(
+                                              onTap: () {
+                                                ref
+                                                    .read(
+                                                        productsDetailsControllerProvider(
                                                                 productSlug ??
                                                                     "product-1")
                                                             .notifier)
-                                                        .selectVariation(data
-                                                            .productDetails!
-                                                            .product!
-                                                            .variations[index]);
-                                                  },
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: index == 0
-                                                            ? 0
-                                                            : defaultPadding /
-                                                                2),
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade200,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        border: Border.all(
-                                                          color: ref
-                                                                      .watch(productsDetailsControllerProvider(
-                                                                          productSlug ??
-                                                                              "product-1"))
-                                                                      .requireValue
-                                                                      .variationID ==
-                                                                  data
-                                                                      .productDetails
-                                                                      ?.product
-                                                                      ?.variations[
-                                                                          index]
-                                                                      .id
-                                                              ? primaryColor
-                                                              : Theme.of(
-                                                                      context)
-                                                                  .hintColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                        ),
+                                                    .selectVariation(variation);
+                                              },
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              child: AnimatedContainer(
+                                                duration: const Duration(
+                                                    milliseconds: 200),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 12),
+                                                decoration: BoxDecoration(
+                                                  color: isSelected
+                                                      ? primaryColor
+                                                          .withOpacity(0.1)
+                                                      : Colors.grey.shade50,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                    color: isSelected
+                                                        ? primaryColor
+                                                        : Colors.grey.shade300,
+                                                    width: isSelected ? 2 : 1,
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    if (isSelected)
+                                                      const Icon(
+                                                        Icons.check_circle,
+                                                        color: primaryColor,
+                                                        size: 18,
                                                       ),
-                                                      child: Center(
-                                                        child: Text(
-                                                            "${data.productDetails?.product?.variations[index].options}"),
+                                                    if (isSelected)
+                                                      const SizedBox(width: 8),
+                                                    Text(
+                                                      variation.options ??
+                                                          variation.name ??
+                                                          '',
+                                                      style: TextStyle(
+                                                        color: isSelected
+                                                            ? primaryColor
+                                                            : Colors.black87,
+                                                        fontWeight: isSelected
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal,
+                                                        fontSize: 14,
                                                       ),
                                                     ),
-                                                  ),
-                                                ))),
-                                  ),
-                                )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(defaultPadding),
-                        sliver: SliverToBoxAdapter(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: UnitPrice(
-                                  price: (data.productDetails?.product?.price
-                                              ?.hasDiscount ??
-                                          false)
-                                      ? (data.productDetails?.product?.price
-                                                  ?.beforeDiscount ??
-                                              0) *
-                                          (data.productDetails?.product
-                                                  ?.quantity ??
-                                              0)
-                                      : 0,
-                                  priceAfterDiscount: (data.productDetails
-                                              ?.product?.price?.hasDiscount ??
-                                          false)
-                                      ? (data.productDetails?.product?.price
-                                                  ?.afterDiscount ??
-                                              0) *
-                                          (data.productDetails?.product
-                                                  ?.quantity ??
-                                              0)
-                                      : (data.productDetails?.product?.price
-                                                  ?.beforeDiscount ??
-                                              0) *
-                                          (data.productDetails?.product
-                                                  ?.quantity ??
-                                              0),
-                                ),
-                              ),
-                              ProductQuantity(
-                                numOfItem:
-                                    data.productDetails?.product?.quantity ?? 0,
-                                onIncrement: () {
-                                  ref
-                                      .read(ProductsDetailsControllerProvider(
-                                              productSlug ?? "product-1")
-                                          .notifier)
-                                      .onIncrement();
-                                },
-                                onDecrement: () {
-                                  ref
-                                      .read(ProductsDetailsControllerProvider(
-                                              productSlug ?? "product-1")
-                                          .notifier)
-                                      .onDecrement();
-                                },
-                                onQuantityChanged: (quantity) {
-                                  ref
-                                      .read(ProductsDetailsControllerProvider(
-                                              productSlug ?? "product-1")
-                                          .notifier)
-                                      .onQuantityChanged(quantity);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(defaultPadding),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if ((data.productDetails?.promotions?.length ??
-                                      0) >
-                                  0)
-                                Text(
-                                  S.of(context).pormotions,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              SizedBox(
-                                width: deviceWidth,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                      data.productDetails?.promotions?.length ??
-                                          0,
-                                  itemBuilder: (context, index) =>
-                                      Card.outlined(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      side:
-                                          const BorderSide(color: primaryColor),
-                                    ),
-                                    elevation: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            S.of(context).buy_x_get_y(
-                                                  data
-                                                          .productDetails
-                                                          ?.promotions?[index]
-                                                          .xYOffer
-                                                          ?.buyQuantity ??
-                                                      0,
-                                                  data
-                                                          .productDetails
-                                                          ?.promotions?[index]
-                                                          .xYOffer
-                                                          ?.getQuantity ??
-                                                      0,
-                                                  data
-                                                          .productDetails
-                                                          ?.promotions?[index]
-                                                          .xYOffer
-                                                          ?.getProduct
-                                                          ?.name ??
-                                                      '',
+                                                  ],
                                                 ),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                          ),
-                                          if (data
-                                                  .productDetails
-                                                  ?.promotions?[index]
-                                                  .description !=
-                                              null)
-                                            Text(
-                                              "${data.productDetails?.promotions?[index].description}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
+                                              ),
                                             ),
-                                          if (data
-                                                  .productDetails
-                                                  ?.promotions?[index]
-                                                  .minAmount !=
-                                              null)
-                                            Text(
-                                              "Min amount: ${data.productDetails?.promotions?[index].minAmount}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                            ),
-                                          if (data
-                                                  .productDetails
-                                                  ?.promotions?[index]
-                                                  .minItems !=
-                                              null)
-                                            Text(
-                                              "Min Items: ${data.productDetails?.promotions?[index].minItems}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                            ),
-                                        ],
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      // Price and Quantity Section with Enhanced UI
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: defaultPadding, vertical: 8),
+                        sliver: SliverToBoxAdapter(
+                          child: Container(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: UnitPrice(
+                                    // price: original price (for strikethrough when discount exists)
+                                    price: (data.productDetails?.product?.price
+                                                ?.beforeDiscount ??
+                                            0) *
+                                        (data.productDetails?.product
+                                                ?.quantity ??
+                                            1),
+                                    // priceAfterDiscount: discounted price (main display) or null if no discount
+                                    priceAfterDiscount: (data
+                                                    .productDetails
+                                                    ?.product
+                                                    ?.price
+                                                    ?.hasDiscount ??
+                                                false) &&
+                                            (data.productDetails?.product?.price
+                                                        ?.afterDiscount ??
+                                                    0) >
+                                                0 &&
+                                            (data.productDetails?.product?.price
+                                                        ?.afterDiscount ??
+                                                    0) <
+                                                (data
+                                                        .productDetails
+                                                        ?.product
+                                                        ?.price
+                                                        ?.beforeDiscount ??
+                                                    0)
+                                        ? (data.productDetails?.product?.price
+                                                    ?.afterDiscount ??
+                                                0) *
+                                            (data.productDetails?.product
+                                                    ?.quantity ??
+                                                1)
+                                        : null,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                ProductQuantity(
+                                  numOfItem:
+                                      data.productDetails?.product?.quantity ??
+                                          0,
+                                  onIncrement: () {
+                                    ref
+                                        .read(ProductsDetailsControllerProvider(
+                                                productSlug ?? "product-1")
+                                            .notifier)
+                                        .onIncrement();
+                                  },
+                                  onDecrement: () {
+                                    ref
+                                        .read(ProductsDetailsControllerProvider(
+                                                productSlug ?? "product-1")
+                                            .notifier)
+                                        .onDecrement();
+                                  },
+                                  onQuantityChanged: (quantity) {
+                                    ref
+                                        .read(ProductsDetailsControllerProvider(
+                                                productSlug ?? "product-1")
+                                            .notifier)
+                                        .onQuantityChanged(quantity);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
+                      // Promotions Section with Enhanced UI
+                      if ((data.productDetails?.promotions?.length ?? 0) > 0)
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding, vertical: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: primaryColor.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Icon(
+                                        Icons.local_offer,
+                                        color: primaryColor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Text(
+                                      S.of(context).pormotions,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                SizedBox(
+                                  width: deviceWidth,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: data.productDetails?.promotions
+                                            ?.length ??
+                                        0,
+                                    itemBuilder: (context, index) => Container(
+                                      margin: const EdgeInsets.only(bottom: 12),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            primaryColor.withOpacity(0.1),
+                                            primaryColor.withOpacity(0.05),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: primaryColor.withOpacity(0.3),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.card_giftcard,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Expanded(
+                                                  child: Text(
+                                                    S.of(context).buy_x_get_y(
+                                                          data
+                                                                  .productDetails
+                                                                  ?.promotions?[
+                                                                      index]
+                                                                  .xYOffer
+                                                                  ?.buyQuantity ??
+                                                              0,
+                                                          data
+                                                                  .productDetails
+                                                                  ?.promotions?[
+                                                                      index]
+                                                                  .xYOffer
+                                                                  ?.getQuantity ??
+                                                              0,
+                                                          data
+                                                                  .productDetails
+                                                                  ?.promotions?[
+                                                                      index]
+                                                                  .xYOffer
+                                                                  ?.getProduct
+                                                                  ?.name ??
+                                                              '',
+                                                        ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: primaryColor,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            if (data
+                                                    .productDetails
+                                                    ?.promotions?[index]
+                                                    .description !=
+                                                null) ...[
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                "${data.productDetails?.promotions?[index].description}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                            ],
+                                            if (data
+                                                    .productDetails
+                                                    ?.promotions?[index]
+                                                    .minAmount !=
+                                                null) ...[
+                                              const SizedBox(height: 8),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.attach_money,
+                                                    size: 16,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    "Min amount: ${data.productDetails?.promotions?[index].minAmount}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                          color:
+                                                              Colors.grey[700],
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                            if (data
+                                                    .productDetails
+                                                    ?.promotions?[index]
+                                                    .minItems !=
+                                                null) ...[
+                                              const SizedBox(height: 4),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.shopping_bag,
+                                                    size: 16,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    "Min Items: ${data.productDetails?.promotions?[index].minItems}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                          color:
+                                                              Colors.grey[700],
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       SliverPadding(
                         padding: const EdgeInsets.all(defaultPadding),
                         sliver: SliverToBoxAdapter(
