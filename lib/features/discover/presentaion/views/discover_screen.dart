@@ -312,6 +312,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen>
                                   return FadeTransition(
                                     opacity: _animationController,
                                     child: ProductCard(
+                                      key: ValueKey(product.id),
                                       image: product.thumbnail ?? "",
                                       brandName: product.slug ?? "",
                                       title: product.name ?? "",

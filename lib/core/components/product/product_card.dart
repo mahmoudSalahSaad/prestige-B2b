@@ -47,19 +47,13 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   double? currentPrice;
   double? currentDiscountPrice;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize with first variation if available (default selection)
-    // Always prioritize variations when they exist - use variation prices
+  void _applyVariationsOrPrice() {
     if (widget.variations != null && widget.variations!.isNotEmpty) {
       selectedVariation = widget.variations!.first;
       final variationPrice = selectedVariation!.price ?? 0.0;
       final variationDiscountPrice = selectedVariation!.discountPrice;
 
       currentPrice = variationPrice;
-      // Set discount price if it exists and is different from original price
-      // Show discount when discountPrice exists, is > 0, and is less than original price
       if (variationDiscountPrice != null &&
           variationDiscountPrice > 0 &&
           variationPrice > 0 &&
@@ -69,12 +63,10 @@ class _ProductCardState extends ConsumerState<ProductCard> {
         currentDiscountPrice = null;
       }
     } else {
-      // No variations - use product price
+      selectedVariation = null;
       currentPrice = widget.price;
-      // Parse discount price from string and validate it
       if (widget.priceAfetDiscount != null) {
         final parsedDiscount = double.tryParse(widget.priceAfetDiscount!);
-        // Only use discount if it's valid and less than original price
         currentDiscountPrice = (parsedDiscount != null &&
                 parsedDiscount > 0 &&
                 parsedDiscount < widget.price &&
@@ -84,6 +76,23 @@ class _ProductCardState extends ConsumerState<ProductCard> {
       } else {
         currentDiscountPrice = null;
       }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _applyVariationsOrPrice();
+  }
+
+  @override
+  void didUpdateWidget(ProductCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // When product/variations change (e.g. different product in list), sync state
+    if (oldWidget.productId != widget.productId ||
+        oldWidget.variations != widget.variations ||
+        (oldWidget.variations?.length ?? 0) != (widget.variations?.length ?? 0)) {
+      _applyVariationsOrPrice();
     }
   }
 
